@@ -1,5 +1,5 @@
 {
-    "name": "btybug.plugins/blog",
+    "name": "btybug.hook/blog",
     "description": "Blog package description",
     "type": "plugin",
     "authors": [
@@ -12,7 +12,7 @@
     "require": {},
 	"autoload": {
     "psr-4": {
-      "BtyBugPlugins\\Blog\\": "src/"
+      "BtyBugHook\\Blog\\": "src/"
     }
   }
 }
