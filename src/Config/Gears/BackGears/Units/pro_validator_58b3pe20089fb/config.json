@@ -1,0 +1,17 @@
+{
+  "title": "Pro Validation Builder",
+  "self_type": "units",
+  "main_type": "buttons",
+  "type": "general",
+  "enabled": "true",
+  "have_settings": 1,
+  "author": "Sahak",
+  "main_file": "tpl.blade.php",
+  "settings": "settings.blade.php",
+  "slug": "58b3pe20089fb",
+  "folder": "pro_validator_58b3pe20089fb",
+  "created_at": 1488182816,
+  "is_core": 0,
+  "place": "backend",
+  "module_slug":"ProValidator"
+}

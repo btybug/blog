@@ -1,0 +1,12 @@
+{
+  "title": "Breadcrumb",
+  "type": "horizontal",
+  "self_type": "section",
+  "enabled": "true",
+  "have_settings": 1,
+  "author": "Diana",
+  "section": "backend",
+  "main_file": "tpl.blade.php",
+  "slug": "breadcramp_section",
+  "folder": "breadcramp_section"
+}

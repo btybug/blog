@@ -1,0 +1,26 @@
+{
+  "name": "Ara 2017",
+  "author": "Ara",
+  "type": "section",
+  "self_type": "page_section",
+  "version": 1,
+  "example": "demo",
+  "descrition": "Ara 2017 page section",
+  "layout": "main",
+  "css": [
+    "style.css",
+    "setting-body.css"
+  ],    "js": ["js.js"],
+
+  "settings": {
+    "file": "settings",
+    "css": [
+      "style.css"
+    ],
+    "js": ["js.js"]
+  },
+  "slug": "new_page_section_857412365421",
+  "created_at": 1476346979,
+  "folder": "new_page_section",
+  "active": false
+}

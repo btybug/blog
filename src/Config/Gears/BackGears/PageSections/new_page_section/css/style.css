@@ -1,0 +1,30 @@
+
+.demo.main-wrapper{
+    height: auto;
+    width: 100%;
+    border: 2px solid;
+    border-style: dashed;
+}
+.demo .section_1_container{
+    width: 100%;
+    min-height: 100px;
+    background: #c8c8d6;
+    margin: 12px;
+    border: 2px solid;
+    border-style: dotted;
+}
+.demo .main_content_container{
+    width: 60%;
+    min-height: 500px;
+    border: 3px solid;
+    margin: 7px;
+    border-style: dashed;
+}
+.demo .placeholder_2_container{
+    width: 37%;
+    min-height: 500px;
+    border: 3px solid;
+    margin: 7px;
+    border-style: double;
+    background: antiquewhite;
+}

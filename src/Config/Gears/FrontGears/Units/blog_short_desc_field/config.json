@@ -1,0 +1,24 @@
+{
+  "title": "Short Description Field",
+  "author": "Edo",
+  "site": "http:\/\/bootydev.co.uk",
+  "version": "1.0",
+  "type": "unit",
+  "description": "Short Description Field",
+  "have_setting": 1,
+  "image": "screenshot.png",
+  "slug": "blog_short_desc_field",
+  "folder": "blog_short_desc_field",
+  "created_at": 1490088665,
+  "is_core": 1,
+  "place": "frontend",
+  "fields" : [
+    "short_desc",
+    "tags"
+  ],
+  "tags": [
+    "blog_field",
+    "frontend"
+  ],
+  "path": "app\/Plugins\/vendor\/btybug.hook\/blog\/src\/Config\/Gears\/FrontGears\/Units\/blog_short_desc_field"
+}

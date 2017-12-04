@@ -1,0 +1,21 @@
+{
+  "title": "Single Post",
+  "author": "Edo",
+  "site": "http:\/\/bootydev.co.uk",
+  "version": "1.0",
+  "type": "unit",
+  "description": "single post unit",
+  "have_setting": 1,
+  "image": "screenshot.png",
+  "slug": "single_post",
+  "folder": "single_post",
+  "created_at": 1490088665,
+  "is_core": 1,
+  "example" : "demo",
+  "place": "frontend",
+  "tags": [
+    "single_post",
+    "frontend"
+  ],
+  "path": "app\/Plugins\/vendor\/btybug.hook\/blog\/src\/Config\/Gears\/FrontGears\/Units\/single_post"
+}
