@@ -23,13 +23,13 @@
 
 
 //Routes
-Route::get('/', 'IndexConroller@getIndex');
-Route::get('/posts', 'IndexConroller@getPosts');
-Route::get('/new-post', 'IndexConroller@getNewPost');
+Route::get('/', 'IndexConroller@getIndex',true);
+Route::get('/posts', 'IndexConroller@getPosts',true);
+Route::get('/new-post', 'IndexConroller@getNewPost',true);
 Route::post('/new-post', 'IndexConroller@postNewPost');
-Route::get('/settings', 'IndexConroller@getSettings');
+Route::get('/settings', 'IndexConroller@getSettings',true);
 Route::group(['prefix'=>'form-bulder'],function (){
-    Route::get('/', 'IndexConroller@getFormBulder');
+    Route::get('/', 'IndexConroller@getFormBulder',true);
     Route::post('/form-fields', 'IndexConroller@postFormFieldsSettings');
 });
 Route::post('/settings', 'IndexConroller@postSettings');
