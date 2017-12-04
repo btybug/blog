@@ -3,7 +3,7 @@
 namespace BtyBugHook\Blog\Models;
 
 
-use Sahakavatar\Cms\Models\Templates\Units;
+use Btybug\btybug\Models\Templates\Units;
 use Sahakavatar\Settings\Repository\AdminsettingRepository;
 
 class PostFields

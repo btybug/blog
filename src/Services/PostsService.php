@@ -9,7 +9,7 @@
 
 namespace BtyBugHook\Blog\Services;
 
-use Sahakavatar\Cms\Services\GeneralService;
+use Btybug\btybug\Services\GeneralService;
 use BtyBugHook\Blog\Repository\PostsRepository;
 
 class PostsService extends GeneralService

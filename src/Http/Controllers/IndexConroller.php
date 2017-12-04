@@ -4,7 +4,7 @@ namespace BtyBugHook\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Sahakavatar\Cms\Models\Templates\Units;
+use Btybug\btybug\Models\Templates\Units;
 use Sahakavatar\Console\Repository\FrontPagesRepository;
 use Sahakavatar\Modules\Models\Migrations;
 use Sahakavatar\Settings\Repository\AdminsettingRepository;

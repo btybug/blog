@@ -1,7 +1,7 @@
 @php
     $postRepo = new \BtyBugHook\Blog\Repository\PostsRepository();
     $posts = $postRepo->getPublished();
-    $page = \Sahakavatar\Cms\Services\RenderService::getFrontPageByURL();
+    $page = \Btybug\btybug\Services\RenderService::getFrontPageByURL();
 @endphp
 
 <section id="blog-section">

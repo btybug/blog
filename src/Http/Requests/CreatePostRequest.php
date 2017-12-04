@@ -9,7 +9,7 @@
 
 namespace BtyBugHook\Blog\Http\Requests;
 
-use Sahakavatar\Cms\Http\Requests\Request;
+use Btybug\btybug\Http\Requests\Request;
 use BtyBugHook\Blog\Repository\PostsRepository;
 use BtyBugHook\Blog\Services\PostsService;
 

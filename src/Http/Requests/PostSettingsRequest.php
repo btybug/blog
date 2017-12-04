@@ -2,7 +2,7 @@
 
 namespace BtyBugHook\Blog\Http\Requests;
 
-use Sahakavatar\Cms\Http\Requests\Request;
+use Btybug\btybug\Http\Requests\Request;
 
 class PostSettingsRequest extends Request
 {

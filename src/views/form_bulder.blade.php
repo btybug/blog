@@ -1,4 +1,4 @@
-@extends('cms::layouts.mTabs',['index'=>'blog_pages'])
+@extends('btybug::layouts.mTabs',['index'=>'blog_pages'])
 @section('tab')
     <div class="container-fluid">
         <div class="col-md-12">

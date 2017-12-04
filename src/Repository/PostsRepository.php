@@ -1,7 +1,7 @@
 <?php
 namespace BtyBugHook\Blog\Repository;
 
-use Sahakavatar\Cms\Repositories\GeneralRepository;
+use Btybug\btybug\Repositories\GeneralRepository;
 use BtyBugHook\Blog\Models\Post;
 
 class PostsRepository extends GeneralRepository

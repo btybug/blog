@@ -27,7 +27,6 @@ class ModuleServiceProvider extends ServiceProvider
     {
         $this->loadTranslationsFrom(__DIR__ . '/../views', 'blog');
         $this->loadViewsFrom(__DIR__ . '/../views', 'blog');
-        dd(54545);
         \Eventy::action('admin.menus', [
             "title" => "Blog",
             "custom-link" => "#",

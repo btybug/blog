@@ -1,4 +1,4 @@
-@extends('cms::layouts.admin')
+@extends('btybug::layouts.admin')
 @section('content')
     <div role="tabpanel" class="m-t-10" id="main">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 main_container_11">
