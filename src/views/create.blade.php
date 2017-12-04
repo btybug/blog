@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="col-md-8">
-        <h2>New Post</h2>
+        <h2>New Post.</h2>
         {!! Form::open(['files' => true]) !!}
         <div class="form-group col-md-12">
             <label class="col-md-2 control-label" for="title">Post title</label>
