@@ -37,29 +37,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            {!! Form::submit("Save",['class' => 'btn settingBtn pull-right']) !!}
-                        </div>
-                        {!! Form::close() !!}
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{--all and singel settings--}}
-        <div class="col-md-12">
-            <div class="panel panelSettingData">
-                <div class="panel-heading" role="tab" id="headingSingle">
-                    <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion"
-                                               href="#collapseSingle" aria-expanded="true"
-                                               aria-controls="collapseSingle"> <i
-                                    class="glyphicon glyphicon-chevron-right"></i>Single settings</a></h4>
-                </div>
-                <div id="collapseSingle" class="panel-collapse collapse in" role="tabpanel"
-                     aria-labelledby="headingSingle">
-                    <div class="panel-body">
-                        {!! Form::model($single) !!}
-                        {!! Form::hidden('id',null) !!}
-                        <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12 m-b-10">
                                     <div class="col-sm-4 p-l-0">Main Unit</div>
@@ -69,17 +46,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="row">
-                                <label for="navstyle" class="col-xs-3">Page Title</label>
-                                <div class="col-xs-9">
-                                    {!! Form::text('title',null,['class' => 'form-control']) !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             {!! Form::submit("Save",['class' => 'btn settingBtn pull-right']) !!}
                         </div>
                         {!! Form::close() !!}
+
                     </div>
                 </div>
             </div>
