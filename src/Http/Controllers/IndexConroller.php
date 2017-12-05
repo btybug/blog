@@ -108,4 +108,25 @@ class IndexConroller extends Controller
         $adminsettingRepository->createOrUpdate(json_encode($data,true), 'btybug_blog', 'form_field_settings');
         return redirect()->back();
     }
+
+    public function getEditPost(
+        $id,
+        PostsRepository $postsRepository
+    )
+    {
+        $post = $postsRepository->findOrFail($id);
+
+        return view('blog::edit',compact('post'));
+    }
+
+    public function postEditPos(
+        $id,
+        Request $request,
+        PostsService $postsService
+    )
+    {
+        $result = $postsService->update($request->except("_token", 'image'), $request->file("image"));
+
+        return redirect()->to('admin/blog/posts')->with("message", "Post Successfully Edited");
+    }
 }

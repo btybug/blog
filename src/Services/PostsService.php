@@ -38,7 +38,7 @@ class PostsService extends GeneralService
         $updated = $this->postRepo->update($data['id'],$data);
         if ($updated) {
             if($file){
-                unlink(public_path($updated->icon));
+                if($updated->icon && file_exists(public_path($updated->icon)) && ! is_dir(public_path($updated->icon))) unlink(public_path($updated->icon));
                 $this->upload($file, $updated->id);
             }
         }

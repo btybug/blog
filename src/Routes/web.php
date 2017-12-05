@@ -28,6 +28,13 @@ Route::get('/posts', 'IndexConroller@getPosts',true);
 Route::get('/new-post', 'IndexConroller@getNewPost',true);
 Route::post('/new-post', 'IndexConroller@postNewPost');
 Route::get('/settings', 'IndexConroller@getSettings',true);
+
+Route::group(['prefix'=>'edit-post'],function (){
+    Route::get('/', 'IndexConroller@getEditPost',true);
+    Route::get('/{param}', 'IndexConroller@getEditPost',true);
+    Route::post('/{param}', 'IndexConroller@postEditPos');
+});
+
 Route::group(['prefix'=>'form-bulder'],function (){
     Route::get('/', 'IndexConroller@getFormBulder',true);
     Route::post('/form-fields', 'IndexConroller@postFormFieldsSettings');
