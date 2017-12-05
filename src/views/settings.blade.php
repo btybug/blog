@@ -274,7 +274,7 @@
 
     @include('resources::assests.deleteModal')
     @include('resources::assests.magicModal')
-    @include('modules::developers._partials.mysql_error')
+    {{--@include('btybug::_partials.mysql_error')--}}
 
 @stop
 @section('CSS')
