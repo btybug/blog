@@ -46,7 +46,7 @@
             </div>
         </div>
         {{--all and singel settings--}}
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="panel panelSettingData">
                 <div class="panel-heading" role="tab" id="headingSingle">
                     <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion"
