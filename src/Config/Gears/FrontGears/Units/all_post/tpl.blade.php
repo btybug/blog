@@ -17,7 +17,7 @@
                                          class="img-responsive">
                                     <div class="content-title">
                                         <div class="text-center">
-                                            <h3><a href="{!! url($page->url."/".$post->slug) !!}">{!! $post->description !!}</a></h3>
+                                            <h3><a href="#">{!! $post->description !!}</a></h3>
                                         </div>
                                     </div>
                                     <div class="content-footer">
