@@ -70,45 +70,15 @@
                     <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion"
                                                href="#formBuilderCollapse" aria-expanded="true"
                                                aria-controls="formBuilderCollapse">
-                            <i
-                                    class="glyphicon glyphicon-chevron-right"></i>Table Columns</a></h4>
+                            <i class="glyphicon glyphicon-chevron-right"></i>Table Columns</a></h4>
                 </div>
                 <div id="formBuilderCollapse" class="panel-collapse collapse in" role="tabpanel"
                      aria-labelledby="formBuilder">
                     <div class="panel-body">
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th>Column Name</th>
-                                <th>DataType</th>
-                                {{--<th>Create Form</th>--}}
-                                <th>Is Null</th>
-                                <th>Key</th>
-                                <th>Default</th>
-                                <th>Extra</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($columns as $colum)
-                                <tr>
-                                    @foreach($colum as $k=>$v)
-                                        <th>{!! $v !!}</th>
-
-                                    @endforeach
-                                    <th>
-                                        <a href="javascript:void(0)"
-                                           class="btn btn-info get-column-data" data-table="{{ $table }}" data-column="{{ $colum->Field }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                        <a href="{!! url('admin/modules/tables/fields',[$table,$colum->Field]) !!}"
-                                           class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-
-                                    </th>
-
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    {!! Form::open(['class'=>'form-horizontal']) !!}
+                    <div class="col-md-12 m-b-15">
+                        <button type="button" id="add_colum" class="btn btn-info">Add Column</button>
+                    </div>
+                    {!! Form::open(['class'=>'form-horizontal columns-add-form hide']) !!}
                     <!-- Select Basic -->
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="engine">Add after</label>
@@ -129,28 +99,54 @@
                             </tr>
                             </thead>
                             <tbody id="table_engine">
-                            <tr>
-                                <td> {!! Form::text('column[0][name]',null,['class'=>'form-control']) !!}</td>
-                                <td>{!! Form::select('column[0][type]',$tbtypes,28,['class'=>'form-control']) !!}</td>
-                                <td>{!! Form::text('column[0][lenght]',null,['class'=>'form-control']) !!}</td>
-                                <td>{!! Form::text('column[0][default]',null,['class'=>'form-control']) !!}</td>
-                                <td>{!! Form::checkbox('column[0][nullable]') !!}</td>
-                                <td>{!! Form::checkbox('column[0][unique]') !!}</td>
 
-                                <td>
-                                    <span class='btn btn-warning'><i class='fa fa-trash' aria-hidden='true'></i></span>
-                                </td>
-                            </tr>
                             </tbody>
                         </table>
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-success" id="submit_form">Create</button>
+                        </div>
                         {!! Form::close() !!}
-                        <button type="button" id="add_colum" class="btn btn-info">Add Column</button>
-                        <button type="button" class="btn btn-success" id="submit_form">Create</button>
+
+
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Column Name</th>
+                                <th>DataType</th>
+                                {{--<th>Create Form</th>--}}
+                                <th>Is Null</th>
+                                <th>Key</th>
+                                <th>Default</th>
+                                <th>Extra</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($columns as $colum)
+                                <tr>
+                                    @foreach($colum as $k=>$v)
+                                        <th>{!! $v !!}</th>
+                                    @endforeach
+                                    <th>
+                                        <a href="javascript:void(0)"
+                                           class="btn btn-info get-column-data" data-table="{{ $table }}"
+                                           data-column="{{ $colum->Field }}"><i class="fa fa-pencil-square-o"
+                                                                                aria-hidden="true"></i></a>
+                                        <a href="{!! url('admin/modules/tables/fields',[$table,$colum->Field]) !!}"
+                                           class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+
+                                    </th>
+
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
     </div>
 
     @include('resources::assests.deleteModal')
@@ -220,7 +216,7 @@
     <script>
         $(document).ready(function () {
 
-            $("body").on('click','.get-column-data', function () {
+            $("body").on('click', '.get-column-data', function () {
                 var table = $(this).data('table');
                 var column = $(this).data('column');
                 $.ajax({
@@ -231,7 +227,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $("input[name='_token']").val()
                     },
-                    data: {table:table,column:column},
+                    data: {table: table, column: column},
                     success: function (data) {
                         // if()
                     }
@@ -245,6 +241,12 @@
             });
             var i = 1;
             $('#add_colum').on('click', function () {
+                var form = $(".columns-add-form")
+                if(form.hasClass('hide')){
+                    form.removeClass("hide");
+                    form.addClass("show");
+                }
+
                 var column = "<tr>" +
                     '<td> <input type="text" name="column[' + i + '][name]" class="form-control"></input></td>' +
                     '<td><select name="column[' + i + '][type]" class="form-control">@foreach($tbtypes as $k=>$v) <option value="{!! $k !!}">{!! $v !!}</option> @endforeach</select></td>' +
@@ -265,7 +267,7 @@
                 var data = $('form').serialize();
                 $.ajax({
                     type: 'POST',
-                    url: '/admin/modules/tables/add-column/posts',
+                    url: '/admin/console/structures/tables/add-column/posts',
                     headers: '{!! csrf_token() !!}',
                     datatype: 'json',
                     cache: false,
