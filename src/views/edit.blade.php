@@ -32,7 +32,7 @@
 
         <div class="form-group col-md-12">
             <div class="col-md-8">
-                {!! Form::submit("Create",['class' => 'btn btn-primary pull-right']) !!}
+                {!! Form::submit("Edit",['class' => 'btn btn-primary pull-right']) !!}
             </div>
         </div>
         {!! Form::close() !!}
