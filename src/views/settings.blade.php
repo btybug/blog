@@ -39,8 +39,17 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12 m-b-10">
-                                    <div class="col-sm-4 p-l-0">Main Unit</div>
-                                    {!! BBbutton2('unit','main_content','single_post',(isset($single->main_content) && $single->main_content)?'Change':'Select',['class'=>'btn btn-default change-layout','model' =>(isset($single->main_content) && $single->main_content) ?$single->main_content : null]) !!}
+                                    <div class="col-sm-4 p-l-0">All posts Unit</div>
+                                    {!! BBbutton2('unit','all_main_content','all_post',(isset($all->main_content) && $all->main_content)?'Change':'Select',['class'=>'btn btn-default change-layout','model' =>(isset($all->main_content) && $all->main_content) ?$all->main_content : null]) !!}
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12 m-b-10">
+                                    <div class="col-sm-4 p-l-0">Single posts Unit</div>
+                                    {!! BBbutton2('unit','single_main_content','single_post',(isset($single->main_content) && $single->main_content)?'Change':'Select',['class'=>'btn btn-default change-layout','model' =>(isset($single->main_content) && $single->main_content) ?$single->main_content : null]) !!}
 
                                 </div>
                             </div>
@@ -88,8 +97,8 @@
 
                                     @endforeach
                                     <th>
-                                        <a href="{!! url('admin/modules/tables/edit-column',[$table,$colum->Field]) !!}"
-                                           class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                        <a href="javascript:void(0)"
+                                           class="btn btn-info get-column-data" data-table="{{ $table }}" data-column="{{ $colum->Field }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                         <a href="{!! url('admin/modules/tables/fields',[$table,$colum->Field]) !!}"
                                            class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 
@@ -210,6 +219,25 @@
     {!! HTML::script("/js/UiElements/bb_styles.js?v.5") !!}
     <script>
         $(document).ready(function () {
+
+            $("body").on('click','.get-column-data', function () {
+                var table = $(this).data('table');
+                var column = $(this).data('column');
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/console/structure/tables/get-column',
+                    datatype: 'json',
+                    cache: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $("input[name='_token']").val()
+                    },
+                    data: {table:table,column:column},
+                    success: function (data) {
+                        // if()
+                    }
+                });
+            });
+
             $('.delete_table_column').on('click', function () {
                 $('#delete_confirm').attr('href', $(this).attr('data-href'));
                 $('.delete_modal .modal-body p').html('are you sure delete this column?');
