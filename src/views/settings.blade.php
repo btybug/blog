@@ -95,6 +95,7 @@
                                 <th>Default</th>
                                 <th>Null</th>
                                 <th>Key Unique</th>
+                                <th>Field</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -118,6 +119,7 @@
                                 <th>Key</th>
                                 <th>Default</th>
                                 <th>Extra</th>
+                                <th>Field</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -125,9 +127,14 @@
                             @foreach($columns as $colum)
                                 <tr>
                                     @foreach($colum as $k=>$v)
-                                        <th>{!! $v !!}</th>
+                                        <th>
+                                            {!! $v !!}
+                                        </th>
                                     @endforeach
+
                                     <th>
+                                     NO
+                                    </th><th>
                                         <a href="javascript:void(0)"
                                            class="btn btn-info get-column-data" data-table="{{ $table }}"
                                            data-column="{{ $colum->Field }}"><i class="fa fa-pencil-square-o"
@@ -254,6 +261,7 @@
                     '<td> <input type="text" name="column[' + i + '][default]" class="form-control"></input></td>' +
                     '<td><input type="checkbox" name="column[' + i + '][nullable]"/></td>' +
                     '<td><input type="checkbox" name="column[' + i + '][unique]"/></td>' +
+                    '<td>YES<input value="yes" type="radio" name="column[\' + i + \'][field]"/>NO<input value="no" type="radio" name="column[\' + i + \'][field]"/></td>' +
                     '<td><span class="btn btn-warning delete_row"><i class="fa fa-trash" aria-hidden="true"></i></span></td>' +
                     "</tr>";
                 $('#table_engine').append($(column));
