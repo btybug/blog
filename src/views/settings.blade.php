@@ -131,17 +131,25 @@
                                             {!! $v !!}
                                         </th>
                                     @endforeach
-
                                     <th>
-                                     NO
-                                    </th><th>
+                                        @if(\Btybug\Console\Services\FieldService::checkField($table,$colum->Field))
+                                            YES
+                                        @else
+                                            NO
+                                        @endif
+                                    </th>
+                                    <th>
                                         <a href="javascript:void(0)"
                                            class="btn btn-info get-column-data" data-table="{{ $table }}"
                                            data-column="{{ $colum->Field }}"><i class="fa fa-pencil-square-o"
                                                                                 aria-hidden="true"></i></a>
-                                        <a href="{!! url('admin/modules/tables/fields',[$table,$colum->Field]) !!}"
+                                        <a href="{!! url('admin/console/structure/tables/fields',[$table,$colum->Field]) !!}"
                                            class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-
+                                        @if(\Btybug\Console\Services\FieldService::checkField($table,$colum->Field))
+                                            <a href="{!! route("edit_field",['id' => \Btybug\Console\Services\FieldService::getFieldID($table,$colum->Field)]) !!}"
+                                               class="btn btn-warning" ><i class="fa fa-pencil"
+                                                                                    aria-hidden="true"></i> Field</a>
+                                        @endif
                                     </th>
 
                                 </tr>
@@ -246,6 +254,7 @@
                 $('.delete_modal .modal-body p').html('are you sure delete this column?');
                 $('.delete_modal').modal();
             });
+
             var i = 1;
             $('#add_colum').on('click', function () {
                 var form = $(".columns-add-form")
@@ -253,7 +262,6 @@
                     form.removeClass("hide");
                     form.addClass("show");
                 }
-
                 var column = "<tr>" +
                     '<td> <input type="text" name="column[' + i + '][name]" class="form-control"></input></td>' +
                     '<td><select name="column[' + i + '][type]" class="form-control">@foreach($tbtypes as $k=>$v) <option value="{!! $k !!}">{!! $v !!}</option> @endforeach</select></td>' +
@@ -261,7 +269,7 @@
                     '<td> <input type="text" name="column[' + i + '][default]" class="form-control"></input></td>' +
                     '<td><input type="checkbox" name="column[' + i + '][nullable]"/></td>' +
                     '<td><input type="checkbox" name="column[' + i + '][unique]"/></td>' +
-                    '<td>YES<input value="yes" type="radio" name="column[\' + i + \'][field]"/>NO<input value="no" type="radio" name="column[\' + i + \'][field]"/></td>' +
+                    '<td>YES<input value="yes" type="radio" name="column[' + i + '][field]"/>NO<input value="no" type="radio" name="column[\' + i + \'][field]"/></td>' +
                     '<td><span class="btn btn-warning delete_row"><i class="fa fa-trash" aria-hidden="true"></i></span></td>' +
                     "</tr>";
                 $('#table_engine').append($(column));
@@ -271,11 +279,12 @@
             $('body').on('click', '.delete_row', function () {
                 $(this).parent().parent().remove();
             });
+
             $('#submit_form').on('click', function () {
-                var data = $('form').serialize();
+                var data = $('.columns-add-form').serialize();
                 $.ajax({
                     type: 'POST',
-                    url: '/admin/console/structures/tables/add-column/posts',
+                    url: '/admin/console/structure/tables/add-column/posts',
                     headers: '{!! csrf_token() !!}',
                     datatype: 'json',
                     cache: false,
