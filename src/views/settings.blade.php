@@ -315,6 +315,40 @@
                     }
                 });
             });
+
+
+            $('body').on('click', '.edit-column-btn' ,function () {
+                var data = $('#edit-column-form').serialize();
+                var column = $(this).data('column');
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/console/structure/tables/edit-column/posts/'+column,
+                    headers: '{!! csrf_token() !!}',
+                    datatype: 'json',
+                    cache: false,
+                    data: data,
+                    success: function (data) {
+                        if (data.error) {
+                            if (data.arrm) {
+                                $('#mysql .error_message').empty();
+                                $.each(data.message, function (k, v) {
+                                    var message = $('</p>');
+                                    var p = message.clone().text(v);
+                                    $('#mysql .error_message').append(p);
+                                });
+                                $("#column-pop-up").modal('hide');
+                                $('#mysql').modal('show');
+                            } else {
+                                $('#mysql .error_message').html(data.message);
+                                $("#column-pop-up").modal('hide');
+                                $('#mysql').modal('show');
+                            }
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+            });
         })
 
     </script>
