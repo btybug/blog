@@ -167,6 +167,7 @@
     @include('resources::assests.deleteModal')
     @include('resources::assests.magicModal')
     @include('btybug::_partials.mysql_error')
+    @include('console::structure.developers._partials.columns_pop_up')
 
 @stop
 @section('CSS')
@@ -244,7 +245,12 @@
                     },
                     data: {table: table, column: column},
                     success: function (data) {
-                        // if()
+                        if(! data.error){
+                            $("#column-pop-up .modal-body").html(data.html);
+                            $("#column-pop-up").modal();
+                        }else{
+                            alert(data.message);
+                        }
                     }
                 });
             });
