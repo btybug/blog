@@ -12,10 +12,24 @@
                 <div id="formBuilderCollapse" class="panel-collapse collapse in" role="tabpanel"
                      aria-labelledby="formBuilder">
                     <div class="panel-body">
-                        {!! Form::submit("Save",['class' => 'btn btn-info pull-left']) !!}
-                        {!!  BBbutton2('unit',"blog_fields","blog_field","Extra Fields",['class'=>'btn btn-default pull-right select-field','data-type'=> "blog_field",'model'=>null]) !!}
-                        {!!  BBbutton2('layouts',"blog_layouts","blog_layouts","Layout",['class'=>'btn btn-success pull-right select-field','data-type'=> "blog_layouts",'model'=>null]) !!}
-                        {!!  BBbutton2('fields',"blog_fields","posts","Fields",['class'=>'btn btn-warning pull-right select-field','data-key' => 'blog_fields','model'=>null]) !!}
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="col-md-4">
+                                    Form name
+                                </div>
+                                <div class="col-md-8">
+                                    {!! Form::text('form_name',null,['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                {!! Form::submit("Save",['class' => 'btn btn-info pull-right m-r-5']) !!}
+                                <a class="btn btn-primary pull-right m-r-5"><i class="fa fa-plus"></i> Field</a>
+                                <a class="btn btn-warning pull-right m-r-5">Layout</a>
+                            </div>
+                        </div>
+                        {{--{!!  BBbutton2('unit',"blog_fields","blog_field","Extra Fields",['class'=>'btn btn-default pull-right select-field','data-type'=> "blog_field",'model'=>null]) !!}--}}
+                        {{--{!!  BBbutton2('layouts',"blog_layouts","blog_layouts","Layout",['class'=>'btn btn-success pull-right select-field','data-type'=> "blog_layouts",'model'=>null]) !!}--}}
+                        {{--{!!  BBbutton2('fields',"blog_fields","posts","Fields",['class'=>'btn btn-warning pull-right select-field','data-key' => 'blog_fields','model'=>null]) !!}--}}
                     </div>
                 </div>
             </div>
