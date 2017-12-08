@@ -133,4 +133,15 @@ class IndexConroller extends Controller
 
         return redirect()->to('admin/blog/posts')->with("message", "Post Successfully Edited");
     }
+
+    public function getFieldsByTable(
+        Request $request,
+        FieldsRepository $fieldsRepository
+    )
+    {
+        $fields = $fieldsRepository->getBy('table_name',$request->table);
+        $html = \View("blog::_partials.field-list",compact('fields'))->render();
+
+        return \Response::json(['html' => $html]);
+    }
 }

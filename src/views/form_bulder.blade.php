@@ -23,7 +23,7 @@
                             </div>
                             <div class="col-md-4">
                                 {!! Form::submit("Save",['class' => 'btn btn-info pull-right m-r-5']) !!}
-                                <a class="btn btn-primary pull-right m-r-5"><i class="fa fa-plus"></i> Field</a>
+                                <a class="btn btn-primary pull-right m-r-5 select-field"> + Field</a>
                                 <a class="btn btn-warning pull-right m-r-5">Layout</a>
                             </div>
                         </div>
@@ -37,31 +37,58 @@
         </div>
         {{--all and singel settings--}}
 
-        <div class="col-md-12">
-            <div class="panel panelSettingData">
-                <div class="panel-heading" role="tab" id="formBuilder">
-                    <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion"
-                                               href="#formBuilderCollapse" aria-expanded="true"
-                                               aria-controls="formBuilderCollapse">
-                            <i
-
-                                    class="glyphicon glyphicon-chevron-right"></i>Form Builder</a></h4>
-                </div>
-                <div id="formBuilderCollapse" class="panel-collapse collapse in" role="tabpanel"
-                     aria-labelledby="formBuilder">
-                    <div class="panel-body form-builder-panel">
-                        {!! form_render("blog_form") !!}
+        <h3>Form Preview</h3>
+        <div class="col-md-12 bb-menu-container">
+            <ol class="bb-menu-area">
+                <li class="p-10">
+                    <div class="listinginfo bb-menu-item">
+                    {!! BBRenderUnits("core_fields.input_variation") !!}
                     </div>
-                </div>
-            </div>
+                </li>
+                <li class="p-10">
+                    <div class="listinginfo bb-menu-item">
+                    {!! BBRenderUnits("core_fields.input_variation") !!}
+                    </div>
+                </li>
+                <li class="p-10">
+                    <div class="listinginfo bb-menu-item">
+                    {!! BBRenderUnits("core_fields.input_variation") !!}
+                    </div>
+                </li>
+
+            </ol>
         </div>
     </div>
 
     @include('resources::assests.deleteModal')
     @include('resources::assests.magicModal')
+
+    <div class="modal fade" id="select-fields" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="font-size: 32px;
+    font-family: fantasy;
+    text-align: center;">Select Fields</h4>
+                </div>
+                <div class="modal-body" style="min-height: 300px;">
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 @section('CSS')
-
+    {!! HTML::style('public/css/menus.css?v='.rand(1111,9999)) !!}
     <style>
         .panel-heading {
             z-index: 99999999
@@ -118,25 +145,77 @@
     </style>
 @stop
 @section('JS')
+    {!! HTML::script('public/js/jquery.mjs.nestedSortable.js') !!}
+    {!! HTML::script('public/css/bootstrap/js/bootstrap-switch.min.js') !!}
+    {!! HTML::script('public/css/font-awesome/js/fontawesome-iconpicker.min.js') !!}
+    {!! HTML::script('public/js/menus.js') !!}
     {!! HTML::script("/public/js/UiElements/bb_styles.js?v.5") !!}
     <script>
         $(document).ready(function () {
-            $("body").on("click","[data-key=posts]",function () {
-                var id = $(this).find('[data-value]').data('value');
-                console.log(id);
+            $("body").on("click",".select-field",function () {
+                var table = "posts";
                 $.ajax({
-                    url: "{!! url('admin/blog/render-unit') !!}",
-                    data: {id: id},
+                    url: "{!! url('admin/blog/get-fields') !!}",
+                    data: {table: table},
                     headers: {
                         'X-CSRF-TOKEN': $("input[name='_token']").val()
                     },
                     dataType: 'json',
                     success: function (data) {
-                       $(".form-builder-panel").append(data.html);
+                        $("#select-fields .modal-body").html(data.html);
+                        $("#select-fields").modal();
                     },
                     type: 'POST'
                 });
             })
+
+            {{--$.ajax({--}}
+                {{--url: "{!! url('admin/blog/render-unit') !!}",--}}
+                {{--data: {id: id},--}}
+                {{--headers: {--}}
+                    {{--'X-CSRF-TOKEN': $("input[name='_token']").val()--}}
+                {{--},--}}
+                {{--dataType: 'json',--}}
+                {{--success: function (data) {--}}
+                    {{--$(".form-builder-panel").append(data.html);--}}
+                {{--},--}}
+                {{--type: 'POST'--}}
+            {{--});--}}
+
+            $('ol.bb-menu-area').nestedSortable({
+                items: 'li',
+                isTree: false,
+                stop: function(event, ui) {
+                    var item = $(ui.item).attr("data-id");
+                    var type = $(ui.item).attr("data-type");
+                    var parent = $(ui.item).closest('ol').parent('li').attr("data-id");
+
+                    // if(type == 'custom'){
+                    //     $.ajax({
+                    //         url: '/admin/front-site/structure/front-pages/sorting',
+                    //         data: {
+                    //             item: item,
+                    //             parent: parent
+                    //         },
+                    //         type: 'POST',
+                    //         headers: {
+                    //             'X-CSRF-TOKEN': $("input[name='_token']").val()
+                    //         },
+                    //         dataType: 'json',
+                    //         beforeSend : function () {
+                    //
+                    //         },
+                    //         success: function (data) {
+                    //             if (! data.error) {
+                    //
+                    //             }
+                    //         }
+                    //     });
+                    // }else{
+                    //     $("ol.bb-menu-area").sortable("cancel");
+                    // }
+                }
+            });
         })
     </script>
 @stop
