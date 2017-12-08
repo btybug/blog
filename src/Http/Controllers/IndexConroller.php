@@ -3,6 +3,7 @@
 namespace BtyBugHook\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Btybug\Console\Repository\FieldsRepository;
 use Illuminate\Http\Request;
 use Btybug\btybug\Models\Templates\Units;
 use Btybug\Console\Repository\FrontPagesRepository;
@@ -86,20 +87,23 @@ class IndexConroller extends Controller
 
     public function unitRenderWithFields(
         Request $request,
-        AdminsettingRepository $adminsettingRepository
+        AdminsettingRepository $adminsettingRepository,
+        FieldsRepository $fieldsRepository
     )
     {
-        $settings = $adminsettingRepository->findBy("section", "btybug_blog");
-        $unit = Units::findByVariation($request->id);
-        $data['unit'] = $unit;
-        $data['fields'] = $unit->fields;
-        $columns = \DB::select('SHOW COLUMNS FROM posts');
-        foreach ($columns as $column) {
-            $after_columns[$column->Field] = $column->Field;
-        }
-        $data['columns'] = $after_columns;
-        $field_html = view("blog::_partials.fields")->with($data)->render();
-        return \Response::json(['html' => BBRenderUnits($request->id), 'field_html' => $field_html]);
+        $field = $fieldsRepository->findOrFail($request->id);
+//
+//        $settings = $adminsettingRepository->findBy("section", "btybug_blog");
+//        $unit = Units::findByVariation($request->id);
+//        $data['unit'] = $unit;
+//        $data['fields'] = $unit->fields;
+//        $columns = \DB::select('SHOW COLUMNS FROM posts');
+//        foreach ($columns as $column) {
+//            $after_columns[$column->Field] = $column->Field;
+//        }
+//        $data['columns'] = $after_columns;
+//        $field_html = view("blog::_partials.fields")->with($data)->render();
+        return \Response::json(['html' => BBRenderUnits($field->unit,$field->toArray())]);
     }
 
     public function postFormFieldsSettings(Request $request, AdminsettingRepository $adminsettingRepository)

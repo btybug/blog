@@ -15,7 +15,7 @@
                         {!! Form::submit("Save",['class' => 'btn btn-info pull-left']) !!}
                         {!!  BBbutton2('unit',"blog_fields","blog_field","Extra Fields",['class'=>'btn btn-default pull-right select-field','data-type'=> "blog_field",'model'=>null]) !!}
                         {!!  BBbutton2('layouts',"blog_layouts","blog_layouts","Layout",['class'=>'btn btn-success pull-right select-field','data-type'=> "blog_layouts",'model'=>null]) !!}
-                        {!!  BBbutton2('fields',"blog_fields","blog_fields","Fields",['class'=>'btn btn-warning pull-right select-field','data-type'=> "blog_fields",'model'=>null]) !!}
+                        {!!  BBbutton2('fields',"blog_fields","posts","Fields",['class'=>'btn btn-warning pull-right select-field','data-key' => 'blog_fields','model'=>null]) !!}
                     </div>
                 </div>
             </div>
@@ -104,11 +104,12 @@
     </style>
 @stop
 @section('JS')
-    {!! HTML::script("/js/UiElements/bb_styles.js?v.5") !!}
+    {!! HTML::script("/public/js/UiElements/bb_styles.js?v.5") !!}
     <script>
         $(document).ready(function () {
-            $("body").on("click","a[data-key=blog_fields]",function () {
-                var id = $(this).data('value');
+            $("body").on("click","[data-key=posts]",function () {
+                var id = $(this).find('[data-value]').data('value');
+                console.log(id);
                 $.ajax({
                     url: "{!! url('admin/blog/render-unit') !!}",
                     data: {id: id},
@@ -118,8 +119,6 @@
                     dataType: 'json',
                     success: function (data) {
                        $(".form-builder-panel").append(data.html);
-                       $(".fields-box").append(data.field_html);
-
                     },
                     type: 'POST'
                 });
