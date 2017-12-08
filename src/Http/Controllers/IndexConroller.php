@@ -91,19 +91,18 @@ class IndexConroller extends Controller
         FieldsRepository $fieldsRepository
     )
     {
-        $field = $fieldsRepository->findOrFail($request->id);
-//
-//        $settings = $adminsettingRepository->findBy("section", "btybug_blog");
-//        $unit = Units::findByVariation($request->id);
-//        $data['unit'] = $unit;
-//        $data['fields'] = $unit->fields;
-//        $columns = \DB::select('SHOW COLUMNS FROM posts');
-//        foreach ($columns as $column) {
-//            $after_columns[$column->Field] = $column->Field;
-//        }
-//        $data['columns'] = $after_columns;
-//        $field_html = view("blog::_partials.fields")->with($data)->render();
-        return \Response::json(['html' => BBRenderUnits($field->unit,$field->toArray())]);
+        $fields = $request->get('fields',null);
+        $data = [];
+        if($fields){
+            foreach ($fields as $k => $v){
+                $f = $fieldsRepository->find($k);
+                if($f) $data[] = $f;
+            }
+
+            $html = \view("blog::_partials.render-fields",compact('data'))->render();
+            return \Response::json(['html' => $html,'error' => false]);
+        }
+        return \Response::json(['message' => "Fields are invalid",'error' => true]);
     }
 
     public function postFormFieldsSettings(Request $request, AdminsettingRepository $adminsettingRepository)

@@ -3,12 +3,14 @@
         {!! Form::open(['id' => 'selected-fields']) !!}
         @if($fields && count($fields))
             @foreach($fields as $field)
-                <label style="    display: block;">
-                <div class="col-md-4 field-item">
-                    {!! $field->name !!}
-                    {!! Form::checkbox('fields['.$field->id.']',1,null) !!}
-                </div>
-                </label>
+                @if($field->unit)
+                    <label style="    display: block;">
+                        <div class="col-md-4 field-item">
+                            {!! $field->name !!}
+                            {!! Form::checkbox('fields['.$field->id.']',1,null) !!}
+                        </div>
+                    </label>
+                @endif
             @endforeach
         @else
             No Available Fields
@@ -17,7 +19,7 @@
 </div>
 
 <style>
-    .field-item{
+    .field-item {
         height: 50px;
         border: 1px solid;
         padding: 3px;

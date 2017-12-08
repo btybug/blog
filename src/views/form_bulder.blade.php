@@ -40,21 +40,6 @@
         <h3>Form Preview</h3>
         <div class="col-md-12 bb-menu-container">
             <ol class="bb-menu-area">
-                <li class="p-10">
-                    <div class="listinginfo bb-menu-item">
-                    {!! BBRenderUnits("core_fields.input_variation") !!}
-                    </div>
-                </li>
-                <li class="p-10">
-                    <div class="listinginfo bb-menu-item">
-                    {!! BBRenderUnits("core_fields.input_variation") !!}
-                    </div>
-                </li>
-                <li class="p-10">
-                    <div class="listinginfo bb-menu-item">
-                    {!! BBRenderUnits("core_fields.input_variation") !!}
-                    </div>
-                </li>
 
             </ol>
         </div>
@@ -79,7 +64,7 @@
                 <div class="modal-footer">
                     <div class="col-md-12">
                         <div class="col-md-6">
-                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="button" class="btn btn-success add-to-form">Add to Form</button>
                         </div>
                     </div>
                 </div>
@@ -152,6 +137,10 @@
     {!! HTML::script("/public/js/UiElements/bb_styles.js?v.5") !!}
     <script>
         $(document).ready(function () {
+            $("body").on("click",".delete-field",function () {
+                $(this).parent().remove();
+            });
+
             $("body").on("click",".select-field",function () {
                 var table = "posts";
                 $.ajax({
@@ -167,20 +156,33 @@
                     },
                     type: 'POST'
                 });
+            });
+
+
+            $("body").on("click",".add-to-form",function () {
+                var data = $("#selected-fields").serialize();
+                $.ajax({
+                    url: "{!! url('admin/blog/render-unit') !!}",
+                    data: data,
+                    headers: {
+                        'X-CSRF-TOKEN': $("input[name='_token']").val()
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $("#select-fields").modal("hide");
+
+                        if(! data.error){
+                            $(".bb-menu-area").append(data.html);
+                        }else{
+                            alert(data.message);
+                        }
+                    },
+                    type: 'POST'
+                });
             })
 
-            {{--$.ajax({--}}
-                {{--url: "{!! url('admin/blog/render-unit') !!}",--}}
-                {{--data: {id: id},--}}
-                {{--headers: {--}}
-                    {{--'X-CSRF-TOKEN': $("input[name='_token']").val()--}}
-                {{--},--}}
-                {{--dataType: 'json',--}}
-                {{--success: function (data) {--}}
-                    {{--$(".form-builder-panel").append(data.html);--}}
-                {{--},--}}
-                {{--type: 'POST'--}}
-            {{--});--}}
+
+
 
             $('ol.bb-menu-area').nestedSortable({
                 items: 'li',
