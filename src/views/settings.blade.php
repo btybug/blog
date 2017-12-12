@@ -275,7 +275,7 @@
                     '<td> <input type="text" name="column[' + i + '][default]" class="form-control"></input></td>' +
                     '<td><input type="checkbox" name="column[' + i + '][nullable]"/></td>' +
                     '<td><input type="checkbox" name="column[' + i + '][unique]"/></td>' +
-                    '<td>YES<input value="yes" type="radio" name="column[' + i + '][field]"/>NO<input value="no" type="radio" name="column[\' + i + \'][field]"/></td>' +
+                    '<td>NO<input value="no" type="radio" name="column[' + i + '][field]"/> YES<input value="yes" checked type="radio" name="column[' + i + '][field]"/></td>' +
                     '<td><span class="btn btn-warning delete_row"><i class="fa fa-trash" aria-hidden="true"></i></span></td>' +
                     "</tr>";
                 $('#table_engine').append($(column));
@@ -287,6 +287,7 @@
             });
 
             $('#submit_form').on('click', function () {
+                //TODO: fix add columns field option value - always coming YES
                 var data = $('.columns-add-form').serialize();
                 $.ajax({
                     type: 'POST',
