@@ -40,7 +40,7 @@
         <h3>Form Preview</h3>
         <div class="col-md-12 bb-menu-container">
             <ol class="bb-menu-area">
-
+                
             </ol>
         </div>
     </div>
@@ -74,6 +74,7 @@
 @stop
 @section('CSS')
     {!! HTML::style('public/css/menus.css?v='.rand(1111,9999)) !!}
+    {!! BBstyle(plugins_path("vendor/btybug.hook/blog/src/Assets/css/blog-form.css")) !!}
     <style>
         .panel-heading {
             z-index: 99999999
@@ -135,6 +136,7 @@
     {!! HTML::script('public/css/font-awesome/js/fontawesome-iconpicker.min.js') !!}
     {!! HTML::script('public/js/menus.js') !!}
     {!! HTML::script("/public/js/UiElements/bb_styles.js?v.5") !!}
+    {!! BBscript(plugins_path("vendor/btybug.hook/blog/src/Assets/js/blog-fields.js")) !!}
     <script>
         $(document).ready(function () {
             $("body").on("click",".delete-field",function () {
