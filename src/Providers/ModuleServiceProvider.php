@@ -56,8 +56,8 @@ class ModuleServiceProvider extends ServiceProvider
                     'title' => 'General',
                     'url' => '/admin/blog/settings',
                 ], [
-                    'title' => 'Form Bulder',
-                    'url' => '/admin/blog/form-bulder',
+                    'title' => 'Form List',
+                    'url' => '/admin/blog/form-list',
                 ],
             ]
         ];

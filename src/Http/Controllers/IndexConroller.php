@@ -74,6 +74,11 @@ class IndexConroller extends Controller
         return view("blog::form_bulder");
     }
 
+    public function getList()
+    {
+        return view("blog::list");
+    }
+
 
     public function postSettings(
         PostSettingsRequest $request,

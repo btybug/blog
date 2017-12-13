@@ -1,5 +1,5 @@
-@extends('btybug::layouts.mTabs',['index'=>'blog_pages'])
-@section('tab')
+@extends('btybug::layouts.admin')
+@section('content')
     <div class="container-fluid">
         <div class="col-md-12">
             <div class="panel panelSettingData">
