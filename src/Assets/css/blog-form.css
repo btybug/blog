@@ -427,3 +427,60 @@ form.bty-form-3{
 .bty-input-select-4 .select-options li[rel="hide"] {
     display: none;
 }
+
+
+.bty-new-select select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: #4c7f9a;
+    background-image: none;
+}
+
+.bty-new-select {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #4c7f9a;
+    overflow: hidden;
+}
+
+.bty-new-select select {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0 0 0 .5em;
+    color: #fff;
+    cursor: pointer;
+}
+
+.bty-new-select select::-ms-expand {
+    display: none;
+}
+
+.bty-new-select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 9px 12px;
+    background: #4c7f9a;
+    border-left: 1px solid #333333;
+    pointer-events: none;
+}
+
+.bty-new-select:hover::after {
+    color: #fff;
+}
+
+.bty-new-select::after {
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+}

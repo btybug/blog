@@ -3,7 +3,7 @@
         <label>{!! $field['label'] !!}</label>
     </div>
     <div>
-        <div class="bty-input-select-4">
+        <div class="bty-new-select">
             {!! Form::select($field['column_name'],get_field_data($field['id']),null,['placeholder' => $field['placeholder']]) !!}
         </div>
     </div>

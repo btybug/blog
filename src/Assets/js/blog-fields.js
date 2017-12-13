@@ -1,6 +1,6 @@
 // Input Select 4
-$(function () {
-    $(".bty-input-select-4>select").each(function () {
+// $(function () {
+    $(".bty-input-select-4 select").each(function () {
         var $this = $(this),
             numberOfOptions = $(this).children("option").length;
 
@@ -65,4 +65,4 @@ $(function () {
         });
     });
 
-});
+// });
