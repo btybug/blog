@@ -76,7 +76,7 @@ class IndexConroller extends Controller
 
     public function getList()
     {
-        return view("blog::list");
+        return view("blog::form-list");
     }
 
 
