@@ -1,12 +1,12 @@
 @if($data && count($data))
     @foreach($data as $field)
         @if($field->type)
-            <li class="p-10">
+            <li class="p-10" style="position: relative;">
                 <div class="listinginfo bb-menu-item">
                     @include("blog::_partials.fields.".$field->type,[$field->toArray()])
                 </div>
 
-                <a href="javascript:void(0)" class="btn btn-danger delete-field" style="
+                <a href="javascript:void(0)" data-id="{!! $field->id !!}" class="btn btn-danger delete-field" style="
                     position: absolute;
                     top: 0;
                     right: 0;

@@ -141,7 +141,12 @@
     <script>
         $(document).ready(function () {
             $("body").on("click",".delete-field",function () {
-                $(this).parent().remove();
+                var itemtoRemove = $(this).data('id');
+                var arr =  $("#existing-fields").val();
+                var newData = JSON.parse(arr);
+                console.log(newData.splice, typeof newData);
+                $("#existing-fields").val(JSON.stringify(newData));
+                $(this).closest("li").remove();
             });
 
             $("body").on("click",".select-field",function () {
@@ -175,7 +180,7 @@
                     success: function (data) {
                         $("#select-fields").modal("hide");
                         if(! data.error){
-                            $("#existing-fields").val(data.fields);
+                            $("#existing-fields").val(JSON.stringify(data.fields));
                             $(".bb-menu-area").append(data.html);
                         }else{
                             alert(data.message);
