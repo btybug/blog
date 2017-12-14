@@ -144,7 +144,8 @@
                 var itemtoRemove = $(this).data('id');
                 var arr =  $("#existing-fields").val();
                 var newData = JSON.parse(arr);
-                console.log(newData.splice, typeof newData);
+                const index = newData.indexOf(itemtoRemove)
+                newData.splice(index, 1);
                 $("#existing-fields").val(JSON.stringify(newData));
                 $(this).closest("li").remove();
             });
