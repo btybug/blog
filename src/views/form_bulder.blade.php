@@ -43,6 +43,7 @@
 
             </ol>
         </div>
+        <input type="hidden" name="fields" value="" id="existing-fields">
     </div>
 
     @include('resources::assests.deleteModal')
@@ -145,9 +146,10 @@
 
             $("body").on("click",".select-field",function () {
                 var table = "posts";
+                var fields = $("#existing-fields").val();
                 $.ajax({
                     url: "{!! url('admin/blog/get-fields') !!}",
-                    data: {table: table},
+                    data: {table: table,fields: fields},
                     headers: {
                         'X-CSRF-TOKEN': $("input[name='_token']").val()
                     },
@@ -165,15 +167,15 @@
                 var data = $("#selected-fields").serialize();
                 $.ajax({
                     url: "{!! url('admin/blog/render-unit') !!}",
-                    data: data,
+                    data: data + '&existings=' + $("#existing-fields").val(),
                     headers: {
                         'X-CSRF-TOKEN': $("input[name='_token']").val()
                     },
                     dataType: 'json',
                     success: function (data) {
                         $("#select-fields").modal("hide");
-
                         if(! data.error){
+                            $("#existing-fields").val(data.fields);
                             $(".bb-menu-area").append(data.html);
                         }else{
                             alert(data.message);

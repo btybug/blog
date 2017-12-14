@@ -98,14 +98,18 @@ class IndexConroller extends Controller
     {
         $fields = $request->get('fields',null);
         $data = [];
+        $existing = [];
         if($fields){
             foreach ($fields as $k => $v){
                 $f = $fieldsRepository->find($k);
-                if($f) $data[] = $f;
+                if($f) {
+                    $data[] = $f;
+                    $existing[$k] = $k;
+                }
             }
 
             $html = \view("blog::_partials.render-fields",compact('data'))->render();
-            return \Response::json(['html' => $html,'error' => false]);
+            return \Response::json(['html' => $html,'error' => false,'fields' => json_encode(array_merge($existing,($request->existings) ? json_decode($request->existings,true) : []),true)]);
         }
         return \Response::json(['message' => "Fields are invalid",'error' => true]);
     }
@@ -143,7 +147,7 @@ class IndexConroller extends Controller
         FieldsRepository $fieldsRepository
     )
     {
-        $fields = $fieldsRepository->getBy('table_name',$request->table);
+        $fields = $fieldsRepository->getWhereNotExists($request->table,$request->fields);
         $html = \View("blog::_partials.field-list",compact('fields'))->render();
 
         return \Response::json(['html' => $html]);
