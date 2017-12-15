@@ -2,12 +2,12 @@
 @section('tab')
     <div role="tabpanel" class="m-t-10" id="main">
         <div class="col-md-12 m-b-10">
-            <a href="{!! route('form_builder_blog') !!}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> New Form</a>
+            <a href="{!! route('form_builder_blog') !!}" class="bty-btn bty-btn-add bty-btn-size-md pull-right">New Form</a>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 main_container_11">
-            <table class="table table-bordered" id="tpl-table">
+            <table class="bty-table bty-table-hover bty-table-th-cl-beige" id="tpl-table">
                 <thead>
-                <tr class="bg-black-darker text-white">
+                <tr class="">
                     <th>ID</th>
                     <th>Name</th>
                     <th>Slug</th>
@@ -28,8 +28,8 @@
                     <th>Active</th>
                     <th>11.12.2017</th>
                     <th>
-                        <a href="" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                        <a href="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        <a href="" class="bty-btn-acction bt-edit"></a>
+                        <a href="" class="bty-btn-acction bt-delete"></a>
                     </th>
                 </tr>
                 <tr>
@@ -42,8 +42,8 @@
                     <th>Active</th>
                     <th>13.12.2017</th>
                     <th>
-                        <a href="" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                        <a href="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        <a href="" class="bty-btn-acction bt-edit"></a>
+                        <a href="" class="bty-btn-acction bt-delete"></a>
                     </th>
                 </tr>
                 {{--@if(count($posts))--}}
