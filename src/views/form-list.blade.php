@@ -28,7 +28,8 @@
                     <th>Active</th>
                     <th>11.12.2017</th>
                     <th>
-                        <a href="{!! route('form_settings',['id' => 1]) !!}" class="bty-btn-acction bt-edit"></a>
+                        <a href="{!! route('form_settings',['id' => 1]) !!}" class="btn btn-warning"><i class="fa fa-cog"></i></a>
+                        <a href="" class="bty-btn-acction bt-edit"></a>
                         <a href="" class="bty-btn-acction bt-delete"></a>
                     </th>
                 </tr>
@@ -42,7 +43,8 @@
                     <th>Active</th>
                     <th>13.12.2017</th>
                     <th>
-                        <a href="{!! route('form_settings',['id' => 2]) !!}" class="bty-btn-acction bt-edit"></a>
+                        <a href="{!! route('form_settings',['id' => 2]) !!}" class="btn btn-warning"><i class="fa fa-cog"></i></a>
+                        <a href="" class="bty-btn-acction bt-edit"></a>
                         <a href="" class="bty-btn-acction bt-delete"></a>
                     </th>
                 </tr>
