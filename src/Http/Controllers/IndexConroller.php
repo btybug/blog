@@ -152,4 +152,11 @@ class IndexConroller extends Controller
 
         return \Response::json(['html' => $html]);
     }
+
+    public function getFormSettings (
+        $id
+    )
+    {
+        return view('blog::forms.settings');
+    }
 }
