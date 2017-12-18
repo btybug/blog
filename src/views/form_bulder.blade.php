@@ -21,9 +21,9 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                {!! Form::submit("Save",['class' => 'bty-btn bty-btn-save pull-right m-r-5']) !!}
-                                <a class="bty-btn bty-btn-add pull-right m-r-5 select-field">ADD</a>
-                                <a class="bty-btn bty-btn-default bty-btn-cl-black pull-right m-r-5">Layout</a>
+                                <button type="submit" class="bty-btn bty-btn-save pull-right m-r-5"><span>Save</span></button>
+                                <a class="bty-btn bty-btn-add pull-right m-r-5 select-field"><span>ADD</span></a>
+                                <a class="bty-btn bty-btn-default bty-btn-cl-black pull-right m-r-5"><span>Layout</span></a>
                             </div>
                         </div>
                     </div>
