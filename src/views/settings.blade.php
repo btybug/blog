@@ -55,6 +55,22 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12 m-b-10">
+                                    <div class="col-sm-4 p-l-0">Select create form</div>
+                                    {!! Form::select('posts_create_form',['Select Form'],null,['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12 m-b-10">
+                                    <div class="col-sm-4 p-l-0">Select edit form</div>
+                                    {!! Form::select('posts_edit_form',['Select Form'],null,['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             {!! Form::submit("Save",['class' => 'btn settingBtn pull-right']) !!}
                         </div>
                         {!! Form::close() !!}

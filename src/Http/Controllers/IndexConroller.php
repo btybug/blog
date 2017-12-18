@@ -4,6 +4,7 @@ namespace BtyBugHook\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Btybug\Console\Repository\FieldsRepository;
+use Btybug\Console\Repository\FormsRepository;
 use Illuminate\Http\Request;
 use Btybug\btybug\Models\Templates\Units;
 use Btybug\Console\Repository\FrontPagesRepository;
@@ -74,9 +75,13 @@ class IndexConroller extends Controller
         return view("blog::form_bulder");
     }
 
-    public function getList()
+    public function getList(
+        FormsRepository $formsRepository
+    )
     {
-        return view("blog::form-list");
+        $pluginForms = $formsRepository->getFormsByFieldType('posts',['core','plugin']);
+        $forms = $formsRepository->getFormsByFieldType('posts',['custom']);
+        return view("blog::form-list",compact('pluginForms','forms'));
     }
 
 

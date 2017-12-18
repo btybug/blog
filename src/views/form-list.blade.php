@@ -18,59 +18,43 @@
                     <th>Actions</th>
                 </thead>
                 <tbody>
-                <tr>
-                    <th>1</th>
-                    <th>Create Post</th>
-                    <th>create_post</th>
-                    <th>[form id=1] or [form slug=create_post]</th>
+                @if(count($pluginForms))
+                    @foreach($pluginForms as $pluginForm)
+                        <tr>
+                            <th>{!! $pluginForm->id !!}</th>
+                            <th>{!! $pluginForm->name !!}</th>
+                            <th>{!! $pluginForm->slug !!}</th>
+                            <th>[form id={{ $pluginForm->id }}] or [form slug={{ $pluginForm->slug }}]</th>
 
-                    <th>{{ BBGetUser(Auth::id()) }}</th>
-                    <th>Active</th>
-                    <th>11.12.2017</th>
-                    <th>
-                        <a href="{!! route('form_settings',['id' => 1]) !!}" class="btn btn-warning"><i class="fa fa-cog"></i></a>
-                        <a href="" class="bty-btn-acction bt-edit"></a>
-                        <a href="" class="bty-btn-acction bt-delete"></a>
-                    </th>
-                </tr>
-                <tr>
-                    <th>2</th>
-                    <th>Edit Post</th>
-                    <th>edit_post</th>
-                    <th>[form id=2] or [form slug=edit_post]</th>
+                            <th>{{ $pluginForm->created_by }}</th>
+                            <th>{!! ($pluginForm->blocked) ? "Blocked" : "Active" !!}</th>
+                            <th>{{ BBgetDateFormat($pluginForm->created_at) }}</th>
+                            <th>
+                                <a href="{!! route('form_settings',['id' => $pluginForm->id]) !!}" class="btn btn-warning"><i class="fa fa-cog"></i></a>
+                                <a href="" class="bty-btn-acction bt-edit"></a>
+                            </th>
+                        </tr>
+                    @endforeach
+                @endif
+                @if(count($forms))
+                    @foreach($forms as $form)
+                        <tr>
+                            <th>{!! $form->id !!}</th>
+                            <th>{!! $form->name !!}</th>
+                            <th>{!! $form->slug !!}</th>
+                            <th>[form id={{ $form->id }}] or [form slug={{ $form->slug }}]</th>
 
-                    <th>{{ BBGetUser(Auth::id()) }}</th>
-                    <th>Active</th>
-                    <th>13.12.2017</th>
-                    <th>
-                        <a href="{!! route('form_settings',['id' => 2]) !!}" class="btn btn-warning"><i class="fa fa-cog"></i></a>
-                        <a href="" class="bty-btn-acction bt-edit"></a>
-                        <a href="" class="bty-btn-acction bt-delete"></a>
-                    </th>
-                </tr>
-                {{--@if(count($posts))--}}
-                {{--@foreach($posts as $post)--}}
-                {{--<tr>--}}
-                {{--<th>{{ $post->title }}</th>--}}
-                {{--<th>{{ $post->description }}</th>--}}
-                {{--<th width="100px">--}}
-                {{--<img src="{!! url($post->image) !!}" class="img-responsive">--}}
-                {{--</th>--}}
-                {{--<th>{{ BBGetUser($post->author_id) }}</th>--}}
-                {{--<th>{{ $post->status }}</th>--}}
-                {{--<th>{{ BBgetDateFormat($post->created_at) }}</th>--}}
-                {{--<th>--}}
-                {{--<a href="{!! url("admin/blog/edit-post",$post->id) !!}" class="btn btn-warning"><i class="fa fa-edit"></i></a>--}}
-                {{--</th>--}}
-                {{--</tr>--}}
-                {{--@endforeach--}}
-                {{--@else--}}
-                {{--<tr>--}}
-                {{--<th  colspan="7" class="text-center">--}}
-                {{--No Forms--}}
-                {{--</th>--}}
-                {{--</tr>--}}
-                {{--@endif--}}
+                            <th>{{ $form->created_by }}</th>
+                            <th>{!! ($form->blocked) ? "Blocked" : "Active" !!}</th>
+                            <th>{{ BBgetDateFormat($form->created_at) }}</th>
+                            <th>
+                                <a href="{!! route('form_settings',['id' => $form->id]) !!}" class="btn btn-warning"><i class="fa fa-cog"></i></a>
+                                <a href="" class="bty-btn-acction bt-edit"></a>
+                                <a href="" class="bty-btn-acction bt-delete"></a>
+                            </th>
+                        </tr>
+                    @endforeach
+                @endif
                 </tbody>
             </table>
         </div>
