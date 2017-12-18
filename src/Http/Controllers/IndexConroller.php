@@ -5,6 +5,7 @@ namespace BtyBugHook\Blog\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Btybug\Console\Repository\FieldsRepository;
 use Btybug\Console\Repository\FormsRepository;
+use Btybug\Console\Services\FormService;
 use Illuminate\Http\Request;
 use Btybug\btybug\Models\Templates\Units;
 use Btybug\Console\Repository\FrontPagesRepository;
@@ -163,5 +164,17 @@ class IndexConroller extends Controller
     )
     {
         return view('blog::forms.settings');
+    }
+
+    public function getMyFormsView (
+        $id,
+        FormsRepository $formsRepository,
+        FormService $formService
+    )
+    {
+        $form = $formsRepository->findOneByMultiple(['id' => $id,'created_by' => 'plugin']);
+        if( ! $form) abort(404,"Form not found");
+
+        return view('blog::forms.view',compact('form'));
     }
 }

@@ -31,7 +31,7 @@
                             <th>{{ BBgetDateFormat($pluginForm->created_at) }}</th>
                             <th>
                                 <a href="{!! route('form_settings',['id' => $pluginForm->id]) !!}" class="btn btn-warning"><i class="fa fa-cog"></i></a>
-                                <a href="" class="bty-btn-acction bt-edit"></a>
+                                <a href="{!! route('form_view',['id' => $pluginForm->id]) !!}" class="bty-btn-acction bt-edit"></a>
                             </th>
                         </tr>
                     @endforeach
