@@ -13,6 +13,7 @@ class Autoload
 {
 // this function will called only install time
     public function up($config){
+    	// Testing commits
 //        Test::migrate();
 //        Test::seed();
     }
