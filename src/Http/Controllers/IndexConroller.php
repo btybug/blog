@@ -49,13 +49,15 @@ class IndexConroller extends Controller
     }
 
     public function getSettings(
-        FrontPagesRepository $pagesRepository
+        FrontPagesRepository $pagesRepository,
+        FormsRepository $formsRepository
     )
     {
+        $table = 'posts';
         $all = $pagesRepository->findBy('slug', 'all-posts');
         $single = $pagesRepository->findBy('slug', 'single-post');
-
-        $table = 'posts';
+        $createForms = $formsRepository->getFormsByFieldType($table,['*'],true,'new');
+        $editForms = $formsRepository->getFormsByFieldType($table,['*'],true,'edit');
         $columns = \DB::select('SHOW COLUMNS FROM ' . $table);
         $this->data['default'] = ['NULL', 'USER_DEFINED', 'CURRENT_TIMESTAMP'];
         $this->data['tbtypes'] = Migrations::types();
@@ -67,7 +69,7 @@ class IndexConroller extends Controller
         }
         $this->data['after_columns'] = $after_columns;
 
-        return view('blog::settings', compact(['all', 'single']))->with($this->data);
+        return view('blog::settings', compact(['all', 'single','createForms','editForms']))->with($this->data);
     }
 
     public function getFormBulder()
