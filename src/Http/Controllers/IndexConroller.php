@@ -179,4 +179,16 @@ class IndexConroller extends Controller
 
         return view('blog::forms.view',compact('form'));
     }
+
+    public function getMyFormsEdit (
+        $id,
+        FormsRepository $formsRepository,
+        FormService $formService
+    )
+    {
+        $form = $formsRepository->findOneByMultiple(['id' => $id,'created_by' => 'plugin']);
+        if( ! $form) abort(404,"Form not found");
+
+        return view('blog::forms.edit',compact('form'));
+    }
 }

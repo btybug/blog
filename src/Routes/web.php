@@ -47,6 +47,10 @@ Route::group(['prefix'=>'form-list'],function (){
         Route::get('/', 'IndexConroller@getMyFormsView',true);
         Route::get('/{id}', 'IndexConroller@getMyFormsView',true)->name("form_view");
     });
+    Route::group(['prefix'=>'edit'],function (){
+        Route::get('/', 'IndexConroller@getMyFormsEdit',true);
+        Route::get('/{id}', 'IndexConroller@getMyFormsEdit',true)->name("form_edit");
+    });
     Route::post('/form-fields', 'IndexConroller@postFormFieldsSettings');
 });
 Route::post('/settings', 'IndexConroller@postSettings');
