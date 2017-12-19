@@ -183,12 +183,15 @@ class IndexConroller extends Controller
     public function getMyFormsEdit (
         $id,
         FormsRepository $formsRepository,
+        FieldsRepository $fieldsRepository,
         FormService $formService
     )
     {
         $form = $formsRepository->findOneByMultiple(['id' => $id,'created_by' => 'plugin']);
         if( ! $form) abort(404,"Form not found");
 
-        return view('blog::forms.edit',compact('form'));
+        $fields = $fieldsRepository->getBy('table_name','posts');
+
+        return view('blog::forms.edit',compact('form','fields'));
     }
 }
