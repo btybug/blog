@@ -50,7 +50,7 @@
                             <th>{{ BBgetDateFormat($form->created_at) }}</th>
                             <th>
                                 <a href="{!! route('form_settings',['id' => $form->id]) !!}" class="btn btn-warning"><i class="fa fa-cog"></i></a>
-                                <a href="" class="bty-btn-acction bt-edit"></a>
+                                <a href="{!! route('form_edit_builder',['id' => $form->id]) !!}" class="bty-btn-acction bt-edit"></a>
                                 <a href="" class="bty-btn-acction bt-delete"></a>
                             </th>
                         </tr>

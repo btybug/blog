@@ -3,6 +3,7 @@
 namespace BtyBugHook\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Btybug\Console\Models\Forms;
 use Btybug\Console\Repository\FieldsRepository;
 use Btybug\Console\Repository\FormsRepository;
 use Btybug\Console\Services\FormService;
@@ -74,8 +75,22 @@ class IndexConroller extends Controller
 
     public function getFormBulder()
     {
+        $form = null;
         //$data['form_fields'] = ($settings) ? json_decode($settings->value,true) : [];
-        return view("blog::form_bulder");
+        return view("blog::form_bulder",compact('form'));
+    }
+
+    public function getEditFormBulder(
+        $id,
+        FormsRepository $formsRepository,
+        FormService $formService
+    )
+    {
+        $form = $formsRepository->findOrFail($id);
+
+        $fields = json_encode([10,11]);
+        $html = $formService->render($id);
+        return view("blog::form_bulder",compact('form','fields','html'));
     }
 
     public function postFormBulder(

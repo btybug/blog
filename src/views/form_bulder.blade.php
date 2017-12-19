@@ -1,6 +1,6 @@
 @extends('btybug::layouts.admin')
 @section('content')
-    {!! Form::model(null) !!}
+    {!! Form::model($form) !!}
     {!! Form::hidden('id',null) !!}
     {!! Form::hidden('fields_type','posts') !!}
     <div class="container-fluid">
@@ -20,7 +20,7 @@
                                     <span class="bty-hover-17 bty-f-s-20">Form name</span>
                                 </div>
                                 <div class="col-md-8">
-                                    {!! Form::text('form_name',null,['class' => 'bty-input-label-2 m-t-0', 'placeholder' => 'What is your Form name ?']) !!}
+                                    {!! Form::text('name',null,['class' => 'bty-input-label-2 m-t-0', 'placeholder' => 'What is your Form name ?']) !!}
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -40,9 +40,9 @@
             <ul class="bb-menu-area bb-form-generator"></ul>
 
         </div>
-
-        <input type="hidden" name="fields" value="[]" id="existing-fields">
-        <input type="hidden" name="fields_json" value="[]" />
+        <input type="hidden" name="fields" value="{!! (isset($fields)) ? $fields : [] !!}" id="existing-fields">
+        <input type="hidden" name="fields_json" value="{!! (isset($form) && $form->fields_json) ? $form->fields_json : [] !!}" />
+        {{--HTML inside $html property--}}
         <input type="hidden" name="fields_html" value="" />
     </div>
     {!! Form::close() !!}
