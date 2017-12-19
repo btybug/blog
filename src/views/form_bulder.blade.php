@@ -37,7 +37,7 @@
 
         <span class="bty-hover-15 bty-f-s-34">Form Preview</span>
         <div class="col-md-12 bb-menu-container">
-            <ul class="bb-menu-area bb-form-generator"></ul>
+            <div class="bb-menu-area bb-form-generator"></div>
 
         </div>
         <input type="hidden" name="fields" value="{!! (isset($fields)) ? $fields : [] !!}" id="existing-fields">
@@ -87,10 +87,10 @@
 
 @stop
 @section('JS')
-    {!! HTML::script('public/js/jquery.mjs.nestedSortable.js') !!}
+    {{--{!! HTML::script('public/js/jquery.mjs.nestedSortable.js') !!}--}}
     {!! HTML::script('public/css/bootstrap/js/bootstrap-switch.min.js') !!}
     {!! HTML::script('public/css/font-awesome/js/fontawesome-iconpicker.min.js') !!}
-    {!! HTML::script('public/js/menus.js') !!}
+    {!! HTML::script('public/js/jquery-ui/jquery-ui.min.js') !!}
     {!! HTML::script("/public/js/UiElements/bb_styles.js?v.5") !!}
     {!! BBscript(plugins_path("vendor/btybug.hook/blog/src/Assets/js/blog-fields.js")) !!}
 
@@ -189,14 +189,39 @@
 
                 // Switch types
                 switch (field.type){
+                    // Input fields "text, number, email, url"
                     case 'text':
-                        fieldHTML = '<input type="text" />';
+                    case 'number':
+                    case 'email':
+                    case 'url':
+                        fieldHTML = '<input name="{name}" type="' + field.type + '" class="form-control" placeholder="{placeholder}" />';
                         break;
+
                     case 'textarea':
-                        fieldHTML = '<textarea></textarea>';
+                        fieldHTML = '<textarea name="{name}" class="form-control" placeholder="{placeholder}"></textarea>';
+                        break;
+
+                    case 'select':
+                        fieldHTML = '<select name="{name}" class="form-control">';
+
+                        var json_data = field.json_data;
+
+                        // Manual type
+                        if(json_data.manual){
+                            var options = json_data.manual.split(",");
+                            $(options).each(function (index, option){
+                                fieldHTML += '<option value="' + option + '">' + option + '</option>';
+                            });
+                        }
+
+                        fieldHTML += '</select>';
                         break;
                 }
 
+                fieldHTML = fieldHTML.replace(/{placeholder}/g, field.placeholder);
+                fieldHTML = fieldHTML.replace(/{name}/g, field.column_name);
+
+                // Insert into template
                 fieldTemplate = fieldTemplate.replace(/{label}/g, field.label);
                 fieldTemplate = fieldTemplate.replace(/{field}/g, fieldHTML);
 
@@ -204,39 +229,8 @@
             }
 
 
-            $('ol.bb-menu-area').nestedSortable({
-                items: 'li',
-                isTree: false,
-                stop: function(event, ui) {
-                    var item = $(ui.item).attr("data-id");
-                    var type = $(ui.item).attr("data-type");
-                    var parent = $(ui.item).closest('ol').parent('li').attr("data-id");
+            $('.bb-form-generator').sortable({
 
-                    // if(type == 'custom'){
-                    //     $.ajax({
-                    //         url: '/admin/front-site/structure/front-pages/sorting',
-                    //         data: {
-                    //             item: item,
-                    //             parent: parent
-                    //         },
-                    //         type: 'POST',
-                    //         headers: {
-                    //             'X-CSRF-TOKEN': $("input[name='_token']").val()
-                    //         },
-                    //         dataType: 'json',
-                    //         beforeSend : function () {
-                    //
-                    //         },
-                    //         success: function (data) {
-                    //             if (! data.error) {
-                    //
-                    //             }
-                    //         }
-                    //     });
-                    // }else{
-                    //     $("ol.bb-menu-area").sortable("cancel");
-                    // }
-                }
             });
         });
     </script>
