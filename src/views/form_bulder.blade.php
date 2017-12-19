@@ -34,16 +34,12 @@
 
         <span class="bty-hover-15 bty-f-s-34">Form Preview</span>
         <div class="col-md-12 bb-menu-container">
-            <ul class="bb-menu-area"></ul>
-
-            <div class="bb-form-generator">
-                <ul id="form-generator"></ul>
-            </div>
+            <ul class="bb-menu-area bb-form-generator"></ul>
 
         </div>
-        <input type="hidden" name="fields" value="" id="existing-fields">
-        <input type="hidden" name="fields_json" />
-        <input type="hidden" name="fields_html" />
+        <input type="hidden" name="fields" value="[]" id="existing-fields">
+        <input type="hidden" name="fields_json" value="[]" />
+        <input type="hidden" name="fields_html" value="" />
     </div>
 
     @include('resources::assests.deleteModal')
@@ -72,6 +68,14 @@
             </div>
         </div>
     </div>
+
+    <!-- Field Container Template -->
+    <script type="template/html" id="field-template">
+        <div class="form-group">
+            <label for="">{label}</label>
+            {field}
+        </div>
+    </script>
 @stop
 @section('CSS')
     {!! HTML::style('public/css/menus.css?v='.rand(1111,9999)) !!}
@@ -126,9 +130,10 @@
                     success: function (data) {
                         $("#select-fields").modal("hide");
                         if(! data.error){
-                            $("#existing-fields").val(JSON.stringify(data.fields));
+                            // $("#existing-fields").val(JSON.stringify(data.fields));
                             // $(".bb-menu-area").append(data.html);
 
+                            $('.bb-form-generator').html(formBuilder(data.fields));
                         }else{
                             alert(data.message);
                         }
@@ -137,6 +142,63 @@
                 });
 
             });
+
+            function formBuilder(fields){
+                var existingFields = $("#existing-fields"),
+                    existingFieldsData = JSON.parse(existingFields.val());
+
+                var fieldsJSON = $('[name=fields_json]'),
+                    fieldsJSONData = JSON.parse(fieldsJSON.val());
+
+                var fieldsHTML = $('[name=fields_html]'),
+                    fieldsHTMLData = fieldsHTML.val();
+
+                $(fields).each(function (index, field){
+                    // Add to existing fields
+                    existingFieldsData.push(field.id);
+
+                    // Add fields json
+                    fieldsJSONData.push(field);
+
+                    // Render fields
+                    fieldsHTMLData += renderFormField(field);
+                });
+
+                // Add existing fields to hidden input
+                existingFields.val(JSON.stringify(existingFieldsData));
+
+                // Add fields json to hidden input
+                fieldsJSON.val(JSON.stringify(fieldsJSONData));
+
+                // Add rendered fields html to hidden input
+                fieldsHTML.val(fieldsHTMLData);
+
+                return fieldsHTMLData;
+            }
+
+            function renderFormField(field){
+                // Check if not object
+                if(!field.id) return;
+
+                var fieldHTML = '',
+                    fieldTemplate = $('#field-template').html();
+
+                // Switch types
+                switch (field.type){
+                    case 'text':
+                        fieldHTML = '<input type="text" />';
+                        break;
+                    case 'textarea':
+                        fieldHTML = '<textarea></textarea>';
+                        break;
+                }
+
+                fieldTemplate = fieldTemplate.replace(/{label}/g, field.label);
+                fieldTemplate = fieldTemplate.replace(/{field}/g, fieldHTML);
+
+                return fieldTemplate;
+            }
+
 
             $('ol.bb-menu-area').nestedSortable({
                 items: 'li',
