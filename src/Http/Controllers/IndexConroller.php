@@ -117,7 +117,7 @@ class IndexConroller extends Controller
             }
 
             $html = \view("blog::_partials.render-fields",compact('data'))->render();
-            return \Response::json(['html' => $html,'error' => false,'fields' => array_merge($existing,($request->existings) ? json_decode($request->existings,true) : [])]);
+            return \Response::json(['html' => $html,'error' => false,'fields' => $data]);
         }
         return \Response::json(['message' => "Fields are invalid",'error' => true]);
     }
