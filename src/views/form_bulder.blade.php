@@ -34,11 +34,16 @@
 
         <span class="bty-hover-15 bty-f-s-34">Form Preview</span>
         <div class="col-md-12 bb-menu-container">
-            <ol class="bb-menu-area">
+            <ol class="bb-menu-area"></ol>
 
-            </ol>
+            <div class="bb-form-generator" id="form-generator">
+                <ul></ul>
+            </div>
+
         </div>
         <input type="hidden" name="fields" value="" id="existing-fields">
+        <input type="hidden" name="fields_json" />
+        <input type="hidden" name="fields_html" />
     </div>
 
     @include('resources::assests.deleteModal')
@@ -80,6 +85,7 @@
     {!! HTML::script('public/js/menus.js') !!}
     {!! HTML::script("/public/js/UiElements/bb_styles.js?v.5") !!}
     {!! BBscript(plugins_path("vendor/btybug.hook/blog/src/Assets/js/blog-fields.js")) !!}
+
     <script>
         $(document).ready(function () {
             $("body").on("click",".delete-field",function () {
@@ -90,9 +96,8 @@
                 newData.splice(index, 1);
                 $("#existing-fields").val(JSON.stringify(newData));
                 $(this).closest("li").remove();
-            });
 
-            $("body").on("click",".select-field",function () {
+            }).on("click",".select-field",function () {
                 var table = "posts";
                 var fields = $("#existing-fields").val();
                 $.ajax({
@@ -108,10 +113,8 @@
                     },
                     type: 'POST'
                 });
-            });
 
-
-            $("body").on("click",".add-to-form",function () {
+            }).on("click",".add-to-form",function () {
                 var data = $("#selected-fields").serialize();
                 $.ajax({
                     url: "{!! url('admin/blog/render-unit') !!}",
@@ -124,17 +127,17 @@
                         $("#select-fields").modal("hide");
                         if(! data.error){
                             $("#existing-fields").val(JSON.stringify(data.fields));
-                            $(".bb-menu-area").append(data.html);
+                            // $(".bb-menu-area").append(data.html);
+
+                            app.formFields.push(data.fields);
                         }else{
                             alert(data.message);
                         }
                     },
                     type: 'POST'
                 });
-            })
 
-
-
+            });
 
             $('ol.bb-menu-area').nestedSortable({
                 items: 'li',
@@ -170,6 +173,6 @@
                     // }
                 }
             });
-        })
+        });
     </script>
 @stop
