@@ -34,10 +34,10 @@
 
         <span class="bty-hover-15 bty-f-s-34">Form Preview</span>
         <div class="col-md-12 bb-menu-container">
-            <ol class="bb-menu-area"></ol>
+            <ul class="bb-menu-area"></ul>
 
-            <div class="bb-form-generator" id="form-generator">
-                <ul></ul>
+            <div class="bb-form-generator">
+                <ul id="form-generator"></ul>
             </div>
 
         </div>
@@ -129,7 +129,6 @@
                             $("#existing-fields").val(JSON.stringify(data.fields));
                             // $(".bb-menu-area").append(data.html);
 
-                            app.formFields.push(data.fields);
                         }else{
                             alert(data.message);
                         }
