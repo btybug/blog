@@ -1,5 +1,15 @@
 @extends('btybug::layouts.admin')
 @section('content')
+
+    <style>
+        .ui-sortable-handle, .ui-sortable > div {
+            outline: 2px dashed #e2e2e2;
+            padding: 10px;
+            background: #fff;
+            cursor: move;
+        }
+    </style>
+
     {!! Form::model($form) !!}
     {!! Form::hidden('id',null) !!}
     {!! Form::hidden('fields_type','posts') !!}
@@ -38,12 +48,10 @@
         <span class="bty-hover-15 bty-f-s-34">Form Preview</span>
         <div class="col-md-12 bb-menu-container">
             <div class="bb-menu-area bb-form-generator"></div>
-
         </div>
         
-        <input type="hidden" name="fields" value="{!! (isset($fields)) ? json_encode($fields) : '[]' !!}" id="existing-fields" />
-        <input type="hidden" name="fields_json" value="{!! (isset($form) && $form->fields_json) ? $form->fields_json : '[]' !!}" />
-        {{--HTML inside $html property--}}
+        <input type="hidden" name="fields" value="[]" id="existing-fields" />
+        <input type="hidden" name="fields_json" value="[]" />
         <input type="hidden" name="fields_html" value="" />
     </div>
     {!! Form::close() !!}
@@ -148,6 +156,19 @@
 
             });
 
+            // Check for default values
+            @if(isset($form) and $form->fields_json)
+
+                var fieldsJSON = JSON.parse('{!! $form->fields_json !!}');
+
+                if(fieldsJSON.length > 0){
+                    $('.bb-form-generator').html(formBuilder(fieldsJSON));
+                }
+
+            @endif
+
+
+            // Building form and hidden inputs
             function formBuilder(fields){
                 var existingFields = $("#existing-fields"),
                     existingFieldsData = JSON.parse(existingFields.val());
@@ -181,6 +202,7 @@
                 return fieldsHTMLData;
             }
 
+            // Render fields HTML
             function renderFormField(field){
                 // Check if not object
                 if(!field.id) return;
@@ -230,9 +252,7 @@
             }
 
 
-            $('.bb-form-generator').sortable({
-
-            });
+            $('.bb-form-generator').sortable();
         });
     </script>
 @stop
