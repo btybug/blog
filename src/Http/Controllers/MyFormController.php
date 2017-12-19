@@ -15,9 +15,8 @@ class MyFormController extends Controller
     {
         $field = $fieldsRepository->findByTableAndCol($request->table,$request->field);
 
-        if($field){
+        if($field && view()->exists("blog::_partials.custom_fields.".$field->type)){
             $html = \view("blog::_partials.custom_fields.".$field->type)->with('field',$field->toArray())->render();
-
             return ['error' => false,'html' => $html];
         }
         return ['error' => true];

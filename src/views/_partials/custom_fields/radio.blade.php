@@ -1,20 +1,18 @@
-<div class="bty-more-input-radio">
+<fieldset  id="bty-input-id-{!! $field['id'] !!}">
     <div>
-        <label>{!! $field['label'] !!}</label>
+        <div>
+            <label>{!! $field['label'] !!}</label>
+        </div>
+        <div>
+            @if(count(get_field_data($field['id'])))
+                @foreach(get_field_data($field['id']) as $key => $item)
+                    <input name="{!! $field['column_name'] !!}"  value="{{ $key }}" type="radio" class="bty-input-radio-1" id="bty-gender-form-{{ $key }}">
+                    <label for="bty-gender-form-{{$key}}">{{$item}}</label>
+                @endforeach
+            @endif
+        </div>
+        <div class="bty-tooltip"><i class="fa fa-question" aria-hidden="true"></i>
+            <span>Tooltip text</span>
+        </div>
     </div>
-    <div>
-
-        @if(count(get_field_data($field['id'])))
-            @foreach(get_field_data($field['id']) as $key => $item)
-                <div class="bty-new-input-radio">
-                    <input name="{!! $field['column_name'] !!}"  value="{{ $key }}" type="radio" id="bty-new-gender-{{ $key }}">
-                    <label for="bty-new-gender-{{ $key }}">{{ $item }}</label>
-                </div>
-            @endforeach
-        @endif
-    </div>
-    <div>
-        <p>Lorem ipsum Lorem</p>
-        <span><i class="fa fa-question" aria-hidden="true"></i></span>
-    </div>
-</div>
+</fieldset>

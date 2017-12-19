@@ -31,6 +31,22 @@
                 </div>
             </div>
 
+            <div class="bty-panel-collapse 	bty-panel-cl-tomato m-t-20">
+                <div>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#settingsFields" aria-expanded="true">
+                        <span class="icon"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+                        <span class="title">Settings</span>
+                    </a>
+                </div>
+                <div id="settingsFields" class="collapse in" aria-expanded="true" style="">
+                    <div class="content">
+                        <div class="text-center">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <h2>Preview Area</h2>
 
             <div class="col-md-12 preview-area">

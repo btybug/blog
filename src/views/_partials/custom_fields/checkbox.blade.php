@@ -1,19 +1,22 @@
-<div class="bty-more-input-checkbox">
+<fieldset id="bty-input-id-{!! $field['id'] !!}">
     <div>
-        <label>{!! $field['label'] !!}</label>
+        <div>
+            <label>{!! $field['label'] !!}</label>
+        </div>
+        <div>
+            <div>
+                @if(count(get_field_data($field['id'])))
+                    @foreach(get_field_data($field['id']) as $key => $item)
+                        <p>
+                            <input name="{!! $field['column_name'] !!}" value="{{ $key }}" type="checkbox" class="bty-input-checkbox-2" id="bty-cbox-{{ $key }}">
+                            <label for="bty-cbox-{{ $key }}">{{ $item }}</label>
+                        </p>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+        <div class="bty-tooltip"><i class="fa fa-question" aria-hidden="true"></i>
+            <span>Tooltip text</span>
+        </div>
     </div>
-    <div>
-        @if(count(get_field_data($field['id'])))
-            @foreach(get_field_data($field['id']) as $key => $item)
-                <div class="bty-new-input-checkbox">
-                    <input name="{!! $field['column_name'] !!}" value="{{ $key }}" type="checkbox" id="bty-new-cbox-{{ $key }}">
-                    <label for="bty-new-cbox-{{ $key }}">{{ $item }}</label>
-                </div>
-            @endforeach
-        @endif
-    </div>
-    <div>
-        <p>Lorem ipsum Lorem</p>
-        <span><i class="fa fa-question" aria-hidden="true"></i></span>
-    </div>
-</div>
+</fieldset>
