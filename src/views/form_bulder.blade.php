@@ -1,5 +1,8 @@
 @extends('btybug::layouts.admin')
 @section('content')
+    {!! Form::model(null) !!}
+    {!! Form::hidden('id',null) !!}
+    {!! Form::hidden('fields_type','posts') !!}
     <div class="container-fluid">
         <div class="col-md-12 m-t-20 m-b-20">
             <div class="bty-panel-collapse bty-panel-cl-blue">
@@ -37,11 +40,12 @@
             <ul class="bb-menu-area bb-form-generator"></ul>
 
         </div>
+
         <input type="hidden" name="fields" value="[]" id="existing-fields">
         <input type="hidden" name="fields_json" value="[]" />
         <input type="hidden" name="fields_html" value="" />
     </div>
-
+    {!! Form::close() !!}
     @include('resources::assests.deleteModal')
     @include('resources::assests.magicModal')
 

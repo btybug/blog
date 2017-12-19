@@ -78,6 +78,16 @@ class IndexConroller extends Controller
         return view("blog::form_bulder");
     }
 
+    public function postFormBulder(
+        Request $request,
+        FormService $service
+    )
+    {
+        $service->createOrUpdate($request->except('_token'));
+
+        return redirect()->to('admin/blog/form-list')->with('message','Form successfully Saved');
+    }
+
     public function getList(
         FormsRepository $formsRepository
     )
