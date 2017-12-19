@@ -157,11 +157,12 @@
                                     <th>
                                         @if(\Btybug\Console\Services\ColumnService::columnExists($table,$colum->Field))
                                             <a href="javascript:void(0)"
-                                               class="btn btn-info get-column-data" data-table="{{ $table }}"
+                                               class="btn btn-warning get-column-data" data-table="{{ $table }}"
                                                data-column="{{ $colum->Field }}"><i class="fa fa-pencil-square-o"
                                                                                     aria-hidden="true"></i></a>
                                             <a href="{!! url('admin/console/structure/tables/fields',[$table,$colum->Field]) !!}"
                                                class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+
                                             @if(\Btybug\Console\Services\FieldService::checkField($table,$colum->Field))
                                                 <a href="{!! route("edit_field",['id' => \Btybug\Console\Services\FieldService::getFieldID($table,$colum->Field)]) !!}"
                                                    class="btn btn-warning" ><i class="fa fa-pencil"
