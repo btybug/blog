@@ -303,7 +303,6 @@
             });
 
             $('#submit_form').on('click', function () {
-                //TODO: fix add columns field option value - always coming YES
                 var data = $('.columns-add-form').serialize();
                 $.ajax({
                     type: 'POST',
