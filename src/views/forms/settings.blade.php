@@ -2,19 +2,6 @@
 @section( 'content' )
     <div class="row">
         {!! Form::model(null,['class' => 'form-horizontal']) !!}
-        <div class="form-group m-l-0 m-r-0">
-            <label for="success_message" class="col-sm-4 ">Form type</label>
-            <div class="col-sm-8">
-                {!! Form::select('form_type',['admin' => 'Admin','user' => 'User'],null,['class' => 'form-control form_type']) !!}
-            </div>
-        </div>
-
-        <div class="form-group m-l-0 m-r-0">
-            <label for="success_message" class="col-sm-4 ">Table</label>
-            <div class="col-sm-8">
-                {!! Form::select('fields_type',BBGetTables(),null,['class' => 'form-control fields_type']) !!}
-            </div>
-        </div>
 
         <div class="form-group m-l-0 m-r-0">
             <label for="success_message" class="col-sm-4 ">Success Message</label>
