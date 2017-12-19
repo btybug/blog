@@ -40,8 +40,8 @@
             <div class="bb-menu-area bb-form-generator"></div>
 
         </div>
-        <input type="hidden" name="fields" value="{!! (isset($fields)) ? $fields : [] !!}" id="existing-fields">
-        <input type="hidden" name="fields_json" value="{!! (isset($form) && $form->fields_json) ? $form->fields_json : [] !!}" />
+        <input type="hidden" name="fields" value="{!! (isset($fields)) ? json_decode($fields) : '[]' !!}" id="existing-fields" />
+        <input type="hidden" name="fields_json" value="{!! (isset($form) && $form->fields_json) ? $form->fields_json : '[]' !!}" />
         {{--HTML inside $html property--}}
         <input type="hidden" name="fields_html" value="" />
     </div>
