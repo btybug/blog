@@ -78,7 +78,7 @@
                                     <span class="bty-hover-17 bty-f-s-20">Form title</span>
                                 </div>
                                 <div class="col-md-8">
-                                    <input class="bty-input-label-2 m-t-0" placeholder="What is your Form title ?"
+                                    <input class="bty-input-label-2 m-t-0 form-title-settings" placeholder="What is your Form title ?"
                                            name="form_title" type="text" value="Create post">
                                 </div>
                             </div>
@@ -107,6 +107,12 @@
 @section( 'JS' )
     <script>
         $(document).ready(function () {
+            $("body").on('input','.form-title-settings',function () {
+                var val = $(this).val();
+
+                $(".form-title").text(val);
+            });
+
             $("body").on('change', '.select-field', function () {
                 var checkbox = this;
                 var field = $(checkbox).val();
