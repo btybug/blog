@@ -10,7 +10,7 @@
         }
     </style>
 
-    {!! Form::model($form) !!}
+    {!! Form::model($form,['route' => 'add_or_update_form_builder']) !!}
     {!! Form::hidden('id',null) !!}
     {!! Form::hidden('fields_type','posts') !!}
     <div class="container-fluid">
