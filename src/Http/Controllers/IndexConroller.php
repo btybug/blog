@@ -52,7 +52,8 @@ class IndexConroller extends Controller
 
     public function getSettings(
         FrontPagesRepository $pagesRepository,
-        FormsRepository $formsRepository
+        FormsRepository $formsRepository,
+        AdminsettingRepository $adminsettingRepository
     )
     {
         $table = 'posts';
@@ -70,8 +71,8 @@ class IndexConroller extends Controller
             $after_columns[$column->Field] = $column->Field;
         }
         $this->data['after_columns'] = $after_columns;
-
-        return view('blog::settings', compact(['all', 'single','createForms','editForms']))->with($this->data);
+        $settings = $adminsettingRepository->findOneByMultipleSettingsArray(['section' => 'btybug_blog','settingkey' => 'blog_settings']);
+        return view('blog::settings', compact(['all', 'single','createForms','editForms','settings']))->with($this->data);
     }
 
     public function getFormBulder()
@@ -115,11 +116,13 @@ class IndexConroller extends Controller
 
 
     public function postSettings(
-        PostSettingsRequest $request,
-        FrontPagesRepository $pagesRepository
+        Request $request,
+        FrontPagesRepository $pagesRepository,
+        AdminsettingRepository $adminsettingRepository
     )
     {
-        $pagesRepository->update($request->id, $request->except('id', '_token'));
+        $adminsettingRepository->createOrUpdate(json_encode($request->only('posts_create_form','posts_edit_form','url_manager'),true), 'btybug_blog', 'blog_settings');
+//        $pagesRepository->update($request->id, $request->except('id', '_token'));
 
         return redirect()->back();
     }

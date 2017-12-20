@@ -12,7 +12,7 @@
                 </div>
                 <div id="urlManagerCol" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="urlManager">
                     <div class="panel-body">
-                        {!! Form::model(null,['url' => '/admin/blog/url-manager']) !!}
+                        {!! Form::model($settings,['url' => '/admin/blog/settings']) !!}
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="radios">Select type</label>
                             <div class="col-md-4">
