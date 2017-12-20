@@ -1,7 +1,7 @@
 @extends( 'btybug::layouts.admin' )
 @section( 'content' )
     <div class="row">
-        {!! Form::model(null,['class' => 'form-horizontal']) !!}
+        {!! Form::model($form->settings,['class' => 'form-horizontal']) !!}
 
         <div class="col-md-12 m-t-20 m-b-20">
             <div class="bty-panel-collapse bty-panel-cl-blue">
@@ -12,9 +12,7 @@
                         <span class="title">Permissions</span>
                     </a>
                 </div>
-                <div id="collapseOne" class="collapse in" aria-expanded="true" style="">
-                    <div class="content" style="overflow: hidden;">
-
+                <div id="formBuilderCollapse" class="collapse" aria-expanded="true" style="">
                         <div class="content">
                             <div class="panel-body general-menu-settings">
                                 <div class="bb-menu-form">
@@ -177,100 +175,77 @@
                                 </div>
                             </div>
                         </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-md-12 m-t-20 m-b-20">
+            <div class="bty-panel-collapse bty-panel-cl-blue">
+                <div>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+                       href="#formSettingsGeneral" aria-expanded="true">
+                        <span class="icon"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+                        <span class="title">General</span>
+                    </a>
+                </div>
+                <div id="formSettingsGeneral" class="collapse in" aria-expanded="true" style="">
+                    <div class="content">
+                        <div class="form-group m-l-0 m-r-0">
+                            <label for="success_message" class="col-sm-4 ">Success Message</label>
+                            <div class="col-sm-8">
+                                {!! Form::text('message',(isset($settings['message'])) ? $settings['message'] : null ,['class' =>'form-control']) !!}
+                            </div>
+                        </div>
+
+                        <div class="form-group m-l-0 m-r-0">
+                            <label for="success_message" class="col-sm-4 ">Event/Trigger</label>
+                            <div class="col-sm-8">
+                                {!! Form::select('event',['' => 'Select Event'] + \Subscriber::getEvents(true), (isset($settings['event'])) ? $settings['event'] : null ,['class' =>'form-control']) !!}
+                            </div>
+                        </div>
+
+                        <div class="form-group m-l-0 m-r-0">
+                            <label for="" class="col-sm-4">Redirect Page</label>
+                            <div class="col-sm-8">
+                                <select id="target" class="form-control" name="redirect_Page" title="Select Target">
+                                    <option value="alert">BB get page</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-l-0 m-r-0">
+                            <label for="" class="col-sm-4">Is Ajax</label>
+
+                            <div class="col-sm-8">
+                                <div class="customelement radio-inline">
+                                    <input name="is_ajax" id="is_ajax_yes"
+                                           <?php echo (isset($settings['is_ajax']) && $settings['is_ajax'] == 'yes') ? 'checked' : '' ?> value="yes"
+                                           type="radio">
+                                    <label for="is_ajax_yes">Yes</label>
+                                </div>
+                                <div class="customelement radio-inline">
+                                    <input name="is_ajax" id="is_ajax_no"
+                                           <?php echo (isset($settings['is_ajax'])
+                                               && $settings['is_ajax'] == 'no') ? 'checked' : (isset($settings['is_ajax']) && $settings['is_ajax'] == 'yes') ? '' : 'checked' ?>
+                                           value="no" type="radio"> <label for="is_ajax_no">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-l-0 m-r-0">
+                            <button type="submit" class="bty-btn bty-btn-save bty-btn-cl-black bty-btn-size-sm pull-right m-r-10" data-action="save-form"><span>Save</span></button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="form-group m-l-0 m-r-0">
-            <label for="success_message" class="col-sm-4 ">Success Message</label>
-            <div class="col-sm-8">
-                {!! Form::text('message',(isset($settings['message'])) ? $settings['message'] : null ,['class' =>'form-control']) !!}
-            </div>
-        </div>
-
-        <div class="form-group m-l-0 m-r-0">
-            <label for="success_message" class="col-sm-4 ">Event/Trigger</label>
-            <div class="col-sm-8">
-                {!! Form::select('event',['' => 'Select Event'] + \Subscriber::getEvents(true), (isset($settings['event'])) ? $settings['event'] : null ,['class' =>'form-control']) !!}
-            </div>
-        </div>
-
-        <div class="form-group m-l-0 m-r-0">
-            <label for="" class="col-sm-4">Redirect Page</label>
-            <div class="col-sm-8">
-                <select id="target" class="form-control" name="redirect_Page" title="Select Target">
-                    <option value="alert">BB get page</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group m-l-0 m-r-0">
-            <label for="" class="col-sm-4">Is Ajax</label>
-
-            <div class="col-sm-8">
-                <div class="customelement radio-inline">
-                    <input name="is_ajax" id="is_ajax_yes"
-                           <?php echo (isset($settings['is_ajax']) && $settings['is_ajax'] == 'yes') ? 'checked' : '' ?> value="yes"
-                           type="radio">
-                    <label for="is_ajax_yes">Yes</label>
-                </div>
-                <div class="customelement radio-inline"><input name="is_ajax" id="is_ajax_no"
-                                                               <?php echo (isset($settings['is_ajax'])
-                                                                   && $settings['is_ajax'] == 'no') ? 'checked' : (isset($settings['is_ajax']) && $settings['is_ajax'] == 'yes') ? '' : 'checked' ?>
-                                                               value="no" type="radio"> <label
-                            for="is_ajax_no">No</label>
-                </div>
-            </div>
-        </div>
-        {{--<div class="form-group m-l-0 m-r-0">--}}
-        {{--<label for="" class="col-sm-4"></label>--}}
-        {{--<div class="col-sm-4 p-10">--}}
-        {{--<div class="panel panel-default custompanel ">--}}
-        {{--<div class="panel-heading">Available Fields</div>--}}
-        {{--<div class="panel-body">--}}
-        {{--<ul class="list-group" data-sortables="avalable" style="min-height: 200px;">--}}
-        {{--@if(count($fields))--}}
-        {{--@foreach($fields as $field)--}}
-        {{--<li class="list-group-item"> {!! $field->name !!}</li>--}}
-        {{--@endforeach--}}
-        {{--@endif--}}
-        {{--</ul>--}}
-
-        {{--</div>--}}
-        {{--</div>--}}
-
-        {{--</div>--}}
-        {{--<div class="col-sm-4  p-10">--}}
-        {{--<div class="panel panel-default custompanel ">--}}
-        {{--<div class="panel-heading">Used Fields</div>--}}
-        {{--<div class="panel-body">--}}
-        {{--<ul class="list-group" data-sortables="usedfield" style="min-height: 200px;">--}}
-
-        {{--</ul>--}}
-
-
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-
-        {{--</div>--}}
-        <div>
-            {!! Form::submit('Save',['class' => 'btn btn-success']) !!}
-        </div>
         {!! Form::close() !!}
     </div>
     @include('resources::assests.magicModal')
 @stop
 @section( 'CSS' )
-
-
-
-
     {!! HTML::style('public/css/new-store.css') !!}
-    {!!HTML::style( '/resources/assets/css/create_pages.css' ) !!}
-    {!!HTML::style( '/resources/assets/css/form-builder.css?v=4.89' ) !!}
     {!! HTML::style('public/css/bootstrap/css/bootstrap-switch.min.css') !!}
     {!! HTML::style('public/css/font-awesome/css/fontawesome-iconpicker.min.css') !!}
     {!! HTML::style("public/js/select2/css/select2.css") !!}
@@ -278,16 +253,11 @@
 
 
 @section( 'JS' )
-
-
-
     {!! HTML::script('public/js/jquery.mjs.nestedSortable.js') !!}
     {!! HTML::script('public/css/bootstrap/js/bootstrap-switch.min.js') !!}
     {!! HTML::script('public/css/font-awesome/js/fontawesome-iconpicker.min.js') !!}
     {!! HTML::script('public/js/menus.js') !!}
     {!! HTML::script('public/js/bty.js?v='.rand(1111,9999)) !!}
-
-
     {!! HTML::script("public/js/select2/js/select2.js") !!}
     <script>
 

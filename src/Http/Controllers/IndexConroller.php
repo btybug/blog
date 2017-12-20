@@ -191,11 +191,26 @@ class IndexConroller extends Controller
     }
 
     public function getFormSettings (
-        $id, RoleRepository $roleRepository
+        $id,
+        RoleRepository $roleRepository,
+        FormsRepository $formsRepository
     )
     {
+        $form = $formsRepository->findOrFail($id);
         $roles = $roleRepository->getAllWithGuest();
-        return view('blog::forms.settings',compact('roles'));
+        return view('blog::forms.settings',compact('roles','form'));
+    }
+
+    public function postFormSettings(
+        $id,
+        Request $request,
+        FormsRepository $formsRepository
+    )
+    {
+        $form = $formsRepository->findOrFail($id);
+        $formsRepository->update($id,['settings' => $request->except('_token')]);
+
+        return redirect()->back()->with('message','Form settings are saved');
     }
 
     public function getMyFormsView (

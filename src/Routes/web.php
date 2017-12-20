@@ -49,9 +49,11 @@ Route::group(['prefix'=>'form-list'],function (){
     });
 
     Route::post('/create', 'IndexConroller@postFormBulder')->name('add_or_update_form_builder');
+
     Route::group(['prefix'=>'settings'],function (){
         Route::get('/', 'IndexConroller@getFormSettings',true);
         Route::get('/{id}', 'IndexConroller@getFormSettings',true)->name("form_settings");
+        Route::post('/{id}', 'IndexConroller@postFormSettings',true)->name("post_form_settings");
     });
     Route::group(['prefix'=>'view'],function (){
         Route::get('/', 'IndexConroller@getMyFormsView',true);
