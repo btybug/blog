@@ -4,6 +4,7 @@ namespace BtyBugHook\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Btybug\Console\Repository\FieldsRepository;
+use BtyBugHook\Blog\Services\ReplaceAtor;
 use Illuminate\Http\Request;
 
 class MyFormController extends Controller
@@ -37,7 +38,8 @@ class MyFormController extends Controller
             $field = $fieldsRepository->findByTableAndCol('posts',$field);
             $path=plugins_path('vendor/btybug.hook/blog/src/views/_partials/custom_fields/'.$field->type.'.blade.php');
             if (\File::exists($path)){
-                $html .= \File::get($path)."\r\n";
+                $blade=\File::get($path)."\r\n";
+                $html .= ReplaceAtor::replace($blade,$field);
             }
         }
         $storagePath="Forms/$id.blade.php";

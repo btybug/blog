@@ -10,7 +10,7 @@
                        aria-expanded="true">
                         <span class="icon"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
                         <span class="title">General</span>
-                        <a class="bty-btn bty-btn-save bty-btn-cl-black bty-btn-size-sm pull-right m-r-10"><span>Save</span></a>
+                        <button class="bty-btn bty-btn-save bty-btn-cl-black bty-btn-size-sm pull-right m-r-10" data-action="save-form"><span>Save</span></button>
                     </a>
                 </div>
                 <div id="general" class="collapse in" aria-expanded="true" style="">
