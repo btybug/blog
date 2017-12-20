@@ -219,14 +219,13 @@
                             <div class="col-sm-8">
                                 <div class="customelement radio-inline">
                                     <input name="is_ajax" id="is_ajax_yes"
-                                           <?php echo (isset($settings['is_ajax']) && $settings['is_ajax'] == 'yes') ? 'checked' : '' ?> value="yes"
+                                           <?php echo (isset($form->settings['is_ajax']) && $form->settings['is_ajax'] == 'yes') ? 'checked' : '' ?> value="yes"
                                            type="radio">
                                     <label for="is_ajax_yes">Yes</label>
                                 </div>
                                 <div class="customelement radio-inline">
                                     <input name="is_ajax" id="is_ajax_no"
-                                           <?php echo (isset($settings['is_ajax'])
-                                               && $settings['is_ajax'] == 'no') ? 'checked' : (isset($settings['is_ajax']) && $settings['is_ajax'] == 'yes') ? '' : 'checked' ?>
+                                           <?php echo (isset($form->settings['is_ajax']) && $form->settings['is_ajax'] == 'no') ? 'checked' : '' ?>
                                            value="no" type="radio"> <label for="is_ajax_no">No</label>
                                 </div>
                             </div>
