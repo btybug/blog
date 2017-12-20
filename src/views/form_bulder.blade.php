@@ -81,7 +81,35 @@
                             <h4 class="modal-title" id="myModalLabel">Select Form Style</h4>
                         </div>
                         <div class="modal-body">
-                            Styles .... 
+                            <div class="bb-form-styles">
+                                <!-- Field style -->
+                                <div class="bb-field-style">
+                                    <a href="javascript:" data-id="style-1">
+                                        Style 1
+                                    </a>
+                                    <script type="template/html" id="style-1">
+                                        <div class="form-group" data-field-id="{id}">
+                                            <label><i class="fa {icon}"></i> {label}</label>
+                                            <i class="fa {tooltip_icon}" data-toggle="tooltip" data-placement="top" title="{help}"></i>
+                                            {field}
+                                        </div>
+                                    </script>
+                                </div>
+
+                                <!-- Field style -->
+                                <div class="bb-field-style">
+                                    <a href="javascript:" data-id="style-2">
+                                        Style 2
+                                    </a>
+                                    <script type="template/html" id="style-2">
+                                        <div class="form-group" data-field-id="{id}">
+                                            <label><i class="fa {icon}"></i> <strong>{label}</strong></label>
+                                            {field}
+                                            <span class="help-block">{help}</span>
+                                        </div>
+                                    </script>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -223,6 +251,22 @@
                         type: 'POST'
                     });
 
+                })
+                // Change form style
+                .on("click", ".bb-field-style>a", function () {
+                    var $this = $(this),
+                        template = $('#' + $this.attr('data-id')).html(),
+                        fieldsJSON = JSON.parse($('[name=fields_json]').val());
+
+                    $('#field-template').html(template);
+
+                    // Reset fields
+                    $('[name=fields]').val('[]');
+                    $('[name=fields_json]').val('[]');
+                    $('[name=fields_html]').val('');
+
+                    // Apply HTML
+                    $('.bb-form-generator').html(formBuilder(fieldsJSON));
                 });
 
             @if(isset($form) and $form->fields_json)
