@@ -111,10 +111,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -267,6 +263,9 @@
 
                     // Apply HTML
                     $('.bb-form-generator').html(formBuilder(fieldsJSON));
+
+                    // Hide modal
+                    $('#formStyle').modal('hide');
                 });
 
             @if(isset($form) and $form->fields_json)
