@@ -32,7 +32,7 @@ class MyFormController extends Controller
         $fields = $request->get('fields');
 
 
-        $html="//Form $id \r\n";
+        $html="{{--Form $id --}}\r\n";
 
         foreach ($fields as $field){
             $field = $fieldsRepository->findByTableAndCol('posts',$field);
