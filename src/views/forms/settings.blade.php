@@ -3,6 +3,22 @@
     <div class="row">
         {!! Form::model(null,['class' => 'form-horizontal']) !!}
 
+        <div class="col-md-12 m-t-20 m-b-20">
+            <div class="bty-panel-collapse bty-panel-cl-blue">
+                <div>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#formBuilderCollapse" aria-expanded="true">
+                        <span class="icon"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+                        <span class="title">Permissions</span>
+                    </a>
+                </div>
+                <div id="formBuilderCollapse" class="collapse in" aria-expanded="true" style="">
+                    <div class="content" style="overflow: hidden;">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group m-l-0 m-r-0">
             <label for="success_message" class="col-sm-4 ">Success Message</label>
             <div class="col-sm-8">
