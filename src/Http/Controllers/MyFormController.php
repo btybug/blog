@@ -30,20 +30,19 @@ class MyFormController extends Controller
     {
         $id = $request->get('id');
         $fields = $request->get('fields');
-
-
-        $html="{{--Form $id --}}\r\n";
-
-        foreach ($fields as $field){
-            $field = $fieldsRepository->findByTableAndCol('posts',$field);
-            $path=plugins_path('vendor/btybug.hook/blog/src/views/_partials/custom_fields/'.$field->type.'.blade.php');
-            if (\File::exists($path)){
-                $blade=\File::get($path)."\r\n";
-                $html .= ReplaceAtor::replace($blade,$field);
+        $html = "{{--Form $id --}}\r\n" . \File::get(plugins_path('vendor/btybug.hook/blog/src/views/_partials/custom_fields/fheader.blade.php')) . "\r\n";
+        foreach ($fields as $field) {
+            $field = $fieldsRepository->findByTableAndCol('posts', $field);
+            $path = plugins_path('vendor/btybug.hook/blog/src/views/_partials/custom_fields/' . $field->type . '.blade.php');
+            if (\File::exists($path)) {
+                $blade = \File::get($path) . "\r\n";
+                $html .= ReplaceAtor::replace($blade, $field);
             }
         }
-        $storagePath="Forms/$id.blade.php";
-        \File::put(storage_path($storagePath),$html);
-        return ['error' => false];
+        $html .= \File::get(plugins_path('vendor/btybug.hook/blog/src/views/_partials/custom_fields/ffooter.blade.php')) . "\r\n";
+        $storagePath = "Forms/$id.blade.php";
+        //TODO:: $html esi htmlna Edo
+//        \File::put(storage_path($storagePath), $html);
+        return ['error' => true];
     }
 }
