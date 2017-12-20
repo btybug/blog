@@ -7,6 +7,7 @@ use Btybug\Console\Models\Forms;
 use Btybug\Console\Repository\FieldsRepository;
 use Btybug\Console\Repository\FormsRepository;
 use Btybug\Console\Services\FormService;
+use Btybug\User\Repository\RoleRepository;
 use Illuminate\Http\Request;
 use Btybug\btybug\Models\Templates\Units;
 use Btybug\Console\Repository\FrontPagesRepository;
@@ -187,10 +188,11 @@ class IndexConroller extends Controller
     }
 
     public function getFormSettings (
-        $id
+        $id, RoleRepository $roleRepository
     )
     {
-        return view('blog::forms.settings');
+        $roles = $roleRepository->getAllWithGuest();
+        return view('blog::forms.settings',compact('roles'));
     }
 
     public function getMyFormsView (

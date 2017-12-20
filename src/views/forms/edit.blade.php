@@ -42,6 +42,8 @@
                     <div class="content">
                         <div class="text-center">
                             @if(count($fields))
+                                {!! Form::open(['id'=>'fields-list']) !!}
+                                {!! Form::hidden('id',$form->id) !!}
                                 @foreach($fields as $field)
                                     <div class="col-md-2">
                                         <p>
@@ -54,6 +56,7 @@
                                         </p>
                                     </div>
                                 @endforeach
+                                {!! Form::close() !!}
                             @else
                                 No Columns Available
                             @endif
@@ -105,39 +108,5 @@
 @stop
 
 @section( 'JS' )
-    <script>
-        $(document).ready(function () {
-            $("body").on('input','.form-title-settings',function () {
-                var val = $(this).val();
-
-                $(".form-title").text(val);
-            });
-
-            $("body").on('change', '.select-field', function () {
-                var checkbox = this;
-                var field = $(checkbox).val();
-                if (checkbox.checked) {
-                    var table = "posts";
-                    $.ajax({
-                        url: "{!! url('admin/blog/render-fields') !!}",
-                        data: {table: table, field: field},
-                        headers: {
-                            'X-CSRF-TOKEN': $("input[name='_token']").val()
-                        },
-                        dataType: 'json',
-                        success: function (data) {
-                            if (!data.error) {
-                                $("input[name='form_id']").after(data.html);
-                            }
-                        },
-                        type: 'POST'
-                    });
-                    // alert($(checkbox).val());
-                } else {
-
-                    $("#bty-input-id-" + $(checkbox).data('id')).remove();
-                }
-            });
-        });
-    </script>
+    {!! BBscript(plugins_path('vendor/btybug.hook/blog/src/public/scripts.js')) !!}
 @stop

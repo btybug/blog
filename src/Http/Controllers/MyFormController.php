@@ -13,12 +13,35 @@ class MyFormController extends Controller
         FieldsRepository $fieldsRepository
     )
     {
-        $field = $fieldsRepository->findByTableAndCol($request->table,$request->field);
+        $field = $fieldsRepository->findByTableAndCol($request->table, $request->field);
 
-        if($field && view()->exists("blog::_partials.custom_fields.".$field->type)){
-            $html = \view("blog::_partials.custom_fields.".$field->type)->with('field',$field->toArray())->render();
-            return ['error' => false,'html' => $html];
+        if ($field && view()->exists("blog::_partials.custom_fields." . $field->type)) {
+            $html = \view("blog::_partials.custom_fields." . $field->type)->with('field', $field->toArray())->render();
+            return ['error' => false, 'html' => $html];
         }
         return ['error' => true];
+    }
+
+    public function postSaverForm(
+        Request $request,
+        FieldsRepository $fieldsRepository
+    )
+    {
+        $id = $request->get('id');
+        $fields = $request->get('fields');
+
+
+        $html="//Form $id \r\n";
+
+        foreach ($fields as $field){
+            $field = $fieldsRepository->findByTableAndCol('posts',$field);
+            $path=plugins_path('vendor/btybug.hook/blog/src/views/_partials/custom_fields/'.$field->type.'.blade.php');
+            if (\File::exists($path)){
+                $html .= \File::get($path)."\r\n";
+            }
+        }
+        $storagePath="Forms/$id.blade.php";
+        \File::put(storage_path($storagePath),$html);
+        return ['error' => false];
     }
 }

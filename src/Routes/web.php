@@ -31,6 +31,7 @@ Route::post('/get-fields', 'IndexConroller@getFieldsByTable');
 Route::get('/settings', 'IndexConroller@getSettings',true);
 
 Route::post('/render-fields', 'MyFormController@postRenderField');
+Route::post('/save-form', 'MyFormController@postSaverForm');
 
 Route::group(['prefix'=>'edit-post'],function (){
     Route::get('/', 'IndexConroller@getEditPost',true);
