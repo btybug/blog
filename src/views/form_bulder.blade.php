@@ -8,6 +8,21 @@
             background: #fff;
             cursor: move;
         }
+
+        .bb-field-actions {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: none;
+        }
+
+        .bb-form-generator>.form-group {
+            position: relative;
+        }
+
+        .bb-form-generator>.form-group:hover .bb-field-actions{
+            display: block;
+        }
     </style>
 
     {!! Form::model($form,['route' => 'add_or_update_form_builder']) !!}
@@ -17,7 +32,8 @@
         <div class="col-md-12 m-t-20 m-b-20">
             <div class="bty-panel-collapse bty-panel-cl-blue">
                 <div>
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#formBuilderCollapse" aria-expanded="true">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+                       href="#formBuilderCollapse" aria-expanded="true">
                         <span class="icon"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
                         <span class="title">General</span>
                     </a>
@@ -34,7 +50,8 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <button type="submit" class="bty-btn bty-btn-save pull-right m-r-5"><span>Save</span></button>
+                                <button type="submit" class="bty-btn bty-btn-save pull-right m-r-5"><span>Save</span>
+                                </button>
                                 <a class="bty-btn bty-btn-add pull-right m-r-5 select-field"><span>ADD</span></a>
                                 <a class="bty-btn bty-btn-default bty-btn-cl-black pull-right m-r-5"><span>Layout</span></a>
                             </div>
@@ -49,10 +66,10 @@
         <div class="col-md-12 bb-menu-container">
             <div class="bb-menu-area bb-form-generator"></div>
         </div>
-        
-        <input type="hidden" name="fields" value="[]" id="existing-fields" />
-        <input type="hidden" name="fields_json" value="[]" />
-        <input type="hidden" name="fields_html" value="" />
+
+        <input type="hidden" name="fields" value="[]" id="existing-fields"/>
+        <input type="hidden" name="fields_json" value="[]"/>
+        <input type="hidden" name="fields_html" value=""/>
     </div>
     {!! Form::close() !!}
     @include('resources::assests.deleteModal')
@@ -89,6 +106,15 @@
             {field}
         </div>
     </script>
+
+    <!-- Actions Buttons Template -->
+    <script type="template/html" id="actions-template">
+        <div class="bb-field-actions">
+            <button class="btn btn-xs btn-danger delete-field" data-id="{id}">
+                <i class="fa fa-trash"></i>
+            </button>
+        </div>
+    </script>
 @stop
 @section('CSS')
     {!! HTML::style('public/css/menus.css?v='.rand(1111,9999)) !!}
@@ -105,71 +131,97 @@
 
     <script>
         $(document).ready(function () {
-            $("body").on("click",".delete-field",function () {
-                var itemtoRemove = $(this).data('id');
-                var arr =  $("#existing-fields").val();
-                var newData = JSON.parse(arr);
-                const index = newData.indexOf(itemtoRemove)
-                newData.splice(index, 1);
-                $("#existing-fields").val(JSON.stringify(newData));
-                $(this).closest("li").remove();
+            $("body")
+                // Remove field
+                .on("click", ".delete-field", function (e) {
+                    e.preventDefault();
 
-            }).on("click",".select-field",function () {
-                var table = "posts";
-                var fields = $("#existing-fields").val();
-                $.ajax({
-                    url: "{!! url('admin/blog/get-fields') !!}",
-                    data: {table: table,fields: fields},
-                    headers: {
-                        'X-CSRF-TOKEN': $("input[name='_token']").val()
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        $("#select-fields .modal-body").html(data.html);
-                        $("#select-fields").modal();
-                    },
-                    type: 'POST'
+                    var itemtoRemove = $(this).data('id'),
+                        fields = $("#existing-fields");
+
+                    var newData = JSON.parse(fields.val());
+                    const index = newData.indexOf(itemtoRemove);
+                    newData.splice(index, 1);
+                    fields.val(JSON.stringify(newData));
+                    resortJSON(newData);
+
+                    // Remove from DOM
+                    $(this).closest('.form-group').css("background", "red").fadeOut(function (){
+                        $(this).remove();
+                    });
+                })
+                // Select field
+                .on("click", ".select-field", function () {
+                    var table = "posts";
+                    var fields = $("#existing-fields").val();
+                    $.ajax({
+                        url: "{!! url('admin/blog/get-fields') !!}",
+                        data: {table: table, fields: fields},
+                        headers: {
+                            'X-CSRF-TOKEN': $("input[name='_token']").val()
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            $("#select-fields .modal-body").html(data.html);
+                            $("#select-fields").modal();
+                        },
+                        type: 'POST'
+                    });
+
+                })
+                // Add field to form
+                .on("click", ".add-to-form", function () {
+                    var data = $("#selected-fields").serialize();
+                    $.ajax({
+                        url: "{!! url('admin/blog/render-unit') !!}",
+                        data: data + '&existings=' + $("#existing-fields").val(),
+                        headers: {
+                            'X-CSRF-TOKEN': $("input[name='_token']").val()
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            $("#select-fields").modal("hide");
+                            if (!data.error) {
+                                // $("#existing-fields").val(JSON.stringify(data.fields));
+                                // $(".bb-menu-area").append(data.html);
+
+                                addFieldsToFormArea(data.fields);
+                            } else {
+                                alert(data.message);
+                            }
+                        },
+                        type: 'POST'
+                    });
+
                 });
 
-            }).on("click",".add-to-form",function () {
-                var data = $("#selected-fields").serialize();
-                $.ajax({
-                    url: "{!! url('admin/blog/render-unit') !!}",
-                    data: data + '&existings=' + $("#existing-fields").val(),
-                    headers: {
-                        'X-CSRF-TOKEN': $("input[name='_token']").val()
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        $("#select-fields").modal("hide");
-                        if(! data.error){
-                            // $("#existing-fields").val(JSON.stringify(data.fields));
-                            // $(".bb-menu-area").append(data.html);
-
-                            $('.bb-form-generator').html(formBuilder(data.fields));
-                        }else{
-                            alert(data.message);
-                        }
-                    },
-                    type: 'POST'
-                });
-
-            });
-
-            // Check for default values
             @if(isset($form) and $form->fields_json)
+            // Default values
+            var fieldsJSON = JSON.parse('{!! $form->fields_json !!}');
 
-                var fieldsJSON = JSON.parse('{!! $form->fields_json !!}');
-
-                if(fieldsJSON.length > 0){
-                    $('.bb-form-generator').html(formBuilder(fieldsJSON));
-                }
-
+            if (fieldsJSON.length > 0) {
+                addFieldsToFormArea(fieldsJSON);
+            }
             @endif
 
+            // Add fields to form area
+            function addFieldsToFormArea(fieldsJSON){
+                $('.bb-form-generator').html(formBuilder(fieldsJSON));
+
+                // Add action button to fields
+                $('.bb-form-generator>.form-group').each(function (){
+                    var $this = $(this),
+                        actionsTemplate = $('#actions-template').html(),
+                        id = $this.attr("data-field-id");
+
+                    actionsTemplate = actionsTemplate.replace(/{id}/g, id);
+
+                    $this.append(actionsTemplate);
+                });
+            }
 
             // Building form and hidden inputs
-            function formBuilder(fields){
+            function formBuilder(fields) {
                 var existingFields = $("#existing-fields"),
                     existingFieldsData = JSON.parse(existingFields.val());
 
@@ -179,7 +231,7 @@
                 var fieldsHTML = $('[name=fields_html]'),
                     fieldsHTMLData = fieldsHTML.val();
 
-                $(fields).each(function (index, field){
+                $(fields).each(function (index, field) {
                     // Add to existing fields
                     existingFieldsData.push(field.id);
 
@@ -203,15 +255,15 @@
             }
 
             // Render fields HTML
-            function renderFormField(field){
+            function renderFormField(field) {
                 // Check if not object
-                if(!field.id) return;
+                if (!field.id) return;
 
                 var fieldHTML = '',
                     fieldTemplate = $('#field-template').html();
 
                 // Switch types
-                switch (field.type){
+                switch (field.type) {
                     // Input fields "text, number, email, url"
                     case 'text':
                     case 'number':
@@ -230,9 +282,9 @@
                         var json_data = field.json_data;
 
                         // Manual type
-                        if(json_data.manual){
+                        if (json_data.manual) {
                             var options = json_data.manual.split(",");
-                            $(options).each(function (index, option){
+                            $(options).each(function (index, option) {
                                 fieldHTML += '<option value="' + option + '">' + option + '</option>';
                             });
                         }
@@ -253,16 +305,16 @@
             }
 
             // Resort fields json
-            function resortJSON(order){
+            function resortJSON(order) {
                 var fieldsJSON = $('[name=fields_json]'),
-                fieldsJSONData = JSON.parse(fieldsJSON.val()),
-                sortedJSON = [];
+                    fieldsJSONData = JSON.parse(fieldsJSON.val()),
+                    sortedJSON = [];
 
-                order.forEach(function(key) {
+                order.forEach(function (key) {
                     var found = false;
-                    fieldsJSONData = fieldsJSONData.filter(function(item) {
+                    fieldsJSONData = fieldsJSONData.filter(function (item) {
                         console.log(item.id, key);
-                        if(!found && item.id === key) {
+                        if (!found && item.id === key) {
                             sortedJSON.push(item);
                             found = true;
                             return false;
@@ -274,11 +326,12 @@
                 fieldsJSON.val(JSON.stringify(sortedJSON));
             }
 
+
             // Form sortable
             $('.bb-form-generator').sortable({
-                stop: function (event, ui){
+                stop: function (event, ui) {
                     var ids = [];
-                    $('.bb-form-generator>.form-group').each(function (){
+                    $('.bb-form-generator>.form-group').each(function () {
                         var id = $(this).attr("data-field-id");
                         ids.push(parseInt(id));
                     });
