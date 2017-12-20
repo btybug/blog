@@ -66,6 +66,33 @@
         </div>
         {{--all and singel settings--}}
 
+        <div class="bb-form-style">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary btn-sm clear" data-toggle="modal" data-target="#formStyle">
+                Form Style
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="formStyle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Select Form Style</h4>
+                        </div>
+                        <div class="modal-body">
+                            Styles .... 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <span class="bty-hover-15 bty-f-s-34">Form Preview</span>
         <div class="col-md-12 bb-menu-container">
             <div class="bb-menu-area bb-form-generator"></div>
