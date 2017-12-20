@@ -3,7 +3,8 @@
     <div class="row">
         <h2>Edit Form</h2>
         <div class="col-md-12">
-
+            {!! Form::model($form,['id'=>'fields-list']) !!}
+            {!! Form::hidden('id',$form->id) !!}
             <div class="bty-panel-collapse 	bty-panel-cl-tomato">
                 <div>
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#general"
@@ -21,8 +22,7 @@
                                     <span class="bty-hover-17 bty-f-s-20">Form name</span>
                                 </div>
                                 <div class="col-md-8">
-                                    <input class="bty-input-label-2 m-t-0" placeholder="What is your Form name ?"
-                                           name="form_name" type="text">
+                                    {!! Form::text('name',null,['placeholder' => 'What is your Form name ?','class' => 'bty-input-label-2 m-t-0']) !!}
                                 </div>
                             </div>
                         </div>
@@ -42,21 +42,19 @@
                     <div class="content">
                         <div class="text-center">
                             @if(count($fields))
-                                {!! Form::open(['id'=>'fields-list']) !!}
-                                {!! Form::hidden('id',$form->id) !!}
                                 @foreach($fields as $field)
                                     <div class="col-md-2">
                                         <p>
                                             <input type="checkbox" data-id="{!! $field->id !!}"
                                                    value="{!! $field->column_name !!}"
                                                    name="fields[{!! $field->id !!}]"
+                                                   {!! (! in_array($field->slug,$existingFields)) ?: "checked"  !!}
                                                    class="bty-input-checkbox-2 select-field"
                                                    id="bty-cbox-{{ $field->id }}">
                                             <label for="bty-cbox-{{ $field->id }}">{{ $field->name }}</label>
                                         </p>
                                     </div>
                                 @endforeach
-                                {!! Form::close() !!}
                             @else
                                 No Columns Available
                             @endif
@@ -89,17 +87,19 @@
                     </div>
                 </div>
             </div>
+            {!! Form::close() !!}
 
             <h2>Preview Area</h2>
 
             <div class="col-md-12 preview-area">
-                {!! Form::open(['class' => 'bty-form-5']) !!}
-                <h2 class="form-title">Create Post</h2>
-                {!! Form::hidden('form_id',$form->id) !!}
+                {!! form_render($form->id) !!}
+                {{--{!! Form::open(['class' => 'bty-form-5']) !!}--}}
+                {{--<h2 class="form-title">Create Post</h2>--}}
+                {{--{!! Form::hidden('form_id',$form->id) !!}--}}
 
 
-                <button type="submit" class="bty-btn bty-btn-save"><span>Save</span></button>
-                {!! Form::close() !!}
+                {{--<button type="submit" class="bty-btn bty-btn-save"><span>Save</span></button>--}}
+                {{--{!! Form::close() !!}--}}
             </div>
         </div>
     </div>

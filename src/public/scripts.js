@@ -19,7 +19,7 @@ $(function () {
                 dataType: 'json',
                 success: function (data) {
                     if (!data.error) {
-                        $("input[name='form_id']").after(data.html);
+                        $(".field-box").append(data.html);
                     }
                 },
                 type: 'POST'
@@ -43,7 +43,7 @@ $(function () {
             dataType: 'json',
             success: function (data) {
                 if (!data.error) {
-                    alert(data);
+                    window.location.href = "/admin/blog/form-list";
                 }
             },
             type: 'POST'
