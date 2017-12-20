@@ -29,6 +29,7 @@ class ReplaceAtor
             '{!! $field[\'id\'] !!}' => $id,
             '$field[\'id\']' => $id,
             '$field[\'column_name\']' => "get_field_attr($id,'column_name')",
+            '$field[\'table_name\']' => "get_field_attr($id,'table_name')",
             '$field[\'placeholder\']' => "get_field_attr($id,'placeholder')",
             '$field[\'label\']' => "get_field_attr($id,'label')",
         ];

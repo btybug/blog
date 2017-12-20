@@ -20,7 +20,7 @@
                             <th>{{ $post->title }}</th>
                             <th>{{ $post->description }}</th>
                             <th width="100px">
-                                <img src="{!! url($post->image) !!}" class="img-responsive">
+                                {{--<img src="{!! url($post->image) !!}" class="img-responsive">--}}
                             </th>
                             <th>{{ BBGetUser($post->author_id) }}</th>
                             <th>{{ $post->status }}</th>

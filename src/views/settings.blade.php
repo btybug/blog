@@ -162,23 +162,18 @@
                                                                                     aria-hidden="true"></i></a>
                                             <a href="{!! url('admin/console/structure/tables/fields',[$table,$colum->Field]) !!}"
                                                class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                        @else
+                                            <a href="javascript:void(0)"
+                                               class="btn btn-primary get-column-data" data-table="{{ $table }}"
+                                               data-column="{{ $colum->Field }}"><i class="fa fa-eye"
+                                                                                    aria-hidden="true"></i></a>
+                                        @endif
 
                                             @if(\Btybug\Console\Services\FieldService::checkField($table,$colum->Field))
                                                 <a href="{!! route("edit_field",['id' => \Btybug\Console\Services\FieldService::getFieldID($table,$colum->Field)]) !!}"
                                                    class="btn btn-warning" ><i class="fa fa-pencil"
                                                                                aria-hidden="true"></i> Field</a>
                                             @endif
-                                        @else
-                                            <a href="javascript:void(0)"
-                                               class="btn btn-primary get-column-data" data-table="{{ $table }}"
-                                               data-column="{{ $colum->Field }}"><i class="fa fa-eye"
-                                                                                    aria-hidden="true"></i></a>
-                                            @if(\Btybug\Console\Services\FieldService::checkField($table,$colum->Field))
-                                                <a href="{!! route("view_field",['id' => \Btybug\Console\Services\FieldService::getFieldID($table,$colum->Field)]) !!}"
-                                                   class="btn btn-info" ><i class="fa fa-eye"
-                                                                               aria-hidden="true"></i> Field</a>
-                                            @endif
-                                        @endif
                                     </th>
 
                                 </tr>
