@@ -23,6 +23,10 @@
         .bb-form-generator>.form-group:hover .bb-field-actions{
             display: block;
         }
+
+        [data-toggle="tooltip"]{
+            cursor: help;
+        }
     </style>
 
     {!! Form::model($form,['route' => 'add_or_update_form_builder']) !!}
@@ -102,7 +106,8 @@
     <!-- Field Container Template -->
     <script type="template/html" id="field-template">
         <div class="form-group" data-field-id="{id}">
-            <label for="">{label}</label>
+            <label><i class="fa {icon}"></i> {label}</label>
+            <i class="fa {tooltip_icon}" data-toggle="tooltip" data-placement="top" title="{help}"></i>
             {field}
         </div>
     </script>
@@ -131,6 +136,7 @@
 
     <script>
         $(document).ready(function () {
+
             $("body")
                 // Remove field
                 .on("click", ".delete-field", function (e) {
@@ -182,9 +188,6 @@
                         success: function (data) {
                             $("#select-fields").modal("hide");
                             if (!data.error) {
-                                // $("#existing-fields").val(JSON.stringify(data.fields));
-                                // $(".bb-menu-area").append(data.html);
-
                                 addFieldsToFormArea(data.fields);
                             } else {
                                 alert(data.message);
@@ -207,6 +210,9 @@
             // Add fields to form area
             function addFieldsToFormArea(fieldsJSON){
                 $('.bb-form-generator').html(formBuilder(fieldsJSON));
+
+                // Tooltip
+                $('[data-toggle="tooltip"]').tooltip();
 
                 // Add action button to fields
                 $('.bb-form-generator>.form-group').each(function (){
@@ -299,6 +305,9 @@
                 // Insert into template
                 fieldTemplate = fieldTemplate.replace(/{label}/g, field.label);
                 fieldTemplate = fieldTemplate.replace(/{id}/g, field.id);
+                fieldTemplate = fieldTemplate.replace(/{icon}/g, field.icon);
+                fieldTemplate = fieldTemplate.replace(/{help}/g, field.help);
+                fieldTemplate = fieldTemplate.replace(/{tooltip_icon}/g, field.tooltip_icon);
                 fieldTemplate = fieldTemplate.replace(/{field}/g, fieldHTML);
 
                 return fieldTemplate;
