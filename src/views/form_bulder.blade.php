@@ -84,7 +84,7 @@
 
     <!-- Field Container Template -->
     <script type="template/html" id="field-template">
-        <div class="form-group">
+        <div class="form-group" data-field-id="{id}">
             <label for="">{label}</label>
             {field}
         </div>
@@ -246,13 +246,49 @@
 
                 // Insert into template
                 fieldTemplate = fieldTemplate.replace(/{label}/g, field.label);
+                fieldTemplate = fieldTemplate.replace(/{id}/g, field.id);
                 fieldTemplate = fieldTemplate.replace(/{field}/g, fieldHTML);
 
                 return fieldTemplate;
             }
 
+            // Resort fields json
+            function resortJSON(order){
+                var fieldsJSON = $('[name=fields_json]'),
+                fieldsJSONData = JSON.parse(fieldsJSON.val()),
+                sortedJSON = [];
 
-            $('.bb-form-generator').sortable();
+                order.forEach(function(key) {
+                    var found = false;
+                    fieldsJSONData = fieldsJSONData.filter(function(item) {
+                        console.log(item.id, key);
+                        if(!found && item.id === key) {
+                            sortedJSON.push(item);
+                            found = true;
+                            return false;
+                        } else
+                            return true;
+                    })
+                });
+
+                fieldsJSON.val(JSON.stringify(sortedJSON));
+            }
+
+            // Form sortable
+            $('.bb-form-generator').sortable({
+                stop: function (event, ui){
+                    var ids = [];
+                    $('.bb-form-generator>.form-group').each(function (){
+                        var id = $(this).attr("data-field-id");
+                        ids.push(parseInt(id));
+                    });
+
+                    $('[name=fields]').val(JSON.stringify(ids));
+
+                    // Resort JSON
+                    resortJSON(ids);
+                }
+            });
         });
     </script>
 @stop
