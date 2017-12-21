@@ -19,5 +19,5 @@ function get_active_form($form_type = "posts_create_form"){
     $adminsettingRepository =  new \Btybug\btybug\Repositories\AdminsettingRepository();
     $settings = $adminsettingRepository->findOneByMultipleSettingsArray(['section' => 'btybug_blog','settingkey' => 'blog_settings']);
 
-    return (isset($settings[$form_type])) ? $settings[$form_type] : null;
+    return (isset($settings[$form_type])) ? ['slug' => $settings[$form_type]] : null;
 }

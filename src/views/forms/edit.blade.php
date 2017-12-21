@@ -92,14 +92,7 @@
             <h2>Preview Area</h2>
 
             <div class="col-md-12 preview-area">
-                {!! form_render($form->id) !!}
-                {{--{!! Form::open(['class' => 'bty-form-5']) !!}--}}
-                {{--<h2 class="form-title">Create Post</h2>--}}
-                {{--{!! Form::hidden('form_id',$form->id) !!}--}}
-
-
-                {{--<button type="submit" class="bty-btn bty-btn-save"><span>Save</span></button>--}}
-                {{--{!! Form::close() !!}--}}
+                {!! form_render(['id' => $form->id]) !!}
             </div>
         </div>
     </div>
