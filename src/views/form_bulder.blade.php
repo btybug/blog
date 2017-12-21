@@ -109,6 +109,23 @@
                                         </div>
                                     </script>
                                 </div>
+
+                                <!-- Field style -->
+                                <div class="bb-field-style">
+                                    <a href="javascript:" data-id="style-3">
+                                        Style 3
+                                    </a>
+                                    <script type="template/html" id="style-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group" data-field-id="{id}">
+                                                <label><i class="fa {icon}"></i> <strong>{label}</strong></label>
+                                                {field}
+                                                <span class="help-block">{help}</span>
+                                            </div>
+                                        </div>
+                                    </script>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -119,7 +136,7 @@
 
         <span class="bty-hover-15 bty-f-s-34">Form Preview</span>
         <div class="col-md-12 bb-menu-container">
-            <div class="bb-menu-area bb-form-generator"></div>
+            <div class="bb-menu-area bb-form-generator row"></div>
         </div>
 
         <input type="hidden" name="fields" value="[]" id="existing-fields"/>
