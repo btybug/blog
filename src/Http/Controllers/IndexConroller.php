@@ -144,6 +144,7 @@ class IndexConroller extends Controller
                 if($f) {
                     $data[$f->id]['object'] = $f;
                     $data[$f->id]['html'] = $fieldService->returnHtml($f);
+                    $data[$f->id]['field_data'] = get_field_data($f->id);
                     $existing[$k] = $k;
                 }
             }
