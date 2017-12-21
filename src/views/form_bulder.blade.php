@@ -4,7 +4,8 @@
     <style>
         .ui-sortable-handle, .ui-sortable > div {
             outline: 2px dashed #e2e2e2;
-            padding: 10px;
+            outline-offset: -5px;
+            padding: 15px!important;
             background: #fff;
             cursor: move;
         }
@@ -16,16 +17,21 @@
             display: none;
         }
 
-        .bb-form-generator>.form-group {
+        .bb-form-generator > .form-group {
             position: relative;
         }
 
-        .bb-form-generator>.form-group:hover .bb-field-actions{
+        .bb-form-generator > .form-group:hover .bb-field-actions {
             display: block;
         }
 
-        [data-toggle="tooltip"]{
+        [data-toggle="tooltip"] {
             cursor: help;
+        }
+
+        a.bb-form-layout {
+            margin-right: 30px;
+            text-decoration: none;
         }
     </style>
 
@@ -57,13 +63,41 @@
                                 <button type="submit" class="bty-btn bty-btn-save pull-right m-r-5"><span>Save</span>
                                 </button>
                                 <a class="bty-btn bty-btn-add pull-right m-r-5 select-field"><span>ADD</span></a>
-                                <a class="bty-btn bty-btn-default bty-btn-cl-black pull-right m-r-5"><span>Layout</span></a>
+                                <a class="bty-btn bty-btn-default bty-btn-cl-black pull-right m-r-5" data-toggle="modal"
+                                   data-target="#layout-select"><span>Layout</span></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Layout select -->
+        <div class="modal fade" id="layout-select" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Select Layout</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="bb-form-layouts">
+                            <a href="javascript:" class="bb-form-layout" data-layout="12">
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACpSURBVHic7duxDcRADMRA6eH+Wz5H34InODJSSBCbamfmzMX8tIDm+R/nnJUiX7O7Z6YFFKAAWkBTAC2gKYAW0BRAC2gKoAU0BdACmgJoAU0BtICmAFpAUwAtoCmAFtAUQAtoCqAFNAXQApoCaAFNAbSApgBaQFMALaApgBbQFEALaAqgBTQF0AKaAmgBTQG0gKYAWkBTAC2gKYAW0BRAC2iuD7DT9/jdvLH2Bn9rsAwUAAAAAElFTkSuQmCC"
+                                     alt="">
+                            </a>
+
+                            <a href="javascript:" class="bb-form-layout" data-layout="6+6">
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAABzQAAAc0BnvLTTgAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEWSURBVHic7ZuhbQNBFAVno1ATo1Rw/MoIcw1pwCklFRhfBy4jPBUYmbiAbxTpdCCSI+8NuDfSgg9WfzTSwqWqAC5ArXCmquKvA0wruVyqihc2zuti/gHOHfZ8ALsH79yAUweXd2D4HZYBvqvq89kbW2sHHg9w7eTyxizA5p9AAtgCNglgC9gkgC1gkwC2gE0C2AI2CWAL2CSALWCTALaATQLYAjYJYAvYJIAtYJMAtoBNAtgCNglgC9gkgC1gkwC2gE0C2AI2CWAL2CSALWCTALaATQLYAjYJYAvYJIAtYJMAtoBNAtgCNglgC9gkgC1gkwC2gM3y5+jYWvvqsGf/nzudXMb5sAwwMPtWKrMDjr2XbP4J3AFtVWMDBAyODAAAAABJRU5ErkJggg=="
+                                     alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {{--all and singel settings--}}
 
         <div class="bb-form-style">
@@ -77,7 +111,8 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="myModalLabel">Select Form Style</h4>
                         </div>
                         <div class="modal-body">
@@ -90,7 +125,8 @@
                                     <script type="template/html" id="style-1">
                                         <div class="form-group" data-field-id="{id}">
                                             <label><i class="fa {icon}"></i> {label}</label>
-                                            <i class="fa {tooltip_icon}" data-toggle="tooltip" data-placement="top" title="{help}"></i>
+                                            <i class="fa {tooltip_icon}" data-toggle="tooltip" data-placement="top"
+                                               title="{help}"></i>
                                             {field}
                                         </div>
                                     </script>
@@ -237,7 +273,7 @@
                     resortJSON(newData);
 
                     // Remove from DOM
-                    $(this).closest('.form-group').css("background", "red").fadeOut(function (){
+                    $(this).closest('.form-group').css("background", "red").fadeOut(function () {
                         $(this).remove();
                     });
                 })
@@ -304,6 +340,26 @@
                     $('#formStyle').modal('hide');
                 });
 
+            // Change layout "DEMO"
+            $('.bb-form-layout').click(function (){
+                var $this = $(this),
+                    layout = $this.attr("data-layout");
+
+                var column = "col-md-12";
+
+                if(layout === "12"){
+                    column = "col-md-12";
+                }
+
+                if(layout === "6+6"){
+                    column = "col-md-6";
+                }
+
+                $('.form-group').each(function (){
+                    $(this).removeClass("col-md-6 col-md-12").addClass(column);
+                });
+            });
+
             @if(isset($form) and $form->fields_json)
             // Default values
             var fieldsJSON = {!! $form->fields_json !!};
@@ -314,14 +370,14 @@
             @endif
 
             // Add fields to form area
-            function addFieldsToFormArea(fieldsJSON){
+            function addFieldsToFormArea(fieldsJSON) {
                 $('.bb-form-generator').html(formBuilder(fieldsJSON));
 
                 // Tooltip
                 $('[data-toggle="tooltip"]').tooltip();
 
                 // Add action button to fields
-                $('.bb-form-generator>.form-group').each(function (){
+                $('.bb-form-generator>.form-group').each(function () {
                     var $this = $(this),
                         actionsTemplate = $('#actions-template').html(),
                         id = $this.attr("data-field-id");
@@ -399,7 +455,7 @@
                         // Read data
                         if (json_data) {
                             // var options = JSON.parse(json_data);
-                            $.each( json_data, function( key, option ) {
+                            $.each(json_data, function (key, option) {
                                 fieldHTML += '<option value="' + key + '">' + option + '</option>';
                             });
                         }
