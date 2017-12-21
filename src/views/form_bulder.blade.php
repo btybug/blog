@@ -264,8 +264,8 @@
                         type: 'POST'
                     });
 
-                    reload_js('http://blog.albumbugs.com/public-x/custom/js/5a3225c989011.js');
-                    reload_css('http://blog.albumbugs.com/public-x/custom/css/5a3225c989011_test.css');
+                    reload_js('/public-x/custom/js/form_build_assets.js');
+                    reload_css('/public-x/custom/css/form_build_assets.css');
                 })
                 // Change form style
                 .on("click", ".bb-field-style>a", function () {
