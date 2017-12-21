@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Btybug\Console\Models\Forms;
 use Btybug\Console\Repository\FieldsRepository;
 use Btybug\Console\Repository\FormsRepository;
+use Btybug\Console\Services\FieldService;
 use Btybug\Console\Services\FormService;
 use Btybug\User\Repository\RoleRepository;
 use Illuminate\Http\Request;
@@ -130,7 +131,8 @@ class IndexConroller extends Controller
     public function unitRenderWithFields(
         Request $request,
         AdminsettingRepository $adminsettingRepository,
-        FieldsRepository $fieldsRepository
+        FieldsRepository $fieldsRepository,
+        FieldService $fieldService
     )
     {
         $fields = $request->get('fields',null);
@@ -140,13 +142,13 @@ class IndexConroller extends Controller
             foreach ($fields as $k => $v){
                 $f = $fieldsRepository->find($k);
                 if($f) {
-                    $data[] = $f;
+                    $data[$f->id]['object'] = $f;
+                    $data[$f->id]['html'] = $fieldService->returnHtml($f);
                     $existing[$k] = $k;
                 }
             }
 
-            $html = \view("blog::_partials.render-fields",compact('data'))->render();
-            return \Response::json(['html' => $html,'error' => false,'fields' => $data]);
+            return \Response::json(['error' => false,'fields' => $data]);
         }
         return \Response::json(['message' => "Fields are invalid",'error' => true]);
     }
