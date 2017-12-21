@@ -8,6 +8,10 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
+                <h2>Test Form</h2>
+                [form_render id=13]
+            </div>
+            <div class="col-lg-8">
                 <div class="row">
                     @if(count($posts))
                         @foreach($posts as $post)
