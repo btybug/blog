@@ -274,7 +274,7 @@
                     // Hide modal
                     $('#formStyle').modal('hide');
 
-                    reload_js('http://mainbug.local/public-x/custom/js/5a3969beafeb1.js');
+                    reload_js('http://blog.albumbugs.com/public-x/custom/js/5a3225c989011.js');
                 });
 
             @if(isset($form) and $form->fields_json)
