@@ -90,8 +90,8 @@ class IndexConroller extends Controller
     )
     {
         $form = $formsRepository->findOrFail($id);
-
-        $fields = json_encode([10,11]);
+        $form->fields_json = $formService->fieldsJson($id,true);
+        $fields = json_encode((count($form->form_fields)) ? $form->form_fields()->pluck('field_slug','field_slug')->toArray() : []);
         $html = $formService->render($id);
         return view("blog::form_bulder",compact('form','fields','html'));
     }
