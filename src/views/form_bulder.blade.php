@@ -186,6 +186,13 @@
     {!! BBscript(plugins_path("vendor/btybug.hook/blog/src/Assets/js/blog-fields.js")) !!}
 
     <script>
+        function reload_js(src) {
+            $('script[src="' + src + '"]').remove();
+            $('<script>').attr('src', src).appendTo('body');
+        }
+    </script>
+
+    <script>
         $(document).ready(function () {
 
             $("body")
@@ -266,6 +273,8 @@
 
                     // Hide modal
                     $('#formStyle').modal('hide');
+
+                    reload_js('http://mainbug.local/public-x/custom/js/5a3969beafeb1.js');
                 });
 
             @if(isset($form) and $form->fields_json)
