@@ -1,4 +1,4 @@
-<fieldset  id="bty-input-id-{!! $field['id'] !!}">
+<fieldset class="bty-form-radio" id="bty-input-id-{!! $field['id'] !!}">
     <div>
         <div>
             <label>{!! $field['label'] !!}</label>
