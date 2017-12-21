@@ -123,8 +123,8 @@
         </div>
 
         <input type="hidden" name="fields" value="[]" id="existing-fields"/>
-        <input type="hidden" name="fields_json" value="[]"/>
         <input type="hidden" name="fields_html" value=""/>
+        <input type="hidden" name="fields_json" value="[]"/>
     </div>
     {!! Form::close() !!}
     @include('resources::assests.deleteModal')
@@ -270,7 +270,7 @@
 
             @if(isset($form) and $form->fields_json)
             // Default values
-            var fieldsJSON = JSON.parse('{!! $form->fields_json !!}');
+            var fieldsJSON = {!! $form->fields_json !!};
 
             if (fieldsJSON.length > 0) {
                 addFieldsToFormArea(fieldsJSON);
@@ -309,7 +309,7 @@
 
                 $(fields).each(function (index, field) {
                     // Add to existing fields
-                    existingFieldsData.push(field.id);
+                    existingFieldsData.push(field.object.id);
 
                     // Add fields json
                     fieldsJSONData.push(field);
@@ -331,7 +331,10 @@
             }
 
             // Render fields HTML
-            function renderFormField(field) {
+            function renderFormField(fieldObject) {
+
+                var field = fieldObject.object;
+
                 // Check if not object
                 if (!field.id) return;
 
@@ -355,17 +358,21 @@
                     case 'select':
                         fieldHTML = '<select name="{name}" class="form-control">';
 
-                        var json_data = field.json_data;
+                        var json_data = fieldObject.field_data;
 
-                        // Manual type
-                        if (json_data.manual) {
-                            var options = json_data.manual.split(",");
-                            $(options).each(function (index, option) {
-                                fieldHTML += '<option value="' + option + '">' + option + '</option>';
+                        // Read data
+                        if (json_data) {
+                            // var options = JSON.parse(json_data);
+                            $.each( json_data, function( key, option ) {
+                                fieldHTML += '<option value="' + key + '">' + option + '</option>';
                             });
                         }
 
                         fieldHTML += '</select>';
+                        break;
+
+                    case 'special':
+                        fieldHTML = fieldObject.html;
                         break;
                 }
 
@@ -389,12 +396,18 @@
                     fieldsJSONData = JSON.parse(fieldsJSON.val()),
                     sortedJSON = [];
 
+                var fieldsHTML = $('[name=fields_html]'),
+                    fieldsHTMLData = "";
+
                 order.forEach(function (key) {
                     var found = false;
                     fieldsJSONData = fieldsJSONData.filter(function (item) {
-                        console.log(item.id, key);
-                        if (!found && item.id === key) {
+                        console.log(item.object.id, key);
+                        if (!found && item.object.id === key) {
                             sortedJSON.push(item);
+
+                            // Render fields
+                            fieldsHTMLData += renderFormField(item);
                             found = true;
                             return false;
                         } else
@@ -403,13 +416,14 @@
                 });
 
                 fieldsJSON.val(JSON.stringify(sortedJSON));
+                fieldsHTML.val(fieldsHTMLData);
             }
-
 
             // Form sortable
             $('.bb-form-generator').sortable({
                 stop: function (event, ui) {
                     var ids = [];
+
                     $('.bb-form-generator>.form-group').each(function () {
                         var id = $(this).attr("data-field-id");
                         ids.push(parseInt(id));
