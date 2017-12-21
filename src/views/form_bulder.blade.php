@@ -190,6 +190,16 @@
             $('script[src="' + src + '"]').remove();
             $('<script>').attr('src', src).appendTo('body');
         }
+
+        function reload_css(href) {
+            $('link[href="' + href + '"]').remove();
+            $('<link>').attr({
+                'href': href,
+                'type': 'text/css',
+                'rel': 'stylesheet',
+                'media': 'all'
+            }).appendTo('head');
+        }
     </script>
 
     <script>
@@ -255,6 +265,7 @@
                     });
 
                     reload_js('http://blog.albumbugs.com/public-x/custom/js/5a3225c989011.js');
+                    reload_css('http://blog.albumbugs.com/public-x/custom/css/5a3225c989011.css');
                 })
                 // Change form style
                 .on("click", ".bb-field-style>a", function () {
