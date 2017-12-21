@@ -254,6 +254,7 @@
                         type: 'POST'
                     });
 
+                    reload_js('http://blog.albumbugs.com/public-x/custom/js/5a3225c989011.js');
                 })
                 // Change form style
                 .on("click", ".bb-field-style>a", function () {
@@ -273,8 +274,6 @@
 
                     // Hide modal
                     $('#formStyle').modal('hide');
-
-                    reload_js('http://blog.albumbugs.com/public-x/custom/js/5a3225c989011.js');
                 });
 
             @if(isset($form) and $form->fields_json)
