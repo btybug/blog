@@ -142,10 +142,12 @@ class IndexConroller extends Controller
             foreach ($fields as $k => $v){
                 $f = $fieldsRepository->find($k);
                 if($f) {
-                    $data[$f->id]['object'] = $f;
-                    $data[$f->id]['html'] = $fieldService->returnHtml($f);
-                    $data[$f->id]['field_data'] = get_field_data($f->id);
-                    $existing[$k] = $k;
+
+                    $existing['object'] = $f;
+                    $existing['html'] = $fieldService->returnHtml($f);
+                    $existing['field_data'] = get_field_data($f->id);
+
+                    $data[] = $existing;
                 }
             }
 
