@@ -220,7 +220,7 @@
                         <div class="form-group m-l-0 m-r-0">
                             <label for="success_message" class="col-sm-4 ">Success Message</label>
                             <div class="col-sm-8">
-                                {!! Form::text('message',(isset($settings['message'])) ? $settings['message'] : null ,['class' =>'form-control']) !!}
+                                {!! Form::text('message',(isset($form->settings['message'])) ? $form->settings['message'] : null ,['class' =>'form-control']) !!}
                             </div>
                         </div>
 
