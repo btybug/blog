@@ -1,7 +1,7 @@
 @extends( 'btybug::layouts.admin' )
 @section( 'content' )
     <div class="row">
-        {!! Form::model($form->settings,['class' => 'form-horizontal']) !!}
+        {!! Form::model($form,['class' => 'form-horizontal']) !!}
 
         <div class="col-md-12 m-t-20 m-b-20">
             <div class="bty-panel-collapse bty-panel-cl-blue">
@@ -17,7 +17,30 @@
                             <div class="panel-body general-menu-settings">
                                 <div class="bb-menu-form">
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-2">
+                                            <i class="fa fa-universal-access" aria-hidden="true"></i><span
+                                                    class="labls">Form access</span>
+                                            <div class="radio">
+                                                <label for="radios-0">
+                                                    {!! Form::radio('form_access',0,null,['class' => 'access-radio']) !!}
+                                                    Public
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label for="radios-1">
+                                                    {!! Form::radio('form_access',1,null,['class' => 'access-radio']) !!}
+                                                    Roles
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label for="radios-1">
+                                                    {!! Form::radio('form_access',2,null,['class' => 'access-radio']) !!}
+                                                    Loged in
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 roles-box {!! ($form->form_access == 1) ? "show" : "hide" !!}">
                                             <label class="text-primary">How Page display for different visitors
                                                 types?</label>
 
@@ -50,127 +73,131 @@
 
                                                         <div class="pull-right">
                                                             <input type="checkbox" class="bb-switch bb-role-toggle"
-                                                                   {{--@if(isset($settings['roles'][$role['slug']]))--}}
-                                                                   {{--checked--}}
-                                                                   {{--@endif--}}
+                                                                   @if(in_array($role['id'],$formRoles))
+                                                                   checked
+                                                                   @endif
                                                                    name="roles[{!!$role['slug']!!}]">
                                                         </div>
                                                     </li>
                                                 @endforeach
                                             </ul>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="what-to-show-panel hide" data-for="guests">
-                                                <div class="form-group">
-                                                    <label>What to show for "Guests" role?</label>
-                                                    <select name="guests_show" class="form-control input-sm">
-                                                        <option value="hide">Hide Only</option>
-                                                        <option value="unit">Render Unit</option>
-                                                        <option value="menu">Render another menu</option>
-                                                    </select>
-                                                </div>
+                                        {{--<div class="col-md-4">--}}
+                                            {{--<div class="what-to-show-panel hide" data-for="guests">--}}
+                                                {{--<div class="form-group">--}}
+                                                    {{--<label>What to show for "Guests" role?</label>--}}
+                                                    {{--<select name="guests_show" class="form-control input-sm">--}}
+                                                        {{--<option value="hide">Hide Only</option>--}}
+                                                        {{--<option value="unit">Render Unit</option>--}}
+                                                        {{--<option value="menu">Render another menu</option>--}}
+                                                    {{--</select>--}}
+                                                {{--</div>--}}
 
-                                                <div class="form-group hide" data-render="unit">
-                                                    <label>Select unit</label>
-                                                    <button class="btn btn-primary form-control">BB Button for units
-                                                    </button>
-                                                </div>
+                                                {{--<div class="form-group hide" data-render="unit">--}}
+                                                    {{--<label>Select unit</label>--}}
+                                                    {{--<button class="btn btn-primary form-control">BB Button for units--}}
+                                                    {{--</button>--}}
+                                                {{--</div>--}}
 
-                                                <div class="form-group hide" data-render="menu">
-                                                    <label>Select menu</label>
-                                                    <button class="btn btn-info form-control">BB Button for menus
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="what-to-show-panel hide" data-for="normal-user">
-                                                <div class="form-group">
-                                                    <label>What to show for "Normal User" role?</label>
-                                                    <select name="normal-user_show" class="form-control input-sm">
-                                                        <option value="hide">Hide Only</option>
-                                                        <option value="unit">Render Unit</option>
-                                                        <option value="menu">Render another menu</option>
-                                                    </select>
-                                                </div>
+                                                {{--<div class="form-group hide" data-render="menu">--}}
+                                                    {{--<label>Select menu</label>--}}
+                                                    {{--<button class="btn btn-info form-control">BB Button for menus--}}
+                                                    {{--</button>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                            {{--<div class="what-to-show-panel hide" data-for="normal-user">--}}
+                                                {{--<div class="form-group">--}}
+                                                    {{--<label>What to show for "Normal User" role?</label>--}}
+                                                    {{--<select name="normal-user_show" class="form-control input-sm">--}}
+                                                        {{--<option value="hide">Hide Only</option>--}}
+                                                        {{--<option value="unit">Render Unit</option>--}}
+                                                        {{--<option value="menu">Render another menu</option>--}}
+                                                    {{--</select>--}}
+                                                {{--</div>--}}
 
-                                                <div class="form-group hide" data-render="unit">
-                                                    <label>Select unit</label>
-                                                    <button class="btn btn-primary form-control">BB Button for units
-                                                    </button>
-                                                </div>
+                                                {{--<div class="form-group hide" data-render="unit">--}}
+                                                    {{--<label>Select unit</label>--}}
+                                                    {{--<button class="btn btn-primary form-control">BB Button for units--}}
+                                                    {{--</button>--}}
+                                                {{--</div>--}}
 
-                                                <div class="form-group hide" data-render="menu">
-                                                    <label>Select menu</label>
-                                                    <button class="btn btn-info form-control">BB Button for menus
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="what-to-show-panel hide" data-for="pro-user">
-                                                <div class="form-group">
-                                                    <label>What to show for "Pro User" role?</label>
-                                                    <select name="pro-user_show" class="form-control input-sm">
-                                                        <option value="hide">Hide Only</option>
-                                                        <option value="unit">Render Unit</option>
-                                                        <option value="menu">Render another menu</option>
-                                                    </select>
-                                                </div>
+                                                {{--<div class="form-group hide" data-render="menu">--}}
+                                                    {{--<label>Select menu</label>--}}
+                                                    {{--<button class="btn btn-info form-control">BB Button for menus--}}
+                                                    {{--</button>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                            {{--<div class="what-to-show-panel hide" data-for="pro-user">--}}
+                                                {{--<div class="form-group">--}}
+                                                    {{--<label>What to show for "Pro User" role?</label>--}}
+                                                    {{--<select name="pro-user_show" class="form-control input-sm">--}}
+                                                        {{--<option value="hide">Hide Only</option>--}}
+                                                        {{--<option value="unit">Render Unit</option>--}}
+                                                        {{--<option value="menu">Render another menu</option>--}}
+                                                    {{--</select>--}}
+                                                {{--</div>--}}
 
-                                                <div class="form-group hide" data-render="unit">
-                                                    <label>Select unit</label>
-                                                    <button class="btn btn-primary form-control">BB Button for units
-                                                    </button>
-                                                </div>
+                                                {{--<div class="form-group hide" data-render="unit">--}}
+                                                    {{--<label>Select unit</label>--}}
+                                                    {{--<button class="btn btn-primary form-control">BB Button for units--}}
+                                                    {{--</button>--}}
+                                                {{--</div>--}}
 
-                                                <div class="form-group hide" data-render="menu">
-                                                    <label>Select menu</label>
-                                                    <button class="btn btn-info form-control">BB Button for menus
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="what-to-show-panel hide" data-for="editor">
-                                                <div class="form-group">
-                                                    <label>What to show for "Editor" role?</label>
-                                                    <select name="editor_show" class="form-control input-sm">
-                                                        <option value="hide">Hide Only</option>
-                                                        <option value="unit">Render Unit</option>
-                                                        <option value="menu">Render another menu</option>
-                                                    </select>
-                                                </div>
+                                                {{--<div class="form-group hide" data-render="menu">--}}
+                                                    {{--<label>Select menu</label>--}}
+                                                    {{--<button class="btn btn-info form-control">BB Button for menus--}}
+                                                    {{--</button>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                            {{--<div class="what-to-show-panel hide" data-for="editor">--}}
+                                                {{--<div class="form-group">--}}
+                                                    {{--<label>What to show for "Editor" role?</label>--}}
+                                                    {{--<select name="editor_show" class="form-control input-sm">--}}
+                                                        {{--<option value="hide">Hide Only</option>--}}
+                                                        {{--<option value="unit">Render Unit</option>--}}
+                                                        {{--<option value="menu">Render another menu</option>--}}
+                                                    {{--</select>--}}
+                                                {{--</div>--}}
 
-                                                <div class="form-group hide" data-render="unit">
-                                                    <label>Select unit</label>
-                                                    <button class="btn btn-primary form-control">BB Button for units
-                                                    </button>
-                                                </div>
+                                                {{--<div class="form-group hide" data-render="unit">--}}
+                                                    {{--<label>Select unit</label>--}}
+                                                    {{--<button class="btn btn-primary form-control">BB Button for units--}}
+                                                    {{--</button>--}}
+                                                {{--</div>--}}
 
-                                                <div class="form-group hide" data-render="menu">
-                                                    <label>Select menu</label>
-                                                    <button class="btn btn-info form-control">BB Button for menus
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="what-to-show-panel hide" data-for="contributor">
-                                                <div class="form-group">
-                                                    <label>What to show for "Contributor" role?</label>
-                                                    <select name="contributor_show" class="form-control input-sm">
-                                                        <option value="hide">Hide Only</option>
-                                                        <option value="unit">Render Unit</option>
-                                                        <option value="menu">Render another menu</option>
-                                                    </select>
-                                                </div>
+                                                {{--<div class="form-group hide" data-render="menu">--}}
+                                                    {{--<label>Select menu</label>--}}
+                                                    {{--<button class="btn btn-info form-control">BB Button for menus--}}
+                                                    {{--</button>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                            {{--<div class="what-to-show-panel hide" data-for="contributor">--}}
+                                                {{--<div class="form-group">--}}
+                                                    {{--<label>What to show for "Contributor" role?</label>--}}
+                                                    {{--<select name="contributor_show" class="form-control input-sm">--}}
+                                                        {{--<option value="hide">Hide Only</option>--}}
+                                                        {{--<option value="unit">Render Unit</option>--}}
+                                                        {{--<option value="menu">Render another menu</option>--}}
+                                                    {{--</select>--}}
+                                                {{--</div>--}}
 
-                                                <div class="form-group hide" data-render="unit">
-                                                    <label>Select unit</label>
-                                                    <button class="btn btn-primary form-control">BB Button for units
-                                                    </button>
-                                                </div>
+                                                {{--<div class="form-group hide" data-render="unit">--}}
+                                                    {{--<label>Select unit</label>--}}
+                                                    {{--<button class="btn btn-primary form-control">BB Button for units--}}
+                                                    {{--</button>--}}
+                                                {{--</div>--}}
 
-                                                <div class="form-group hide" data-render="menu">
-                                                    <label>Select menu</label>
-                                                    <button class="btn btn-info form-control">BB Button for menus
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                {{--<div class="form-group hide" data-render="menu">--}}
+                                                    {{--<label>Select menu</label>--}}
+                                                    {{--<button class="btn btn-info form-control">BB Button for menus--}}
+                                                    {{--</button>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
+                                    </div>
+
+                                    <div class="row m-l-0 m-r-0">
+                                        <button type="submit" class="bty-btn bty-btn-save bty-btn-cl-black bty-btn-size-sm pull-right m-r-10" data-action="save-form"><span>Save</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -260,7 +287,15 @@
     {!! HTML::script("public/js/select2/js/select2.js") !!}
     <script>
 
-        $(document).ready(function () {
+        $(function () {
+            $(".access-radio").click(function () {
+                if ($(this).val() == 1) {
+                    $(".roles-box").removeClass("hide").addClass("show");
+                } else {
+                    $(".roles-box").removeClass("show").addClass("hide");
+                }
+            });
+
             $('body').on('change', '.fields_type', function () {
                 var table = $(this).val();
 
@@ -279,9 +314,8 @@
                     }
                 })
             })
-        })
 
-        $(function () {
+
             $('[data-sortables="avalable"]').sortable({
                 connectWith: '[data-sortables="usedfield"]',
                 forcePlaceholderSize: true,
