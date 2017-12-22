@@ -63,6 +63,10 @@ class ModuleServiceProvider extends ServiceProvider
         ];
         \Eventy::action('my.tab', $tubs);
 
+        \Eventy::action('shortcode.except.url', [
+            'admin/blog/form-list'
+        ]);
+
         Routes::registerPages('btybug.hook/blog');
     }
 
