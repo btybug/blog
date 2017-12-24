@@ -2,11 +2,9 @@
 @section('content')
 
     <style>
-        .ui-sortable-handle, .ui-sortable > div {
+        .ui-sortable-handle:hover, .ui-sortable > div:hover {
             outline: 2px dashed #e2e2e2;
-            outline-offset: -5px;
-            padding: 15px!important;
-            background: #fff;
+            outline-offset: 5px;
             cursor: move;
         }
 
@@ -32,6 +30,30 @@
         a.bb-form-layout {
             margin-right: 30px;
             text-decoration: none;
+        }
+
+        .bb-form-area:empty {
+            border: 1px dashed #c0c0c0;
+        }
+
+        .bb-form-area:empty:after{
+            content: "Drop Form Fields Here";
+            color: #bdbdbd;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        .bb-form-area {
+            min-height: 50px;
+            position: relative;
+        }
+
+        .bb-form-area.active {
+            outline: 4px solid #f10101;
+            outline-offset: 5px;
         }
     </style>
 
@@ -72,39 +94,22 @@
             </div>
         </div>
 
-        <!-- Layout select -->
-        <div class="modal fade" id="layout-select" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Select Layout</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="bb-form-layouts">
-                            <a href="javascript:" class="bb-form-layout" data-layout="12">
-                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACpSURBVHic7duxDcRADMRA6eH+Wz5H34InODJSSBCbamfmzMX8tIDm+R/nnJUiX7O7Z6YFFKAAWkBTAC2gKYAW0BRAC2gKoAU0BdACmgJoAU0BtICmAFpAUwAtoCmAFtAUQAtoCqAFNAXQApoCaAFNAbSApgBaQFMALaApgBbQFEALaAqgBTQF0AKaAmgBTQG0gKYAWkBTAC2gKYAW0BRAC2iuD7DT9/jdvLH2Bn9rsAwUAAAAAElFTkSuQmCC"
-                                     alt="">
-                            </a>
-
-                            <a href="javascript:" class="bb-form-layout" data-layout="6+6">
-                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAABzQAAAc0BnvLTTgAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEWSURBVHic7ZuhbQNBFAVno1ATo1Rw/MoIcw1pwCklFRhfBy4jPBUYmbiAbxTpdCCSI+8NuDfSgg9WfzTSwqWqAC5ArXCmquKvA0wruVyqihc2zuti/gHOHfZ8ALsH79yAUweXd2D4HZYBvqvq89kbW2sHHg9w7eTyxizA5p9AAtgCNglgC9gkgC1gkwC2gE0C2AI2CWAL2CSALWCTALaATQLYAjYJYAvYJIAtYJMAtoBNAtgCNglgC9gkgC1gkwC2gE0C2AI2CWAL2CSALWCTALaATQLYAjYJYAvYJIAtYJMAtoBNAtgCNglgC9gkgC1gkwC2gM3y5+jYWvvqsGf/nzudXMb5sAwwMPtWKrMDjr2XbP4J3AFtVWMDBAyODAAAAABJRU5ErkJggg=="
-                                     alt="">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         {{--all and singel settings--}}
 
         <div class="bb-form-style">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary btn-sm clear" data-toggle="modal" data-target="#formStyle">
-                Form Style
-            </button>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-sm clear" data-toggle="modal" data-target="#formStyle">
+                        Form Style
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    {!! BBbutton2('unit','default_value','user-unit','Select Layout',['class'=>'form-control']) !!}
+                </div>
+            </div>
+
 
             <!-- Modal -->
             <div class="modal fade" id="formStyle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -146,22 +151,6 @@
                                     </script>
                                 </div>
 
-                                <!-- Field style -->
-                                <div class="bb-field-style">
-                                    <a href="javascript:" data-id="style-3">
-                                        Style 3
-                                    </a>
-                                    <script type="template/html" id="style-3">
-                                        <div class="col-md-6">
-                                            <div class="form-group" data-field-id="{id}">
-                                                <label><i class="fa {icon}"></i> <strong>{label}</strong></label>
-                                                {field}
-                                                <span class="help-block">{help}</span>
-                                            </div>
-                                        </div>
-                                    </script>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -172,12 +161,160 @@
 
         <span class="bty-hover-15 bty-f-s-34">Form Preview</span>
         <div class="col-md-12 bb-menu-container">
-            <div class="bb-menu-area bb-form-generator row"></div>
+
+            <!-- TEST -->
+            <style>
+                @import url(https://fonts.googleapis.com/css?family=Bree+Serif);
+
+                /*******************
+                SELECTION STYLING
+                *******************/
+
+                ::selection {
+                    color: #fff;
+                    background: #f676b2; /* Safari */
+                }
+                ::-moz-selection {
+                    color: #fff;
+                    background: #f676b2; /* Firefox */
+                }
+
+                .login-form {
+                    width: 80%;
+                    margin: 0 auto;
+                    position: relative;
+
+                    background: #f3f3f3;
+                    border: 1px solid #fff;
+                    border-radius: 5px;
+
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+                    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+                    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+                }
+
+                .login-form .header {
+                    padding: 10px 30px 30px 30px;
+                    text-align: center;
+                }
+
+                .login-form .header h1 {
+                    font-family: 'Bree Serif', serif;
+                    font-weight: 300;
+                    font-size: 28px;
+                    line-height:34px;
+                    color: #414848;
+                    text-shadow: 1px 1px 0 rgba(256,256,256,1.0);
+                    margin-bottom: 10px;
+                }
+
+                .login-form .header span {
+                    font-size: 11px;
+                    line-height: 16px;
+                    color: #678889;
+                    text-shadow: 1px 1px 0 rgba(256,256,256,1.0);
+                }
+
+                .login-form .content {
+                    padding: 0 30px 25px 30px;
+                }
+
+                .login-form .footer {
+                    padding: 15px;
+                    overflow: auto;
+
+                    background: #d4dedf;
+                    border-top: 1px solid #fff;
+
+                    box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
+                    -moz-box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
+                    -webkit-box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
+                }
+
+                /* Login button */
+                .login-form .footer .button {
+                    float:right;
+                    padding: 11px 25px;
+
+                    font-family: 'Bree Serif', serif;
+                    font-weight: 300;
+                    font-size: 18px;
+                    color: #fff;
+                    text-shadow: 0px 1px 0 rgba(0,0,0,0.25);
+
+                    background: #56c2e1;
+                    border: 1px solid #46b3d3;
+                    border-radius: 5px;
+                    cursor: pointer;
+
+                    box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
+                    -moz-box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
+                    -webkit-box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
+                }
+
+                .login-form .footer .button:hover {
+                    background: #3f9db8;
+                    border: 1px solid rgba(256,256,256,0.75);
+
+                    box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+                    -moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+                    -webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+                }
+
+                .login-form .footer .button:focus {
+                    position: relative;
+                    bottom: -1px;
+
+                    background: #56c2e1;
+
+                    box-shadow: inset 0 1px 6px rgba(256,256,256,0.75);
+                    -moz-box-shadow: inset 0 1px 6px rgba(256,256,256,0.75);
+                    -webkit-box-shadow: inset 0 1px 6px rgba(256,256,256,0.75);
+                }
+
+                .login-form .footer .register:hover {
+                    color: #3f9db8;
+                }
+
+                .login-form .footer .register:focus {
+                    position: relative;
+                    bottom: -1px;
+                }
+            </style>
+
+            <div class="login-form">
+
+                <div class="header">
+                    <h1>Create Post</h1>
+                    <span>Fill out the form below to create new post</span>
+                </div>
+
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="bb-form-area connectedSortable"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="bb-form-area connectedSortable"></div>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 20px;">
+                            <div class="bb-form-area connectedSortable"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <input type="submit" name="submit" value="Save" class="button" />
+                </div>
+
+            </div>
+            <!-- END TEST -->
+
         </div>
 
-        <input type="hidden" name="fields" value="[]" id="existing-fields"/>
-        <input type="hidden" name="fields_html" value=""/>
-        <input type="hidden" name="fields_json" value="[]"/>
+        <input type="hidden" name="fields" value="{}" id="existing-fields"/>
+        {{--<input type="hidden" name="fields_html" value=""/>--}}
+        {{--<input type="hidden" name="fields_json" value="[]"/>--}}
     </div>
     {!! Form::close() !!}
     @include('resources::assests.deleteModal')
@@ -334,30 +471,25 @@
                     $('[name=fields_html]').val('');
 
                     // Apply HTML
-                    $('.bb-form-generator').html(formBuilder(fieldsJSON));
+                    $('.bb-form-area.active').html(formBuilder(fieldsJSON));
 
                     // Hide modal
                     $('#formStyle').modal('hide');
+                })
+                // Activate form area
+                .on("click", ".bb-form-area", function () {
+                    var toggle = $(this).hasClass("active");
+                    $('.bb-form-area').removeClass("active");
+
+                    if(!toggle) $(this).addClass("active");
                 });
 
             // Change layout "DEMO"
-            $('.bb-form-layout').click(function (){
+            $('[name=default_value]').on('change', function (){
                 var $this = $(this),
                     layout = $this.attr("data-layout");
 
-                var column = "col-md-12";
-
-                if(layout === "12"){
-                    column = "col-md-12";
-                }
-
-                if(layout === "6+6"){
-                    column = "col-md-6";
-                }
-
-                $('.form-group').each(function (){
-                    $(this).removeClass("col-md-6 col-md-12").addClass(column);
-                });
+                console.log($(this).val());
             });
 
             @if(isset($form) and $form->fields_json)
@@ -371,7 +503,18 @@
 
             // Add fields to form area
             function addFieldsToFormArea(fieldsJSON) {
-                $('.bb-form-generator').html(formBuilder(fieldsJSON));
+                // Mark sortable areas
+                $('.bb-form-area').each(function (i){
+                    $(this).attr("data-sortable", i);
+                });
+
+                // Build form
+                var activeFormArea = $('.bb-form-area.active');
+                if(activeFormArea.length === 1){
+                    activeFormArea.html(formBuilder(fieldsJSON, activeFormArea.data("sortable")));
+                }else{
+                    $('[data-sortable=0]').html(formBuilder(fieldsJSON, 0));
+                }
 
                 // Tooltip
                 $('[data-toggle="tooltip"]').tooltip();
@@ -389,23 +532,23 @@
             }
 
             // Building form and hidden inputs
-            function formBuilder(fields) {
+            function formBuilder(fields, position) {
                 var existingFields = $("#existing-fields"),
                     existingFieldsData = JSON.parse(existingFields.val());
 
-                var fieldsJSON = $('[name=fields_json]'),
-                    fieldsJSONData = JSON.parse(fieldsJSON.val());
-
-                var fieldsHTML = $('[name=fields_html]'),
-                    fieldsHTMLData = fieldsHTML.val();
+                // var fieldsJSON = $('[name=fields_json]'),
+                //     fieldsJSONData = JSON.parse(fieldsJSON.val());
+                //
+                var fieldsHTMLData = $('[data-sortable=' + position + ']').html();
 
                 $(fields).each(function (index, field) {
                     // Add to existing fields
-                    existingFieldsData.push(field.object.id);
+                    if(!existingFieldsData[position]) existingFieldsData[position] = [];
+                    existingFieldsData[position].push(field.object.id);
 
-                    // Add fields json
-                    fieldsJSONData.push(field);
-
+                    // // Add fields json
+                    // fieldsJSONData.push(field);
+                    //
                     // Render fields
                     fieldsHTMLData += renderFormField(field);
                 });
@@ -413,12 +556,12 @@
                 // Add existing fields to hidden input
                 existingFields.val(JSON.stringify(existingFieldsData));
 
-                // Add fields json to hidden input
-                fieldsJSON.val(JSON.stringify(fieldsJSONData));
-
-                // Add rendered fields html to hidden input
-                fieldsHTML.val(fieldsHTMLData);
-
+                // // Add fields json to hidden input
+                // fieldsJSON.val(JSON.stringify(fieldsJSONData));
+                //
+                // // Add rendered fields html to hidden input
+                // fieldsHTML.val(fieldsHTMLData);
+                //
                 return fieldsHTMLData;
             }
 
@@ -488,8 +631,8 @@
                     fieldsJSONData = JSON.parse(fieldsJSON.val()),
                     sortedJSON = [];
 
-                var fieldsHTML = $('[name=fields_html]'),
-                    fieldsHTMLData = "";
+                // var fieldsHTML = $('[name=fields_html]'),
+                //     fieldsHTMLData = "";
 
                 order.forEach(function (key) {
                     var found = false;
@@ -498,8 +641,8 @@
                         if (!found && item.object.id === key) {
                             sortedJSON.push(item);
 
-                            // Render fields
-                            fieldsHTMLData += renderFormField(item);
+                            // // Render fields
+                            // fieldsHTMLData += renderFormField(item);
                             found = true;
                             return false;
                         } else
@@ -508,25 +651,31 @@
                 });
 
                 fieldsJSON.val(JSON.stringify(sortedJSON));
-                fieldsHTML.val(fieldsHTMLData);
+                // fieldsHTML.val(fieldsHTMLData);
             }
 
-            // Form sortable
-            $('.bb-form-generator').sortable({
-                stop: function (event, ui) {
-                    var ids = [];
+            // Activate sortable
+            function activateSortable(){
+                // Form sortable
+                $('.bb-form-area').sortable({
+                    connectWith: ".connectedSortable",
+                    stop: function (event, ui) {
+                        var ids = [];
 
-                    $('.bb-form-generator>.form-group').each(function () {
-                        var id = $(this).attr("data-field-id");
-                        ids.push(parseInt(id));
-                    });
+                        $('.bb-form-generator>.form-group').each(function () {
+                            var id = $(this).attr("data-field-id");
+                            ids.push(parseInt(id));
+                        });
 
-                    $('[name=fields]').val(JSON.stringify(ids));
+                        $('[name=fields]').val(JSON.stringify(ids));
 
-                    // Resort JSON
-                    resortJSON(ids);
-                }
-            });
+                        // Resort JSON
+                        resortJSON(ids);
+                    }
+                });
+            }
+
+            activateSortable();
         });
     </script>
 @stop
