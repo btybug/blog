@@ -62,10 +62,11 @@ class ModuleServiceProvider extends ServiceProvider
             ]
         ];
         \Eventy::action('my.tab', $tubs);
-
+        \Config::set('painter.PAINTERSPATHS',array_merge( \Config::get('painter.PAINTERSPATHS'),['app\Plugins\vendor\btybug.hook\blog\src\Config\Gears\FrontGears\Units']));
         \Eventy::action('shortcode.except.url', [
             'admin/blog/form-list'
         ]);
+
 
         Routes::registerPages('btybug.hook/blog');
     }
