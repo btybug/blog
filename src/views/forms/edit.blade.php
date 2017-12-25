@@ -47,7 +47,7 @@
                                         <p>
                                             <input type="checkbox" data-id="{!! $field->id !!}"
                                                    value="{!! $field->column_name !!}"
-                                                   name="fields[{!! $field->id !!}]"
+                                                   name="fields_json[{!! $field->id !!}]"
                                                    {!! (! in_array($field->slug,$existingFields)) ?: "checked"  !!}
                                                    class="bty-input-checkbox-2 select-field"
                                                    id="bty-cbox-{{ $field->id }}">

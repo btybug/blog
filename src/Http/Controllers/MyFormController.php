@@ -51,7 +51,7 @@ class MyFormController extends Controller
     {
         $data = $request->except('_token');
         $id = $data['id'];
-        $fields = $data['fields'];
+        $fields = $data['fields_json'];
         $html = "{{--Form $id --}}\r\n" . \File::get(plugins_path('vendor/btybug.hook/blog/src/views/_partials/custom_fields/fheader.blade.php')) . "\r\n";
         foreach ($fields as $field) {
             $field = $fieldsRepository->findByTableAndCol('posts', $field);
@@ -63,7 +63,7 @@ class MyFormController extends Controller
         }
         $html .= \File::get(plugins_path('vendor/btybug.hook/blog/src/views/_partials/custom_fields/ffooter.blade.php')) . "\r\n";
         $data['fields_html'] = $html;
-        $data['fields'] = array_keys($fields);
+        $data['fields_json'] = array_keys($fields);
 
         $formService->createOrUpdate($data);
 
