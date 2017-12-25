@@ -1,7 +1,6 @@
 @php
-    $post = \BtyBugHook\Blog\Services\PostsService::getPostByUrl();
+    $post = find_post_by_url();
 @endphp
-
 <section id="single-post">
     <div class="col-md-10 blogShort">
         @if($post)

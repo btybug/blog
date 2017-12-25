@@ -123,8 +123,10 @@ class IndexConroller extends Controller
     )
     {
         $adminsettingRepository->createOrUpdate(json_encode($request->only('posts_create_form','posts_edit_form','url_manager'),true), 'btybug_blog', 'blog_settings');
-//        $pagesRepository->update($request->id, $request->except('id', '_token'));
-
+        $all = $pagesRepository->findBy('slug', 'all-posts');
+        $single = $pagesRepository->findBy('slug', 'single-post');
+        $pagesRepository->update($all->id,['template' => $request->all_main_content]);
+        $pagesRepository->update($single->id,['template' => $request->single_main_content]);
         return redirect()->back();
     }
 

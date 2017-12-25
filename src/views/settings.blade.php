@@ -40,7 +40,7 @@
                             <div class="row">
                                 <div class="col-md-12 m-b-10">
                                     <div class="col-sm-4 p-l-0">All posts Unit</div>
-                                    {!! BBbutton2('unit','all_main_content','all_post',(isset($all->main_content) && $all->main_content)?'Change':'Select',['class'=>'btn btn-default change-layout','model' =>(isset($all->main_content) && $all->main_content) ?$all->main_content : null]) !!}
+                                    {!! BBbutton2('unit','all_main_content','all_posts',(isset($all->template) && $all->template)?'Change':'Select',['class'=>'btn btn-default change-layout','model' =>(isset($all->template) && $all->template) ?$all->template : null]) !!}
 
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                             <div class="row">
                                 <div class="col-md-12 m-b-10">
                                     <div class="col-sm-4 p-l-0">Single posts Unit</div>
-                                    {!! BBbutton2('unit','single_main_content','single_post',(isset($single->main_content) && $single->main_content)?'Change':'Select',['class'=>'btn btn-default change-layout','model' =>(isset($single->main_content) && $single->main_content) ?$single->main_content : null]) !!}
+                                    {!! BBbutton2('unit','single_main_content','single_post',(isset($single->template) && $single->template)?'Change':'Select',['class'=>'btn btn-default change-layout','model' =>(isset($single->template) && $single->template) ?$single->template : null]) !!}
 
                                 </div>
                             </div>
@@ -252,7 +252,7 @@
     </style>
 @stop
 @section('JS')
-    {!! HTML::script("/js/UiElements/bb_styles.js?v.5") !!}
+    {!! HTML::script("public/js/UiElements/bb_styles.js") !!}
     <script>
         $(document).ready(function () {
 

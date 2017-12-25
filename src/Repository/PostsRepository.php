@@ -16,7 +16,7 @@ class PostsRepository extends GeneralRepository
 
     public function getPublished()
     {
-        return $this->model->where('status', 'published')->get();
+        return $this->model->where('status', 'published')->orWhere('status',1)->get();
     }
 
     public function getPublishedByUrl($slug)

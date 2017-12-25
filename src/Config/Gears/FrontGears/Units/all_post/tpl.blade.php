@@ -11,45 +11,29 @@
                 <div class="row">
                     @if(count($posts))
                         @foreach($posts as $post)
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-4 col-md-4">
                                 <aside>
+                                    @if(isset($post->image))
                                     <img src="{!! url($post->image) !!}"
                                          class="img-responsive">
+                                    @else
+                                        <img src="https://s-media-cache-ak0.pinimg.com/originals/2a/f7/2f/2af72f34c04fbf5354c4d637e98969a8.jpg"
+                                             class="img-responsive">
+                                    @endif
                                     <div class="content-title">
                                         <div class="text-center">
-                                            <h3><a href="#">{!! $post->description !!}</a></h3>
+                                            <h3><a href="{{ get_post_url($post->id) }}">{!! $post->title !!}</a></h3>
                                         </div>
                                     </div>
                                     <div class="content-footer">
                                         <img class="user-small-img"
                                              src="{!! url(BBGetUserAvatar($post->author_id)) !!}">
-                                        <span style="font-size: 16px;color: #fff;">{!! BBGetUserName($post->id) !!}</span>
+                                        <span style="font-size: 16px;color: #fff;"><a href="">{!! BBGetUserName($post->id) !!}</a></span>
                                         <span class="pull-right">
 				<a href="#" data-toggle="tooltip" data-placement="left" title="Comments"><i class="fa fa-comments"></i> 30</a>
 				<a href="#" data-toggle="tooltip" data-placement="right" title="Loved"><i
                             class="fa fa-heart"></i> 20</a>
 				</span>
-                                        <div class="user-ditels">
-                                            <div class="user-img"><img
-                                                        src="{!! url(BBGetUserAvatar($post->author_id)) !!}"
-                                                        class="img-responsive"></div>
-                                            <span class="user-full-ditels">
-                        <h3>{!! BBGetUserName($post->id) !!}</h3>
-                        <p>{!! BBGetUser($post->id,"email") !!}</p>
-                        </span>
-                                            <div class="social-icon">
-                                                <a href="#"><i class="fa fa-facebook" data-toggle="tooltip"
-                                                               data-placement="bottom" title="Facebook"></i></a>
-                                                <a href="#"><i class="fa fa-twitter" data-toggle="tooltip"
-                                                               data-placement="bottom" title="Twitter"></i></a>
-                                                <a href="#"><i class="fa fa-google-plus" data-toggle="tooltip"
-                                                               data-placement="bottom" title="Google Plus"></i></a>
-                                                <a href="#"><i class="fa fa-youtube" data-toggle="tooltip"
-                                                               data-placement="bottom" title="Youtube"></i></a>
-                                                <a href="#"><i class="fa fa-github" data-toggle="tooltip"
-                                                               data-placement="bottom" title="Github"></i></a>
-                                            </div>
-                                        </div>
                                     </div>
                                 </aside>
                             </div>
