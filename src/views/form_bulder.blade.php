@@ -84,9 +84,6 @@
                             <div class="col-md-6">
                                 <button type="submit" class="bty-btn bty-btn-save pull-right m-r-5"><span>Save</span>
                                 </button>
-                                <a class="bty-btn bty-btn-add pull-right m-r-5 select-field"><span>ADD</span></a>
-                                <a class="bty-btn bty-btn-default bty-btn-cl-black pull-right m-r-5" data-toggle="modal"
-                                   data-target="#layout-select"><span>Layout</span></a>
                             </div>
                         </div>
                     </div>
@@ -100,13 +97,13 @@
 
             <div class="row">
                 <div class="col-md-3">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary btn-sm clear" data-toggle="modal" data-target="#formStyle">
-                        Form Style
-                    </button>
+                    <a class="bty-btn bty-btn-view m-r-5" data-toggle="modal" data-target="#formStyle"><span>Form Style</span></a>
                 </div>
                 <div class="col-md-6">
-                    {!! BBbutton2('unit','default_value','user-unit','Select Layout',['class'=>'form-control']) !!}
+                    {!! BBbutton2('unit','default_value','form_layout','Select Layout',['class'=>'form-control']) !!}
+                </div>
+                <div class="col-md-3">
+                    <a class="bty-btn bty-btn-add pull-right m-r-5 select-field"><span>ADD Field</span></a>
                 </div>
             </div>
 
@@ -158,158 +155,9 @@
             </div>
         </div>
 
-
-        <span class="bty-hover-15 bty-f-s-34">Form Preview</span>
+        {{--<span class="bty-hover-15 bty-f-s-34">Form Preview</span>--}}
         <div class="col-md-12 bb-menu-container">
-
-            <!-- TEST -->
-            <style>
-                @import url(https://fonts.googleapis.com/css?family=Bree+Serif);
-
-                /*******************
-                SELECTION STYLING
-                *******************/
-
-                ::selection {
-                    color: #fff;
-                    background: #f676b2; /* Safari */
-                }
-                ::-moz-selection {
-                    color: #fff;
-                    background: #f676b2; /* Firefox */
-                }
-
-                .login-form {
-                    width: 80%;
-                    margin: 0 auto;
-                    position: relative;
-
-                    background: #f3f3f3;
-                    border: 1px solid #fff;
-                    border-radius: 5px;
-
-                    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-                    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-                    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-                }
-
-                .login-form .header {
-                    padding: 10px 30px 30px 30px;
-                    text-align: center;
-                }
-
-                .login-form .header h1 {
-                    font-family: 'Bree Serif', serif;
-                    font-weight: 300;
-                    font-size: 28px;
-                    line-height:34px;
-                    color: #414848;
-                    text-shadow: 1px 1px 0 rgba(256,256,256,1.0);
-                    margin-bottom: 10px;
-                }
-
-                .login-form .header span {
-                    font-size: 11px;
-                    line-height: 16px;
-                    color: #678889;
-                    text-shadow: 1px 1px 0 rgba(256,256,256,1.0);
-                }
-
-                .login-form .content {
-                    padding: 0 30px 25px 30px;
-                }
-
-                .login-form .footer {
-                    padding: 15px;
-                    overflow: auto;
-
-                    background: #d4dedf;
-                    border-top: 1px solid #fff;
-
-                    box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
-                    -moz-box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
-                    -webkit-box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
-                }
-
-                /* Login button */
-                .login-form .footer .button {
-                    float:right;
-                    padding: 11px 25px;
-
-                    font-family: 'Bree Serif', serif;
-                    font-weight: 300;
-                    font-size: 18px;
-                    color: #fff;
-                    text-shadow: 0px 1px 0 rgba(0,0,0,0.25);
-
-                    background: #56c2e1;
-                    border: 1px solid #46b3d3;
-                    border-radius: 5px;
-                    cursor: pointer;
-
-                    box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
-                    -moz-box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
-                    -webkit-box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
-                }
-
-                .login-form .footer .button:hover {
-                    background: #3f9db8;
-                    border: 1px solid rgba(256,256,256,0.75);
-
-                    box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
-                    -moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
-                    -webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
-                }
-
-                .login-form .footer .button:focus {
-                    position: relative;
-                    bottom: -1px;
-
-                    background: #56c2e1;
-
-                    box-shadow: inset 0 1px 6px rgba(256,256,256,0.75);
-                    -moz-box-shadow: inset 0 1px 6px rgba(256,256,256,0.75);
-                    -webkit-box-shadow: inset 0 1px 6px rgba(256,256,256,0.75);
-                }
-
-                .login-form .footer .register:hover {
-                    color: #3f9db8;
-                }
-
-                .login-form .footer .register:focus {
-                    position: relative;
-                    bottom: -1px;
-                }
-            </style>
-
-            <div class="login-form">
-
-                <div class="header">
-                    <h1>Create Post</h1>
-                    <span>Fill out the form below to create new post</span>
-                </div>
-
-                <div class="content">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="bb-form-area connectedSortable"></div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="bb-form-area connectedSortable"></div>
-                        </div>
-                        <div class="col-md-12" style="margin-top: 20px;">
-                            <div class="bb-form-area connectedSortable"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="footer">
-                    <input type="submit" name="submit" value="Save" class="button" />
-                </div>
-
-            </div>
-            <!-- END TEST -->
-
+            <div class="bb-form-area"></div>
         </div>
 
         <input type="hidden" name="fields" value="{}" id="existing-fields"/>
@@ -486,10 +334,23 @@
 
             // Change layout "DEMO"
             $('[name=default_value]').on('change', function (){
-                var $this = $(this),
-                    layout = $this.attr("data-layout");
+                $.ajax({
+                    url: "{!! url('admin/console/bburl/render-unit') !!}",
+                    data: {
+                        id: $(this).val()
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $("input[name='_token']").val()
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        var layout = data.html;
+                        $('.bb-menu-container').html(layout);
 
-                console.log($(this).val());
+                        activateSortable();
+                    },
+                    type: 'POST'
+                });
             });
 
             @if(isset($form) and $form->fields_json)
