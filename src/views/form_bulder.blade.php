@@ -184,7 +184,7 @@
         <div class="bb-form-area"></div>
     </div>
 
-    <input type="hidden" name="fields" value="{}" id="existing-fields"/>
+    <input type="hidden" name="fields_json" value="{}" id="existing-fields"/>
     {{--<input type="hidden" name="fields_html" value=""/>--}}
     {{--<input type="hidden" name="fields_json" value="[]"/>--}}
 </div>
