@@ -245,4 +245,17 @@ class IndexConroller extends Controller
             return BBGetUser($post->author_id);
         })->rawColumns(['actions'])->make(true);
     }
+
+    public function createPosts()
+    {
+        $data=array();
+        for ($i=0;$i<25000;$i++){
+            $data['author_id']=1;
+            $data['title']=str_random(10);
+            $data['description']=str_random(200);
+            $data['slug']=str_random(10);
+            $data['status']=1;
+        }
+       return Post::created($data);
+    }
 }

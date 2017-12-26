@@ -26,6 +26,7 @@
 Route::get('/', 'IndexConroller@getIndex',true);
 Route::get('/posts', 'IndexConroller@getPosts',true);
 Route::get('/posts-data', 'IndexConroller@postsData')->name('postsData');
+Route::get('/create-data', 'IndexConroller@createPosts');
 Route::get('/new-post', 'IndexConroller@getNewPost',true);
 //Route::post('/new-post', 'IndexConroller@postNewPost');
 Route::post('/get-fields', 'IndexConroller@getFieldsByTable');
