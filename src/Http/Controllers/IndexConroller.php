@@ -252,12 +252,13 @@ class IndexConroller extends Controller
         set_time_limit(-1);
         ini_set('memory_limit', '2048M');
         $data=array();
-        for ($i=0;$i<100;$i++){
+        for ($i=0;$i<500;$i++){
             $data[$i]['author_id']=1;
             $data[$i]['title']=str_random(5);
             $data[$i]['description']=str_random(10);
+            $data[$i]['image']='images/posts/5a26da145b969.jpg';
             $data[$i]['slug']=str_random(5);
-            $data[$i]['status']=1;
+            $data[$i]['status']='published';
         }
         return \DB::table('posts')->insert($data);
     }
