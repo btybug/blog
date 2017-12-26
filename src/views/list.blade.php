@@ -40,7 +40,9 @@
                         columns: ':not(.noVis)'
                     }
                 ]
-                ,
+                ,colReorder: {
+                    realtime: false
+                },
                 columns: [
                     { data: 'id', name: 'id' },
                     { data: 'description', name: 'description' },
