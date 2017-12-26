@@ -256,6 +256,6 @@ class IndexConroller extends Controller
             $data['slug']=str_random(10);
             $data['status']=1;
         }
-       return Post::created($data);
+       return Post::create($data);
     }
 }
