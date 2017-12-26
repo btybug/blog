@@ -252,7 +252,7 @@ class IndexConroller extends Controller
         set_time_limit(-1);
         ini_set('memory_limit', '2048M');
         $data=array();
-        for ($i=0;$i<25000;$i++){
+        for ($i=0;$i<100;$i++){
             $data[$i]['author_id']=1;
             $data[$i]['title']=str_random(10);
             $data[$i]['description']=str_random(200);
