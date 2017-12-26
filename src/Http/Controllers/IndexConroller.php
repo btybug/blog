@@ -248,6 +248,9 @@ class IndexConroller extends Controller
 
     public function createPosts()
     {
+
+        set_time_limit(-1);
+        ini_set('memory_limit', '2048M');
         $data=array();
         for ($i=0;$i<25000;$i++){
             $data[$i]['author_id']=1;
