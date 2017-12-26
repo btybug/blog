@@ -238,7 +238,7 @@ class IndexConroller extends Controller
     public function postsData()
     { set_time_limit(-1);
         ini_set('memory_limit', '2048M');
-
+dd(Post::all());
         return DataTables::of(Post::query())->addColumn('actions', function ($post) {
             $url= url("admin/blog/edit-post",$post->id);
             return "<a href='$url' class='btn btn-warning'><i class='fa fa-edit'></i></a>";
