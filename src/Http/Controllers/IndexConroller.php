@@ -9,6 +9,7 @@ use Btybug\Console\Repository\FormsRepository;
 use Btybug\Console\Services\FieldService;
 use Btybug\Console\Services\FormService;
 use Btybug\User\Repository\RoleRepository;
+use BtyBugHook\Blog\Models\Post;
 use Illuminate\Http\Request;
 use Btybug\btybug\Models\Templates\Units;
 use Btybug\Console\Repository\FrontPagesRepository;
@@ -18,6 +19,7 @@ use BtyBugHook\Blog\Http\Requests\CreatePostRequest;
 use BtyBugHook\Blog\Http\Requests\PostSettingsRequest;
 use BtyBugHook\Blog\Repository\PostsRepository;
 use BtyBugHook\Blog\Services\PostsService;
+use Yajra\DataTables\DataTables;
 
 class IndexConroller extends Controller
 {
@@ -230,5 +232,16 @@ class IndexConroller extends Controller
         if( ! $form) abort(404,"Form not found");
 
         return view('blog::forms.view',compact('form'));
+    }
+
+    public function postsData()
+    {
+        return DataTables::of(Post::query())->addColumn('actions', function ($post) {
+            $url= url("admin/blog/edit-post",$post->id);
+            return "<a href='$url' class='btn btn-warning'><i class='fa fa-edit'></i></a>";
+        },2)->addColumn('author', function ($post) {
+
+            return BBGetUser($post->author_id);
+        })->rawColumns(['actions'])->make(true);
     }
 }

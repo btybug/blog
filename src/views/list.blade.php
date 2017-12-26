@@ -1,10 +1,11 @@
 @extends('btybug::layouts.admin')
 @section('content')
+
     <div role="tabpanel" class="m-t-10" id="main">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 main_container_11">
-            <table class="table table-bordered" id="tpl-table">
+            <table class="table table-bordered" id="users-table">
                 <thead>
-                <tr class="bg-black-darker text-white">
+                <tr>
                     <th>id</th>
                     <th>Description</th>
                     <th>Image</th>
@@ -13,31 +14,6 @@
                     <th>Created date</th>
                     <th>Actions</th>
                 </thead>
-                <tbody>
-                @if(count($posts))
-                    @foreach($posts as $post)
-                        <tr>
-                            <th>{{ $post->title }}</th>
-                            <th>{{ $post->description }}</th>
-                            <th width="100px">
-                                {{--<img src="{!! url($post->image) !!}" class="img-responsive">--}}
-                            </th>
-                            <th>{{ BBGetUser($post->author_id) }}</th>
-                            <th>{{ $post->status }}</th>
-                            <th>{{ BBgetDateFormat($post->created_at) }}</th>
-                            <th>
-                                <a href="{!! url("admin/blog/edit-post",$post->id) !!}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                            </th>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <th  colspan="7" class="text-center">
-                            No posts
-                        </th>
-                    </tr>
-                @endif
-                </tbody>
             </table>
         </div>
     </div>
@@ -46,4 +22,22 @@
 @section('CSS')
 @stop
 @section('JS')
+    <script>
+        $(function() {
+            $('#users-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('postsData') !!}',
+                columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'description', name: 'description' },
+                    { data: 'image', name: 'image' },
+                    { data: 'author', name: 'author' },
+                    { data: 'status', name: 'status' },
+                    { data: 'updated_at', name:'updated_at' },
+                    { data: 'actions', name: 'actions' }
+                ]
+            });
+        });
+    </script>
 @stop
