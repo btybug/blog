@@ -1,3 +1,6 @@
+@php
+    $page = \Btybug\btybug\Services\RenderService::getPageByURL();
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,116 +25,46 @@
 
     {!! BBstyle(plugins_path("vendor/btybug.hook/blog/src/Assets/css/form-builder.css")) !!}
     {!! BBscript(plugins_path("vendor/btybug.hook/blog/src/Assets/js/form-builder.js")) !!}
+
+    {!! HTML::style('public-x/custom/css/'.str_replace(' ','-',$page->slug).'.css') !!}
+    {!! HTML::script('public-x/custom/js/'.str_replace(' ','-',$page->slug).'.js') !!}
 </head>
 <body>
-
-<style>
-    .ui-sortable-handle:hover, .ui-sortable > div:hover {
-        outline: 2px dashed #e2e2e2;
-        outline-offset: 5px;
-        cursor: move;
-    }
-
-    .bb-field-actions {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        display: none;
-    }
-
-    .bb-form-generator > .form-group {
-        position: relative;
-    }
-
-    .bb-form-generator > .form-group:hover .bb-field-actions {
-        display: block;
-    }
-
-    [data-toggle="tooltip"] {
-        cursor: help;
-    }
-
-    a.bb-form-layout {
-        margin-right: 30px;
-        text-decoration: none;
-    }
-
-    .bb-form-area:empty {
-        border: 1px dashed #c0c0c0;
-    }
-
-    .bb-form-area:empty:after{
-        content: "Drop Form Fields Here";
-        color: #bdbdbd;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        line-height: 50px;
-    }
-
-    .bb-form-area {
-        min-height: 50px;
-        position: relative;
-    }
-
-    .bb-form-area.active {
-        outline: 4px solid #f10101;
-        outline-offset: 5px;
-    }
-</style>
 
 {!! Form::model($form,['route' => 'add_or_update_form_builder']) !!}
 {!! Form::hidden('id',null) !!}
 {!! Form::hidden('fields_type','posts') !!}
-<div class="container-fluid">
-    <div class="col-md-12 m-t-20 m-b-20">
-        <div class="bty-panel-collapse bty-panel-cl-blue">
-            <div>
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
-                   href="#formBuilderCollapse" aria-expanded="true">
-                    <span class="icon"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
-                    <span class="title">General</span>
-                </a>
-            </div>
-            <div id="formBuilderCollapse" class="collapse in" aria-expanded="true" style="">
-                <div class="content" style="overflow: hidden;">
-                    <div class="col-md-12">
-                        <div class="col-md-8">
-                            <div class="col-md-4">
-                                <span class="bty-hover-17 bty-f-s-20">Form name</span>
-                            </div>
-                            <div class="col-md-8">
-                                {!! Form::text('name',null,['class' => 'bty-input-label-2 m-t-0', 'placeholder' => 'What is your Form name ?']) !!}
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <button type="submit" class="bty-btn bty-btn-save pull-right m-r-5"><span>Save</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+<div class="bb-form-header">
+    <div class="row">
+        <div class="col-md-8">
+            <label>Form name</label>
+            {!! Form::text('name',null,['class' => 'form-name', 'placeholder' => 'Form Name']) !!}
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="form-save pull-right"><span>Save</span></button>
         </div>
     </div>
+</div>
 
-    {{--all and singel settings--}}
+<div class="bb-form-options">
+
+    <a class="btn btn-default select-field"><i class="fa fa-plus"></i> ADD Field</a>
+
+    <div class="form-layout pull-right">
+        {!! BBbutton2('unit','form_layout','form_layout','Select Layout',['class'=>'form-control']) !!}
+    </div>
+
+    <div class="pull-right">
+        <a class="btn btn-danger form-style" data-toggle="modal" data-target="#formStyle">
+            <span>Form Style</span>
+        </a>
+    </div>
+</div>
+
+<div class="container-fluid">
 
     <div class="bb-form-style">
-
-        <div class="row">
-            <div class="col-md-3">
-                <a class="bty-btn bty-btn-view m-r-5" data-toggle="modal" data-target="#formStyle"><span>Form Style</span></a>
-            </div>
-            <div class="col-md-6">
-                {!! BBbutton2('unit','default_value','form_layout','Select Layout',['class'=>'form-control']) !!}
-            </div>
-            <div class="col-md-3">
-                <a class="bty-btn bty-btn-add pull-right m-r-5 select-field"><span>ADD Field</span></a>
-            </div>
-        </div>
-
-
         <!-- Modal -->
         <div class="modal fade" id="formStyle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -179,14 +112,17 @@
         </div>
     </div>
 
-    {{--<span class="bty-hover-15 bty-f-s-34">Form Preview</span>--}}
-    <div class="col-md-12 bb-menu-container">
-        <div class="bb-form-area"></div>
+    <div class="form-preview">
+        Form Preview
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 bb-form-container">
+            <div class="bb-form-area"></div>
+        </div>
     </div>
 
     <input type="hidden" name="fields_json" value="{}" id="existing-fields"/>
-    {{--<input type="hidden" name="fields_html" value=""/>--}}
-    {{--<input type="hidden" name="fields_json" value="[]"/>--}}
 </div>
 {!! Form::close() !!}
 @include('resources::assests.deleteModal')
@@ -277,9 +213,20 @@
             .on("click", ".select-field", function () {
                 var table = "posts";
                 var fields = $("#existing-fields").val();
+                var fieldsJSON = JSON.parse(fields);
+                var existingFields = [];
+
+                if(Object.keys(fieldsJSON).length > 0){
+                    $.each(fieldsJSON, function (index, group){
+                        console.log(existingFields, group);
+                        existingFields = existingFields.concat(group);
+                        console.log(existingFields);
+                    });
+                }
+
                 $.ajax({
                     url: "{!! url('admin/blog/get-fields') !!}",
-                    data: {table: table, fields: fields},
+                    data: {table: table, fields: JSON.stringify(existingFields)},
                     headers: {
                         'X-CSRF-TOKEN': $("input[name='_token']").val()
                     },
@@ -313,8 +260,8 @@
                     type: 'POST'
                 });
 
-                reload_js('/public-x/custom/js/form_build_assets.js');
-                reload_css('/public-x/custom/css/form_build_assets.css');
+                // reload_js('/public-x/custom/js/form_build_assets.js');
+                // reload_css('/public-x/custom/css/form_build_assets.css');
             })
             // Change form style
             .on("click", ".bb-field-style>a", function () {
@@ -356,7 +303,9 @@
                 dataType: 'json',
                 success: function (data) {
                     var layout = data.html;
-                    $('.bb-menu-container').html(layout);
+                    $('.bb-form-container').html(layout);
+
+                    $("#existing-fields").val("[]");
 
                     activateSortable();
 
@@ -372,30 +321,35 @@
         var fieldsJSON = {!! $form->fields_json !!};
 
         if (fieldsJSON.length > 0) {
-            addFieldsToFormArea(fieldsJSON);
+            $.each(fieldsJSON, function (index, group){
+                console.log(group);
+                addFieldsToFormArea(group, index);
+            });
         }
         @endif
 
         // Add fields to form area
-        function addFieldsToFormArea(fieldsJSON) {
+        function addFieldsToFormArea(fieldsJSON, position) {
             // Mark sortable areas
             $('.bb-form-area').each(function (i){
                 $(this).attr("data-sortable", i);
             });
+
+            if(!position) position = 0;
 
             // Build form
             var activeFormArea = $('.bb-form-area.active');
             if(activeFormArea.length === 1){
                 activeFormArea.html(formBuilder(fieldsJSON, activeFormArea.data("sortable")));
             }else{
-                $('[data-sortable=0]').html(formBuilder(fieldsJSON, 0));
+                $('[data-sortable='+position+']').html(formBuilder(fieldsJSON, position));
             }
 
             // Tooltip
             $('[data-toggle="tooltip"]').tooltip();
 
             // Add action button to fields
-            $('.bb-form-generator>.form-group').each(function () {
+            $('[data-sortable='+position+']>.form-group').each(function () {
                 var $this = $(this),
                     actionsTemplate = $('#actions-template').html(),
                     id = $this.attr("data-field-id");
