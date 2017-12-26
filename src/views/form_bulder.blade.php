@@ -291,7 +291,7 @@
             });
 
         // Change layout "DEMO"
-        $('[name=default_value]').on('change', function (){
+        $('[name=form_layout]').on('change', function (){
             $.ajax({
                 url: "{!! url('admin/console/bburl/render-unit') !!}",
                 data: {
