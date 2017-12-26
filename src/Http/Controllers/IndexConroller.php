@@ -254,9 +254,9 @@ class IndexConroller extends Controller
         $data=array();
         for ($i=0;$i<100;$i++){
             $data[$i]['author_id']=1;
-            $data[$i]['title']=str_random(10);
-            $data[$i]['description']=str_random(200);
-            $data[$i]['slug']=str_random(10);
+            $data[$i]['title']=str_random(5);
+            $data[$i]['description']=str_random(10);
+            $data[$i]['slug']=str_random(5);
             $data[$i]['status']=1;
         }
         return \DB::table('posts')->insert($data);
