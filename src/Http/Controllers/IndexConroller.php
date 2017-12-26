@@ -250,11 +250,11 @@ class IndexConroller extends Controller
     {
         $data=array();
         for ($i=0;$i<25000;$i++){
-            $data['author_id']=1;
-            $data['title']=str_random(10);
-            $data['description']=str_random(200);
-            $data['slug']=str_random(10);
-            $data['status']=1;
+            $data[$i]['author_id']=1;
+            $data[$i]['title']=str_random(10);
+            $data[$i]['description']=str_random(200);
+            $data[$i]['slug']=str_random(10);
+            $data[$i]['status']=1;
         }
        return Post::create($data);
     }
