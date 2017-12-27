@@ -18,19 +18,25 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sort<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">sub 1</a></li>
-                            <li><a href="#">sub 2</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">sub 3</a></li>
-                            <li><a href="#exit">sub 4</a></li>
-                        </ul>
+                        @if(isset($settings["custom_sort"]))
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sort<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">sub 1</a></li>
+                                <li><a href="#">sub 2</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">sub 3</a></li>
+                                <li><a href="#exit">sub 4</a></li>
+                            </ul>
+                            {{--@if(isset($settings["custom_sort_by"]))
+                                <ul class="dropdown-menu" role="menu">
+                                    @foreach($settings["custom_sort_by"] as $sort_by)
+                                        <li><a href="#">{{$sort_by}}</a></li>
+                                    @endforeach
+                                </ul>
+                            @endif--}}
+                        @endif
                     </li>
-                    {{--<li class="active"><a href="#">Grid</a></li>--}}
                     <li>
-                        {{--<input name="radionav" type="radio" class="bty-input-radio-3" id="bty-navradio-1">--}}
-                        {{--<label for="bty-navradio-1"></label>--}}
                         <input name="radionav" type="radio" class="bty-navradio nv-1" id="bty-navradio-1" checked>
                         <label for="bty-navradio-1"></label>
                     </li>
@@ -40,9 +46,11 @@
                     </li>
 
                 </ul>
-                <form class="navbar-form text-center search-form" role="search">
-                    <input type="search" class="form-control" placeholder="Search" />
-                </form>
+                @if(isset($settings["custom_search"]))
+                    <form class="navbar-form text-center search-form" role="search">
+                        <input type="search" class="form-control" placeholder="Search" />
+                    </form>
+                @endif
             </div>
         </div>
     </nav>
