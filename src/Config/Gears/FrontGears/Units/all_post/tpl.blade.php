@@ -26,14 +26,12 @@
                                         </div>
                                     </div>
                                     <div class="content-footer">
-                                        <img class="user-small-img"
-                                             src="{!! url(BBGetUserAvatar($post->author_id)) !!}">
+                                        <img class="user-small-img" src="{!! url(BBGetUserAvatar($post->author_id)) !!}">
                                         <span style="font-size: 16px;color: #fff;"><a href="">{!! BBGetUserName($post->id) !!}</a></span>
                                         <span class="pull-right">
-				<a href="#" data-toggle="tooltip" data-placement="left" title="Comments"><i class="fa fa-comments"></i> 30</a>
-				<a href="#" data-toggle="tooltip" data-placement="right" title="Loved"><i
-                            class="fa fa-heart"></i> 20</a>
-				</span>
+                                            <a href="#" data-toggle="tooltip" data-placement="left" title="Comments"><i class="fa fa-comments"></i> 30</a>
+                                            <a href="#" data-toggle="tooltip" data-placement="right" title="Loved"><i class="fa fa-heart"></i> 20</a>
+                                        </span>
                                     </div>
                                 </aside>
                             </div>
