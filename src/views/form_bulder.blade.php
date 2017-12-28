@@ -1,7 +1,6 @@
 @php
     $page = \Btybug\btybug\Services\RenderService::getPageByURL();
 @endphp
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -178,13 +177,17 @@
     }
 
     function reload_css(href) {
-        $('link[href="' + href + '"]').remove();
         $('<link>').attr({
             'href': href,
             'type': 'text/css',
             'rel': 'stylesheet',
             'media': 'all'
         }).appendTo('head');
+
+        if($('link[href="' + href + '"]').length > 1){
+            $('link[href="' + href + '"]').first().remove();
+        }
+
     }
 </script>
 
@@ -293,10 +296,15 @@
 
         // Change layout "DEMO"
         $('[name=form_layout]').on('change', function (){
+            var layout = $(this).val();
+            loadLayout(layout);
+        });
+
+        function loadLayout(layout, onSuccess){
             $.ajax({
                 url: "{!! url('admin/console/bburl/render-unit') !!}",
                 data: {
-                    id: $(this).val()
+                    id: layout
                 },
                 headers: {
                     'X-CSRF-TOKEN': $("input[name='_token']").val()
@@ -306,27 +314,33 @@
                     var layout = data.html;
                     $('.bb-form-container').html(layout);
 
-                    $("#existing-fields").val("[]");
+                    $("#existing-fields").val("{}");
 
                     activateSortable();
+
+                    if(onSuccess){
+                        onSuccess();
+                    }
 
                     reload_js('/public-x/custom/js/form_build_assets.js');
                     reload_css('/public-x/custom/css/form_build_assets.css');
                 },
                 type: 'POST'
             });
-        });
+        }
 
         @if(isset($form) and $form->fields_json)
         // Default values
         var fieldsJSON = {!! $form->fields_json !!};
+        var layout = '{!! $form->form_layout !!}';
 
-        if (fieldsJSON.length > 0) {
-            $.each(fieldsJSON, function (index, group){
-                console.log(group);
-                addFieldsToFormArea(group, index);
-            });
-        }
+        loadLayout(layout, function (){
+            if (fieldsJSON.length > 0) {
+                $.each(fieldsJSON, function (index, group){
+                    addFieldsToFormArea(group, index);
+                });
+            }
+        });
         @endif
 
         // Add fields to form area
@@ -366,9 +380,6 @@
             var existingFields = $("#existing-fields"),
                 existingFieldsData = JSON.parse(existingFields.val());
 
-            // var fieldsJSON = $('[name=fields_json]'),
-            //     fieldsJSONData = JSON.parse(fieldsJSON.val());
-            //
             var fieldsHTMLData = $('[data-sortable=' + position + ']').html();
 
             $(fields).each(function (index, field) {
@@ -376,9 +387,6 @@
                 if(!existingFieldsData[position]) existingFieldsData[position] = [];
                 existingFieldsData[position].push(field.object.id);
 
-                // // Add fields json
-                // fieldsJSONData.push(field);
-                //
                 // Render fields
                 fieldsHTMLData += renderFormField(field);
             });
@@ -386,12 +394,6 @@
             // Add existing fields to hidden input
             existingFields.val(JSON.stringify(existingFieldsData));
 
-            // // Add fields json to hidden input
-            // fieldsJSON.val(JSON.stringify(fieldsJSONData));
-            //
-            // // Add rendered fields html to hidden input
-            // fieldsHTML.val(fieldsHTMLData);
-            //
             return fieldsHTMLData;
         }
 
@@ -455,52 +457,30 @@
             return fieldTemplate;
         }
 
-        // Resort fields json
-        function resortJSON(order) {
-            var fieldsJSON = $('[name=fields_json]'),
-                fieldsJSONData = JSON.parse(fieldsJSON.val()),
-                sortedJSON = [];
-
-            // var fieldsHTML = $('[name=fields_html]'),
-            //     fieldsHTMLData = "";
-
-            order.forEach(function (key) {
-                var found = false;
-                fieldsJSONData = fieldsJSONData.filter(function (item) {
-                    console.log(item.object.id, key);
-                    if (!found && item.object.id === key) {
-                        sortedJSON.push(item);
-
-                        // // Render fields
-                        // fieldsHTMLData += renderFormField(item);
-                        found = true;
-                        return false;
-                    } else
-                        return true;
-                })
-            });
-
-            fieldsJSON.val(JSON.stringify(sortedJSON));
-            // fieldsHTML.val(fieldsHTMLData);
-        }
-
         // Activate sortable
         function activateSortable(){
             // Form sortable
             $('.bb-form-area').sortable({
                 connectWith: ".connectedSortable",
                 stop: function (event, ui) {
-                    var ids = [];
+                    var fieldsJSON = $('[name=fields_json]'),
+                        fieldsJSONData = JSON.parse(fieldsJSON.val());
 
-                    $('.bb-form-generator>.form-group').each(function () {
-                        var id = $(this).attr("data-field-id");
-                        ids.push(parseInt(id));
+                    $('.bb-form-area').each(function (){
+
+                        var ids = [],
+                            container = $(this),
+                            sortableIndex = container.attr('data-sortable');
+
+                        container.find('.form-group').each(function () {
+                            var id = $(this).attr("data-field-id");
+                            ids.push(parseInt(id));
+                        });
+
+                        fieldsJSONData[sortableIndex] = ids;
                     });
 
-                    $('[name=fields]').val(JSON.stringify(ids));
-
-                    // Resort JSON
-                    resortJSON(ids);
+                    fieldsJSON.val(JSON.stringify(fieldsJSONData));
                 }
             });
         }
