@@ -1,6 +1,8 @@
 @php
     $page = \Btybug\btybug\Services\RenderService::getPageByURL();
 @endphp
+
+{!! $form !!}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +22,7 @@
     {!! HTML::script('public/css/bootstrap/js/bootstrap-switch.min.js') !!}
     {!! HTML::script('public/css/font-awesome/js/fontawesome-iconpicker.min.js') !!}
     {!! HTML::script('public/js/jquery-ui/jquery-ui.min.js') !!}
-    {{--{!! HTML::script("/public/js/UiElements/bb_styles.js?v.5") !!}--}}
+    {!! HTML::script("/public/js/UiElements/bb_styles.js?v.5") !!}
     {!! BBscript(plugins_path("vendor/btybug.hook/blog/src/Assets/js/blog-fields.js")) !!}
 
     {!! BBstyle(plugins_path("vendor/btybug.hook/blog/src/Assets/css/form-builder.css")) !!}
