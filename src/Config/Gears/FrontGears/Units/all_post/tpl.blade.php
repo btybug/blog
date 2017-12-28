@@ -90,6 +90,14 @@
         </div>
     </div>
 
+    @phpPagination($settings)
+        {!! $postRepo->paginationSettings($settings)->links() !!}
+    @loadMore($settings)
+
+    @scroll($settings)
+
+    @endphpPagination
+
 
     {{--<div class="container">
         <div class="row">

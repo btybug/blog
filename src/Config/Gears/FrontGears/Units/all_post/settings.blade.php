@@ -133,30 +133,28 @@ $post = $postRepo->first()->toArray();
 
         <div class="bty-panel-collapse">
             <div>
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#sorting"
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#pagination"
                    aria-expanded="true">
                     <span class="icon"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
                     <span class="title">Pagination system</span>
                 </a>
             </div>
-            <div id="sorting" class="collapse in" aria-expanded="true" style="">
+            <div id="pagination" class="collapse in" aria-expanded="true" style="">
                 <div class="content bty-settings-panel">
                     <div class="pagin-number">
                         <div>
                             <h5>Pagination:</h5>
                             <div class="bty-input-select-1">
-                                <select>
-                                    <option>Choose Option</option>
-                                    <option>Option 1</option>
-                                    <option>Option 2</option>
-                                    <option>Option 3</option>
-                                    <option>Option 4</option>
+                                <select name="custom_pagination">
+                                    <option value="php" {{ (isset($settings['custom_pagination']) && $settings["custom_pagination"] == "php") ? "selected" : "" }}>PHP pagiantion</option>
+                                    <option value="load" {{ (isset($settings['custom_pagination']) && $settings["custom_pagination"] == "load") ? "selected" : "" }}>Load more button</option>
+                                    <option value="scroll" {{ (isset($settings['custom_pagination']) && $settings["custom_pagination"] == "scroll") ? "selected" : "" }}>Scrolling</option>
                                 </select>
                             </div>
                         </div>
                         <div>
                             <h5>Limit page:</h5>
-                                <input class="bty-setting-numner" type="number" placeholder="count" value="10">
+                                <input class="bty-setting-numner" name="custom_limit_per_page" min="5" type="number" placeholder="count" value="{{ isset($settings["custom_limit_per_page"]) ? $settings["custom_limit_per_page"] : 10 }}">
                         </div>
                     </div>
                 </div>

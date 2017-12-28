@@ -19,6 +19,10 @@ class PostsRepository extends GeneralRepository
         return $this->model->where('status', 'published')->orWhere('status',1)->limit(10)->get();
     }
 
+    public function paginationSettings($settings){
+        return $result = $this->model->where('status', 'published')->orWhere('status',1)->paginate($settings["custom_limit_per_page"]);
+    }
+
     public function getPublishedByUrl($slug)
     {
         return $this->model->where('status', 'published')->where('slug',$slug)->first();
