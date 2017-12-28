@@ -1,5 +1,5 @@
 nav.bty-navbar-blog form input[type=search]{ width: 50%;}
-nav.bty-navbar-blog { background: #545454; border-color: #ccc; box-shadow: 0 0 2px 0 #ccc; }
+nav.bty-navbar-blog { background: #545454; border-color: #ccc; box-shadow: 0 0 2px 0 #ccc; margin: 0;}
 nav.bty-navbar-blog a { color: #499bc7; }
 nav.bty-navbar-blog ul.navbar-nav a { color: #fff; border-style: solid; border-width: 0 0 2px 0; border-color: #fff; }
 nav.bty-navbar-blog ul.navbar-nav a:hover,
@@ -352,4 +352,7 @@ nav.bty-navbar-blog .bty-navradio.nv-2:checked + label:before{
     text-overflow: ellipsis;
     overflow: hidden;
     display: block;
+}
+#blog-section .bty-all-blog{
+    margin-top: 25px;
 }
