@@ -14,17 +14,29 @@ $post = $postRepo->first()->toArray();
             </div>
             <div id="general" class="collapse in" aria-expanded="true" style="">
                 <div class="content bty-settings-panel">
-                    <div>
-                        <h5>Show search input:</h5>
-                        {{--<input type="checkbox" name="custom_search" class="show_search_input">--}}
-                        <input name="custom_search" type="checkbox" class="show_search_input bty-input-checkbox-5"
-                               id="bty-checkbox-search-set">
-                        <label for="bty-checkbox-search-set"></label>
+                    <div class="general-head">
+                        <div>
+                            <h5>Show search input:</h5>
+                            <input name="custom_search" type="checkbox" class="show_search_input bty-input-checkbox-5"
+                                   id="bty-checkbox-search-set">
+                            <label for="bty-checkbox-search-set"></label>
+                        </div>
+                        <div class="grid-list">
+                            <div>
+                                <input name="gridlist" type="radio" class="bty-input-radio-1" id="bty-sort-grid">
+                                <label for="bty-sort-grid">GRID</label>
+                            </div>
+                            <div>
+                                <input name="gridlist" type="radio" class="bty-input-radio-1" id="bty-sort-list">
+                                <label for="bty-sort-list">LIST</label>
+                            </div>
+                        </div>
                     </div>
                     <div class="custom_search_div_for_append {{!isset($settings["custom_search"])?"custom_hidden_for_search_div":""}}">
                         <h6>Search by:</h6>
-                        <div>
-                            <select name="custom_search_by[]" class="form-control" id="custom_search_by" multiple="multiple">
+                        <div class="select-search">
+                            <select name="custom_search_by[]" class="form-control" id="custom_search_by"
+                                    multiple="multiple">
                                 <option value="id" selected>ID</option>
                                 @foreach($post as $key => $val)
                                     @if($key === 'id')
@@ -78,10 +90,14 @@ $post = $postRepo->first()->toArray();
                                         </select>
                                     </div>
                                     <div>
-                                        <input name="custom_sort_how" type="radio" class="bty-input-radio-1" id="bty-sort-asc" value="ASC" {{(isset($settings["custom_sort_how"]) && $settings["custom_sort_how"] == 'ASC')?"selected":""}}>
+                                        <input name="custom_sort_how" type="radio" class="bty-input-radio-1"
+                                               id="bty-sort-asc"
+                                               value="ASC" {{(isset($settings["custom_sort_how"]) && $settings["custom_sort_how"] == 'ASC')?"selected":""}}>
                                         <label for="bty-sort-asc">ASC:</label>
 
-                                        <input name="custom_sort_how" type="radio" class="bty-input-radio-1" id="bty-sort-desc" value="DESC" {{(isset($settings["custom_sort_how"]) && $settings["custom_sort_how"] == 'DESC')?"selected":""}}>
+                                        <input name="custom_sort_how" type="radio" class="bty-input-radio-1"
+                                               id="bty-sort-desc"
+                                               value="DESC" {{(isset($settings["custom_sort_how"]) && $settings["custom_sort_how"] == 'DESC')?"selected":""}}>
                                         <label for="bty-sort-desc">DESC:</label>
                                     </div>
                                 </div>
@@ -114,12 +130,46 @@ $post = $postRepo->first()->toArray();
                 </div>
             </div>
         </div>
+
+        <div class="bty-panel-collapse">
+            <div>
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#sorting"
+                   aria-expanded="true">
+                    <span class="icon"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+                    <span class="title">Pagination system</span>
+                </a>
+            </div>
+            <div id="sorting" class="collapse in" aria-expanded="true" style="">
+                <div class="content bty-settings-panel">
+                    <div class="pagin-number">
+                        <div>
+                            <h5>Pagination:</h5>
+                            <div class="bty-input-select-1">
+                                <select>
+                                    <option>Choose Option</option>
+                                    <option>Option 1</option>
+                                    <option>Option 2</option>
+                                    <option>Option 3</option>
+                                    <option>Option 4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <h5>Limit page:</h5>
+                                <input class="bty-setting-numner" type="number" placeholder="count" value="10">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>
 {!!  BBstyle($_this->path.'/css/settings.css') !!}
 {!!  BBstyle($_this->path.'/css/custom.css') !!}
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 {!!  BBscript($_this->path.'/js/custom.js') !!}

@@ -62,9 +62,92 @@
     -webkit-box-shadow: inset 0 0 0 10px #1f8248;
     box-shadow: inset 0 0 0 10px #1f8248;
 }
+.bty-settings-panel .select-search{
+    position: relative;
+    overflow: hidden;
+    display: block;
+}
+.bty-settings-panel .select-search .select2-container--default .select2-selection--multiple{
+    background: #2c3e50;
+    border: none;
+    padding: 8px 0;
+}
+.bty-settings-panel .select-search select{
+    cursor: pointer;
+}
+.bty-settings-panel .select-search .select2-container--default .select2-selection--multiple .select2-selection__rendered li{
+    margin-top: 2px;
+}
+.bty-settings-panel .select-search .select2-container--default .select2-selection--multiple .select2-selection__choice{
+    background-color: #fafafa;
+    color: #444;
+}
+.bty-settings-panel .select-search .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+    color: #0c0c0c;
+    margin-right: 4px;
+}
+.bty-settings-panel .select-search .select2-container .select2-search--inline .select2-search__field{
+    margin-top: 0;
+}
+.bty-settings-panel .select-search:after{
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px 1em;
+    background: #34495e;
+    pointer-events: none;
+}
+.bty-settings-panel .grid-list{
+    display: flex;
+    justify-content: center;
+}
+.bty-settings-panel .general-head{
+    display: flex;
+    justify-content: space-between;
+}
+.bty-settings-panel .grid-list>div{
+    align-self: center;
+}
+.bty-settings-panel .pagin-number{
+    display: flex;
+    justify-content: space-between;
+}
+.bty-settings-panel .pagin-number>div{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+.bty-settings-panel .bty-setting-numner{
+    padding: 11px 5px;
+    color: white;
+    background-color: #2c3e50;
+    border: 0;
+    border-radius: 4px;
+    position: relative;
+}
+.bty-settings-panel .bty-setting-numner:focus{
+    outline: none;
+}
+/*.bty-settings-panel .bty-setting-numner::-webkit-inner-spin-button,*/
+/*.bty-settings-panel .bty-setting-numner::-webkit-outer-spin-button {*/
+    /*!*-webkit-appearance: none;*!*/
+    /*margin: 0;*/
+/*}*/
+/*.bty-settings-panel .bty-setting-numner::-webkit-inner-spin-button{*/
+    /*content: '\f067';*/
+    /*font-family: FontAwesome;*/
+    /*color: black !important;*/
+    /*width: 20px;*/
+    /*height: 100%;*/
+    /*right: 0;*/
+    /*top: 0;*/
+    /*bottom: 0;*/
+    /*background-color: #fff;*/
+    /*z-index: 2;*/
 
-
-
+/*}*/
 
 
 
