@@ -20,7 +20,12 @@ window.onload = function(){
         }
     });
     $("body").delegate(".custom_add_sort_rule","click",function(){
-        $(".custom_sort_append_for_rules").append();
-
+        var content = $(".custom_class_for_copy").html();
+        //console.log(content);
+        $(".custom_sort_append_for_rules").append("<div class='sort-select-ad custom_margin_10'><div class='bty-input-select-1'>" + content + "</div></div>");
+    });
+    $("#custom_search_by").select2({
+        tags: true,
+        width: '100%'
     });
 };
