@@ -2,6 +2,11 @@
     $postRepo = new \BtyBugHook\Blog\Repository\PostsRepository();
     $posts = $postRepo->getPublished();
     $page = \Btybug\btybug\Services\RenderService::getFrontPageByURL();
+
+    $col_md_x = "col-md-4";
+    if (isset($settings["grid_system"]) && $settings["grid_system"] == 'list'){
+        $col_md_x = "col-md-12";
+    }
 @endphp
 
 <section id="blog-section">
@@ -33,11 +38,11 @@
                         @endif
                     </li>
                     <li>
-                        <input name="radionav" type="radio" class="bty-navradio nv-1" id="bty-navradio-1" checked>
+                        <input name="radionav" type="radio" class="bty-navradio nv-1" id="bty-navradio-1" {{ (isset($settings["grid_system"]) && $settings["grid_system"] == 'list') ? "checked" : ""}}>
                         <label for="bty-navradio-1"></label>
                     </li>
                     <li>
-                        <input name="radionav" type="radio" class="bty-navradio nv-2" id="bty-navradio-2">
+                        <input name="radionav" type="radio" class="bty-navradio nv-2" id="bty-navradio-2" {{ (isset($settings["grid_system"]) && $settings["grid_system"] == 'grid') ? "checked" : ""}} {{ !isset($settings["grid_system"])? "checked" : "" }}>
                         <label for="bty-navradio-2"></label>
                     </li>
 
@@ -55,12 +60,6 @@
             <div class="row">
                 @if(count($posts))
                     <ul>
-                        <?php
-                            $col_md_x = "col-md-4";
-                            if (isset($settings["grid_system"]) && isset($settings["grid_system"]) == 'list' ){
-                                $col_md_x = "col-md-12";
-                            }
-                        ?>
                         @foreach($posts as $post)
                             <li class="{{$col_md_x}}">
                                 <figure class="bty-recent-post-3">

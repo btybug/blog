@@ -23,11 +23,11 @@ $post = $postRepo->first()->toArray();
                         </div>
                         <div class="grid-list">
                             <div>
-                                <input name="gridlist" type="radio" class="bty-input-radio-1" id="bty-sort-grid">
+                                <input name="grid_system" value="grid" type="radio" class="bty-input-radio-1" id="bty-sort-grid" {{(isset($settings["grid_system"]) && $settings["grid_system"] === "grid")?"checked":""}} {{ !isset($settings["grid_system"])?"checked":"" }}>
                                 <label for="bty-sort-grid">GRID</label>
                             </div>
                             <div>
-                                <input name="gridlist" type="radio" class="bty-input-radio-1" id="bty-sort-list">
+                                <input name="grid_system" value="list" type="radio" class="bty-input-radio-1" id="bty-sort-list" {{(isset($settings["grid_system"]) && $settings["grid_system"] === "list")?"checked":""}}>
                                 <label for="bty-sort-list">LIST</label>
                             </div>
                         </div>
