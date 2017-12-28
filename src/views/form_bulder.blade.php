@@ -2,7 +2,6 @@
     $page = \Btybug\btybug\Services\RenderService::getPageByURL();
 @endphp
 
-{!! $form !!}
 <!DOCTYPE html>
 <html lang="en">
 <head>
