@@ -2,18 +2,9 @@
   "title": "main variation",
   "id": "all_post.default",
   "settings": {
-    "custom_search": "on",
-    "custom_search_by": [
-      "id",
-      "abo",
-      "title"
-    ],
     "custom_sort": "on",
-    "custom_sort_by": [
-      "id",
-      "abo",
-      "title"
-    ],
-    "custom_sort_how": "ASC"
+    "custom_sort_by": {
+      "id": "id"
+    }
   }
 }

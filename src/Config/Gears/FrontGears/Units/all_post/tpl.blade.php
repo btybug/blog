@@ -21,20 +21,15 @@
                         @if(isset($settings["custom_sort"]))
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-expanded="false">Sort<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">sub 1</a></li>
-                                <li><a href="#">sub 2</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">sub 3</a></li>
-                                <li><a href="#exit">sub 4</a></li>
-                            </ul>
-                            {{--@if(isset($settings["custom_sort_by"]))
+
+                            @if(isset($settings["custom_sort_by"]))
                                 <ul class="dropdown-menu" role="menu">
                                     @foreach($settings["custom_sort_by"] as $sort_by)
                                         <li><a href="#">{{$sort_by}}</a></li>
                                     @endforeach
                                 </ul>
-                            @endif--}}
+                            @endif
+
                         @endif
                     </li>
                     <li>
@@ -58,86 +53,46 @@
     <div class="bty-all-blog">
         <div class="container">
             <div class="row">
-                <ul>
-                    <li class="col-md-4">
-                        <figure class="bty-recent-post-3">
-                            <img src="http://avante.biz/wp-content/uploads/Nice-Wallpapers/Nice-Wallpapers-006.jpg" alt="">
-                            <div>
-                                <span>27</span>
-                                <span>Sep</span>
-                            </div>
-                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                            <figcaption>
-                                <h3>Title lorem 1 lorem</h3>
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has.
-                                </p>
-                                <button>Read More</button>
-                            </figcaption>
-                            <a href="#"></a>
-                        </figure>
-                    </li>
-                    <li class="col-md-4">
-                        <figure class="bty-recent-post-3">
-                            <img src="http://avante.biz/wp-content/uploads/Nice-Wallpapers/Nice-Wallpapers-006.jpg" alt="">
-                            <div>
-                                <span>27</span>
-                                <span>Sep</span>
-                            </div>
-                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                            <figcaption>
-                                <h3>Title lorem 1 lorem</h3>
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has.
-                                </p>
-                                <button>Read More</button>
-                            </figcaption>
-                            <a href="#"></a>
-                        </figure>
-                    </li>
-                    <li class="col-md-4">
-                        <figure class="bty-recent-post-3">
-                            <img src="http://avante.biz/wp-content/uploads/Nice-Wallpapers/Nice-Wallpapers-006.jpg" alt="">
-                            <div>
-                                <span>27</span>
-                                <span>Sep</span>
-                            </div>
-                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                            <figcaption>
-                                <h3>Title lorem 1 lorem</h3>
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has.
-                                </p>
-                                <button>Read More</button>
-                            </figcaption>
-                            <a href="#"></a>
-                        </figure>
-                    </li>
-                    <li class="col-md-4">
-                        <figure class="bty-recent-post-3">
-                            <img src="http://avante.biz/wp-content/uploads/Nice-Wallpapers/Nice-Wallpapers-006.jpg" alt="">
-                            <div>
-                                <span>27</span>
-                                <span>Sep</span>
-                            </div>
-                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                            <figcaption>
-                                <h3>Title lorem 1 lorem</h3>
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has.
-                                </p>
-                                <button>Read More</button>
-                            </figcaption>
-                            <a href="#"></a>
-                        </figure>
-                    </li>
-                </ul>
+                @if(count($posts))
+                    <ul>
+                        <?php
+                            $col_md_x = "col-md-4";
+                            if (isset($settings["grid_system"]) && isset($settings["grid_system"]) == 'list' ){
+                                $col_md_x = "col-md-12";
+                            }
+                        ?>
+                        @foreach($posts as $post)
+                            <li class="{{$col_md_x}}">
+                                <figure class="bty-recent-post-3">
+                                    @if(!isset($post->image))
+                                        <img src="{!! url($post->image) !!}" class="img-responsive">
+                                    @else
+                                        <img src="http://avante.biz/wp-content/uploads/Nice-Wallpapers/Nice-Wallpapers-006.jpg" alt="">
+                                    @endif
+                                    <div>
+                                        <span>{{\Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$post->created_at)->format('d')}}</span>
+                                        <span>{{\Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$post->created_at)->format('M')}}</span>
+                                    </div>
+                                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    <figcaption>
+                                        <h3>{!! $post->title !!}</h3>
+                                        <p>
+                                            {!! $post->description !!}
+                                        </p>
+                                        <button>Read More</button>
+                                    </figcaption>
+                                    <a href="{{ get_post_url($post->id) }}"></a>
+                                </figure>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
         </div>
     </div>
 
 
-    <div class="container">
+    {{--<div class="container">
         <div class="row">
             <div class="col-lg-8">
                 <div class="row">
@@ -176,6 +131,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
 </section>
 {!! BBstyle($_this->path."/css/main.css") !!}
