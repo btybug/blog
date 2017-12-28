@@ -54,7 +54,7 @@
     <a class="btn btn-default select-field"><i class="fa fa-plus"></i> ADD Field</a>
 
     <div class="form-layout pull-right">
-        {!! BBbutton2('unit','form_layout','form_layout','Select Layout',['class'=>'form-control']) !!}
+        {!! BBbutton2('unit','form_layout','form_layout','Select Layout',['class'=>'form-control','model'=>$form]) !!}
     </div>
 
     <div class="pull-right">
