@@ -92,7 +92,6 @@ class IndexConroller extends Controller
     )
     {
         $form = $formsRepository->findOrFail($id);
-dd($form);
         $form->fields_json = $formService->fieldsJson($id,true);
         $fields = json_encode((count($form->form_fields)) ? $form->form_fields()->pluck('field_slug','field_slug')->toArray() : []);
         $html = $formService->render($id);
