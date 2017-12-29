@@ -1,6 +1,6 @@
 @php
     $postRepo = new \BtyBugHook\Blog\Repository\PostsRepository();
-    $posts = $postRepo->getPublished();
+    $posts = $postRepo->paginationSettings($settings);
     $page = \Btybug\btybug\Services\RenderService::getFrontPageByURL();
 
     $col_md_x = "col-md-4";
@@ -38,11 +38,13 @@
                         @endif
                     </li>
                     <li>
-                        <input name="radionav" type="radio" class="bty-navradio nv-1" id="bty-navradio-1" {{ (isset($settings["grid_system"]) && $settings["grid_system"] == 'list') ? "checked" : ""}}>
+                        <input name="radionav" type="radio" class="bty-navradio nv-1 custom_grid_change" value="list"
+                               id="bty-navradio-1" {{ (isset($settings["grid_system"]) && $settings["grid_system"] == 'list') ? "checked" : ""}}>
                         <label for="bty-navradio-1"></label>
                     </li>
                     <li>
-                        <input name="radionav" type="radio" class="bty-navradio nv-2" id="bty-navradio-2" {{ (isset($settings["grid_system"]) && $settings["grid_system"] == 'grid') ? "checked" : ""}} {{ !isset($settings["grid_system"])? "checked" : "" }}>
+                        <input name="radionav" type="radio" class="bty-navradio nv-2 custom_grid_change" value="grid"
+                               id="bty-navradio-2" {{ (isset($settings["grid_system"]) && $settings["grid_system"] == 'grid') ? "checked" : ""}} {{ !isset($settings["grid_system"])? "checked" : "" }}>
                         <label for="bty-navradio-2"></label>
                     </li>
 
@@ -59,14 +61,15 @@
         <div class="container">
             <div class="row">
                 @if(count($posts))
-                    <ul>
+                    <ul class="custom_append_post">
                         @foreach($posts as $post)
                             <li class="{{$col_md_x}}">
                                 <figure class="bty-recent-post-3">
                                     @if(!isset($post->image))
                                         <img src="{!! url($post->image) !!}" class="img-responsive">
                                     @else
-                                        <img src="http://avante.biz/wp-content/uploads/Nice-Wallpapers/Nice-Wallpapers-006.jpg" alt="">
+                                        <img src="http://avante.biz/wp-content/uploads/Nice-Wallpapers/Nice-Wallpapers-006.jpg"
+                                             alt="">
                                     @endif
                                     <div>
                                         <span>{{\Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$post->created_at)->format('d')}}</span>
@@ -90,15 +93,22 @@
         </div>
     </div>
 
-    @phpPagination($settings)
-        {!! $postRepo->paginationSettings($settings)->links() !!}
-    @loadMore($settings)
-
-    @scroll($settings)
-
-    @endphpPagination
-
-
+    @if(isset($settings["custom_pagination"]))
+        @if($settings["custom_pagination"] === "php")
+            {!! $posts->links() !!}
+        @elseif($settings["custom_pagination"] === "scroll")
+            <div class="ajax-load text-center" style="display:none">
+                <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
+            </div>
+            <input type="hidden" id="custom_limit_per_page_for_ajax" value="{{isset($settings["custom_limit_per_page"]) ? $settings["custom_limit_per_page"] : "" }}">
+        @else
+            <button class="custom_load_more">Load More</button>
+            <div class="ajax-load-button text-center" style="display:none">
+                <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
+            </div>
+            <input type="hidden" id="custom_limit_per_page_for_ajax" value="{{isset($settings["custom_limit_per_page"]) ? $settings["custom_limit_per_page"] : "" }}">
+        @endif
+    @endif
     {{--<div class="container">
         <div class="row">
             <div class="col-lg-8">
@@ -141,3 +151,4 @@
     </div>--}}
 </section>
 {!! BBstyle($_this->path."/css/main.css") !!}
+{!!  BBscript($_this->path.'/js/main.js') !!}

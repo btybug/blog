@@ -1,6 +1,7 @@
 <?php
 namespace BtyBugHook\Blog\Repository;
 
+use Btybug\btybug\Models\Universal\Paginator;
 use Btybug\btybug\Repositories\GeneralRepository;
 use BtyBugHook\Blog\Models\Post;
 
@@ -16,11 +17,19 @@ class PostsRepository extends GeneralRepository
 
     public function getPublished()
     {
-        return $this->model->where('status', 'published')->orWhere('status',1)->limit(10)->get();
+        return $this->model->where('status', 'published')->orWhere('status',1)->get();
     }
 
     public function paginationSettings($settings){
-        return $result = $this->model->where('status', 'published')->orWhere('status',1)->paginate($settings["custom_limit_per_page"]);
+        $pagination_type = isset($settings["custom_pagination"]) ? $settings["custom_pagination"] : null;
+        $limit_per_page = $settings["custom_limit_per_page"] ? $settings["custom_limit_per_page"] : 10;
+
+        $posts = $this->getPublished();
+
+        if ($pagination_type){
+            $posts = new Paginator($limit_per_page,6,'bty-pagination-2',$posts);
+        }
+        return $posts;
     }
 
     public function getPublishedByUrl($slug)

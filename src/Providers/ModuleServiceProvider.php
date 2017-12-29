@@ -67,30 +67,6 @@ class ModuleServiceProvider extends ServiceProvider
         \Eventy::action('shortcode.except.url', [
             'admin/blog/form-list'
         ]);
-
-        // this is not final functionality
-        Blade::directive('phpPagination', function ($settings) {
-            if(isset($settings['custom_pagination'])){
-                return "<?php if (".$settings['custom_pagination']." == 'php') { ?>";
-            }
-        });
-        Blade::directive('loadMore', function ($settings) {
-            if(isset($settings['custom_pagination'])) {
-                return "<?php } elseif(".$settings['custom_pagination']." == 'load') { ?>";
-            }
-        });
-        Blade::directive('scroll', function ($settings) {
-            if(isset($settings['custom_pagination'])) {
-                return "<?php } elseif(".$settings['custom_pagination']." == 'scroll') { ?>";
-            }
-        });
-
-        Blade::directive('endphpPagination', function () {
-            if(isset($settings['custom_pagination'])) {
-                return "<?php } ?>";
-            }
-        });
-
         Routes::registerPages('btybug.hook/blog');
     }
 

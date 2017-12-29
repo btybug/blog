@@ -3,6 +3,7 @@
 namespace BtyBugHook\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Btybug\btybug\Models\Universal\Paginator;
 use Btybug\Console\Models\Forms;
 use Btybug\Console\Repository\FieldsRepository;
 use Btybug\Console\Repository\FormsRepository;
@@ -25,7 +26,6 @@ class IndexConroller extends Controller
 {
     public function getIndex()
     {
-
         return view('blog::index');
     }
 
@@ -262,5 +262,17 @@ class IndexConroller extends Controller
             $data[$i]['status']='published';
         }
         return \DB::table('posts')->insert($data);
+    }
+
+    public function appendPostScrollPaginator(PostsRepository $repository,Request $request){
+
+        $posts = $repository->getPublished();
+        $limit_per_page = isset($request->custom_limit_per_page) ? $request->custom_limit_per_page : 10;
+
+        $posts = new Paginator(10,6,'bty-pagination-2',$posts);
+
+        $html = \View::make('blog::_partials.render-for-post',compact('posts'))->render();
+
+        return \Response::json(["html" => $html]);
     }
 }

@@ -69,3 +69,5 @@ Route::group(['prefix'=>'form-list'],function (){
 });
 Route::post('/settings', 'IndexConroller@postSettings');
 Route::post('/render-unit', 'IndexConroller@unitRenderWithFields');
+
+Route::post('append-post-scroll-paginator', 'IndexConroller@appendPostScrollPaginator')->name('append_post_scroll_paginator');

@@ -1,1 +1,1 @@
-{"title":"main variation","id":"all_post.default","settings":{"custom_search":"on","grid_system":"grid","custom_search_by":["id"],"custom_sort":"on","custom_sort_by":["id"],"custom_sort_how":"ASC","custom_pagination":"php","custom_limit_per_page":"10"}}
+{"title":"main variation","id":"all_post.default","settings":{"custom_search":"on","grid_system":"grid","custom_search_by":["id"],"custom_sort":"on","custom_sort_by":["id"],"custom_sort_how":"ASC","custom_pagination":"scroll","custom_limit_per_page":"5"}}
