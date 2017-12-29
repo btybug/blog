@@ -269,7 +269,7 @@ class IndexConroller extends Controller
         $posts = $repository->getPublished();
         $limit_per_page = isset($request->custom_limit_per_page) ? $request->custom_limit_per_page : 10;
 
-        $posts = new Paginator(10,6,'bty-pagination-2',$posts);
+        $posts = new Paginator($limit_per_page,6,'bty-pagination-2',$posts);
 
         $html = \View::make('blog::_partials.render-for-post',compact('posts'))->render();
 
