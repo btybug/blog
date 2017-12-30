@@ -1,157 +1,115 @@
 .ui-sortable-handle:hover, .ui-sortable > div:hover {
-    outline: 2px dashed #e2e2e2;
-    outline-offset: 5px;
-    cursor: move;
-}
+  outline: 2px dashed #e2e2e2;
+  outline-offset: 5px;
+  cursor: move; }
 
 .bb-field-actions {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    display: none;
-}
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: none; }
 
 .bb-form-generator > .form-group {
-    position: relative;
-}
+  position: relative; }
 
 .bb-form-generator > .form-group:hover .bb-field-actions {
-    display: block;
-}
+  display: block; }
 
 [data-toggle="tooltip"] {
-    cursor: help;
-}
+  cursor: help; }
 
 a.bb-form-layout {
-    margin-right: 30px;
-    text-decoration: none;
-}
+  margin-right: 30px;
+  text-decoration: none; }
 
 .bb-form-area:empty {
-    border: 1px dashed #c0c0c0;
-}
+  border: 1px dashed #c0c0c0; }
 
-.bb-form-area:empty:after{
-    content: "Drop Form Fields Here";
-    color: #bdbdbd;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    line-height: 50px;
-}
+.bb-form-area:empty:after {
+  content: "Drop Form Fields Here";
+  color: #bdbdbd;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 50px; }
 
 .bb-form-area {
-    min-height: 50px;
-    position: relative;
-}
+  min-height: 50px;
+  position: relative; }
 
 .bb-form-area.active {
-    outline: 4px solid #f10101;
-    outline-offset: 5px;
-}
+  outline: 4px solid #f10101;
+  outline-offset: 5px; }
 
 .bb-form-header {
-    background: #464646;
-    color: #fff;
-    padding: 10px 15px;
-}
+  background: #464646;
+  color: #fff;
+  padding: 10px 15px; }
 
 input.form-name {
-    margin-left: 10px;
-    text-indent: 5px;
-    border: none;
-    padding: 5px;
-    width: 200px;
-    color: #000;
-}
+  margin-left: 10px;
+  text-indent: 5px;
+  border: none;
+  padding: 5px;
+  width: 200px;
+  color: #000; }
 
 button.form-save {
-    background: #e4d700;
-    color: #524e02;
-    border: none;
-    font-weight: bold;
-    padding: 5px 30px;
-    text-transform: uppercase;
-}
+  background: #e4d700;
+  color: #524e02;
+  border: none;
+  font-weight: bold;
+  padding: 5px 30px;
+  text-transform: uppercase; }
 
 .bb-form-options {
-    background: #848484;
-    padding: 10px 15px;
-    display: table;
-    width: 100%;
-}
+  background: #848484;
+  padding: 10px 15px;
+  display: table;
+  width: 100%; }
 
 .form-layout {
-    width: 360px;
-}
+  width: 360px; }
 
 .form-style {
-    margin-right: 10px;
-}
+  margin-right: 10px; }
 
 .bb-form-container {
-    padding: 10px 20px;
-}
+  padding: 10px 20px; }
 
 .form-preview {
-    background: #464646;
-    color: #fff;
-    font-size: 17px;
-    padding: 10px;
-    text-transform: uppercase;
-    display: table;
-    margin: 10px 0;
-}
+  background: #464646;
+  color: #fff;
+  font-size: 17px;
+  padding: 10px;
+  text-transform: uppercase;
+  display: table;
+  margin: 10px 0; }
 
 /* Form Styles */
-.form-group{
-    &.inline{
-        display: table;
-        width: 100%;
+.form-group.inline {
+  display: table;
+  width: 100%; }
+  .form-group.inline input,
+  .form-group.inline textarea,
+  .form-group.inline select {
+    width: calc(100% - 120px); }
+  .form-group.inline i {
+    position: absolute; }
+  .form-group.inline label {
+    float: left;
+    width: 120px; }
+.form-group.rich {
+  box-shadow: 0 0 1px 1px #ccc;
+  padding: 10px;
+  background: #f3f3f3; }
+  .form-group.rich input,
+  .form-group.rich textarea,
+  .form-group.rich select {
+    border-radius: 0; }
+  .form-group.rich label {
+    float: left;
+    width: 120px; }
 
-        input,
-        textarea,
-        select{
-            width: calc(100% - 120px);
-        }
-
-        i{
-            position: absolute;
-        }
-
-        label{
-            float: left;
-            width: 120px;
-        }
-    }
-
-    &.rich{
-        box-shadow: 0 0 1px 1px #ccc;
-        padding: 10px;
-        background: #f3f3f3;
-
-        input,
-        textarea,
-        select{
-            border-radius: 0;
-        }
-
-        input{
-
-        }
-
-        textarea{
-
-        }
-        select{
-
-        }
-
-        label{
-            float: left;
-            width: 120px;
-        }
-    }
-}
+/*# sourceMappingURL=form-builder.css.map */

@@ -27,7 +27,7 @@
     {!! BBstyle(plugins_path("vendor/btybug.hook/blog/src/Assets/css/form-builder.css")) !!}
     {!! BBscript(plugins_path("vendor/btybug.hook/blog/src/Assets/js/form-builder.js")) !!}
 
-    {!! HTML::style('public-x/custom/css/'.str_replace(' ','-',$page->slug).'.css') !!}
+    {!! HTML::style('public-x/custom/css/'.str_replace(' ','-',$page->slug).'.css', ["id"=>"custom_css"]) !!}
     {!! HTML::script('public-x/custom/js/'.str_replace(' ','-',$page->slug).'.js') !!}
 </head>
 <body>
@@ -79,31 +79,23 @@
                         <div class="bb-form-styles">
                             <!-- Field style -->
                             <div class="bb-field-style">
-                                <a href="javascript:" data-id="style-1">
-                                    Style 1
+                                <a href="javascript:" data-id="default">
+                                    Default Style
                                 </a>
-                                <script type="template/html" id="style-1">
-                                    <div class="form-group" data-field-id="{id}">
-                                        <label><i class="fa {icon}"></i> {label}</label>
-                                        <i class="fa {tooltip_icon}" data-toggle="tooltip" data-placement="top"
-                                           title="{help}"></i>
-                                        {field}
-                                    </div>
-                                </script>
                             </div>
 
                             <!-- Field style -->
                             <div class="bb-field-style">
-                                <a href="javascript:" data-id="style-2">
-                                    Style 2
+                                <a href="javascript:" data-id="inline">
+                                    Inline Style
                                 </a>
-                                <script type="template/html" id="style-2">
-                                    <div class="form-group" data-field-id="{id}">
-                                        <label><i class="fa {icon}"></i> <strong>{label}</strong></label>
-                                        {field}
-                                        <span class="help-block">{help}</span>
-                                    </div>
-                                </script>
+                            </div>
+
+                            <!-- Field style -->
+                            <div class="bb-field-style">
+                                <a href="javascript:" data-id="rich">
+                                    Rich Style
+                                </a>
                             </div>
 
                         </div>
@@ -188,7 +180,6 @@
         if($('link[href="' + href + '"]').length > 1){
             $('link[href="' + href + '"]').first().remove();
         }
-
     }
 </script>
 
@@ -270,19 +261,9 @@
             })
             // Change form style
             .on("click", ".bb-field-style>a", function () {
-                var $this = $(this),
-                    template = $('#' + $this.attr('data-id')).html(),
-                    fieldsJSON = JSON.parse($('[name=fields_json]').val());
+                var $this = $(this);
 
-                $('#field-template').html(template);
-
-                // Reset fields
-                $('[name=fields]').val('[]');
-                $('[name=fields_json]').val('[]');
-                $('[name=fields_html]').val('');
-
-                // Apply HTML
-                $('.bb-form-area.active').html(formBuilder(fieldsJSON));
+                $('.bb-form-area>.form-group').attr("class", "form-group " + $this.attr('data-id'));
 
                 // Hide modal
                 $('#formStyle').modal('hide');
