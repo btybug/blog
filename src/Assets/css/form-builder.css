@@ -104,3 +104,54 @@ button.form-save {
     display: table;
     margin: 10px 0;
 }
+
+/* Form Styles */
+.form-group{
+    &.inline{
+        display: table;
+        width: 100%;
+
+        input,
+        textarea,
+        select{
+            width: calc(100% - 120px);
+        }
+
+        i{
+            position: absolute;
+        }
+
+        label{
+            float: left;
+            width: 120px;
+        }
+    }
+
+    &.rich{
+        box-shadow: 0 0 1px 1px #ccc;
+        padding: 10px;
+        background: #f3f3f3;
+
+        input,
+        textarea,
+        select{
+            border-radius: 0;
+        }
+
+        input{
+
+        }
+
+        textarea{
+
+        }
+        select{
+
+        }
+
+        label{
+            float: left;
+            width: 120px;
+        }
+    }
+}
