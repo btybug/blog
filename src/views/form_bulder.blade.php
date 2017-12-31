@@ -60,10 +60,13 @@
         <a class="btn btn-danger form-style" data-toggle="modal" data-target="#formStyle">
             <span>Form Style</span>
         </a>
+        <a class="btn btn-warning layout-settings" style="margin-right: 10px;">
+            <i class="fa fa-gear"></i>
+        </a>
     </div>
 </div>
 
-<div class="container-fluid">
+<div class="">
 
     <div class="bb-form-style">
         <!-- Modal -->
@@ -109,11 +112,13 @@
         Form Preview
     </div>
 
-    <div class="row">
-        <div class="col-md-12 bb-form-container">
-            <div class="bb-form-area"></div>
-        </div>
-    </div>
+    {{--<div class="row">--}}
+        {{--<div class="col-md-12 bb-form-container">--}}
+            {{--<div class="bb-form-area"></div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+
+    <iframe src="" id="unit-iframe"></iframe>
 
     <input type="hidden" name="fields_json" value="{}" id="existing-fields"/>
 </div>
@@ -161,6 +166,47 @@
             <i class="fa fa-trash"></i>
         </button>
     </div>
+</script>
+
+<!-- Injected templates to iframe -->
+<script type="template/html" id="iframe-inject-head">
+    <style>
+        .bb-form-area:empty {
+            border: 1px dashed #c0c0c0;
+        }
+
+        .bb-form-area:empty:after{
+            content: "Drop Form Fields Here";
+            color: #bdbdbd;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        .bb-form-area {
+            min-height: 50px;
+            position: relative;
+        }
+
+        .bb-form-area.active {
+            outline: 4px solid #f10101;
+            outline-offset: 5px;
+        }
+
+        .ui-sortable-handle:hover, .ui-sortable > div:hover {
+            outline: 2px dashed #e2e2e2;
+            outline-offset: 5px;
+            cursor: move;
+        }
+
+        .ui-sortable-placeholder {
+            background: #fbf7d9;
+            visibility: visible !important;
+            margin-bottom: 6px;
+        }
+    </style>
 </script>
 
 <script>
@@ -279,8 +325,42 @@
         // Change layout "DEMO"
         $('[name=form_layout]').on('change', function (){
             var layout = $(this).val();
-            loadLayout(layout);
+            var iframe = $('#unit-iframe');
+
+            iframe.attr("src", "{!! url("/admin/uploads/gears/settings-iframe/") !!}/" + layout);
+
         });
+
+        // iFrame functions
+        $('#unit-iframe').load(function (){
+            var headHTML = $('#iframe-inject-head').html();
+            var iframe = getIframeContent();
+            iframe.prepend(headHTML);
+
+            iframe.on("click", ".bb-form-area", function () {
+                var toggle = $(this).hasClass("active");
+                iframe.find('.bb-form-area').removeClass("active");
+
+                if(!toggle) $(this).addClass("active");
+            });
+
+            $('.layout-settings').click(function(){
+                console.log("Clicked");
+                var  $this = $(this);
+                if($this.hasClass('active')){
+                    $this.removeClass('active');
+                    iframe.find('[data-settinglive="settings"]').addClass('hide');
+                    iframe.find('.previewcontent').addClass('activeprevew');
+                }else{
+                    $this.addClass('active');
+                    iframe.find('[data-settinglive="settings"]').removeClass('hide');
+                    iframe.find('.previewcontent').removeClass('activeprevew');
+                }
+            });
+
+            activateSortable();
+        });
+
 
         function loadLayout(layout, onSuccess){
             $.ajax({
@@ -325,21 +405,26 @@
         });
         @endif
 
+        function getIframeContent(){
+            return $('#unit-iframe').contents().find('body');
+        }
+
         // Add fields to form area
         function addFieldsToFormArea(fieldsJSON, position) {
+            var iframe = getIframeContent();
             // Mark sortable areas
-            $('.bb-form-area').each(function (i){
+            iframe.find('.bb-form-area').each(function (i){
                 $(this).attr("data-sortable", i);
             });
 
             if(!position) position = 0;
 
             // Build form
-            var activeFormArea = $('.bb-form-area.active');
+            var activeFormArea = iframe.find('.bb-form-area.active');
             if(activeFormArea.length === 1){
                 activeFormArea.html(formBuilder(fieldsJSON, activeFormArea.data("sortable")));
             }else{
-                $('[data-sortable='+position+']').html(formBuilder(fieldsJSON, position));
+                iframe.find('[data-sortable='+position+']').html(formBuilder(fieldsJSON, position));
             }
 
             // Tooltip
@@ -359,10 +444,12 @@
 
         // Building form and hidden inputs
         function formBuilder(fields, position) {
+            var iframe = getIframeContent();
+
             var existingFields = $("#existing-fields"),
                 existingFieldsData = JSON.parse(existingFields.val());
 
-            var fieldsHTMLData = $('[data-sortable=' + position + ']').html();
+            var fieldsHTMLData = iframe.find('[data-sortable=' + position + ']').html();
 
             $(fields).each(function (index, field) {
                 // Add to existing fields
@@ -441,8 +528,9 @@
 
         // Activate sortable
         function activateSortable(){
+            var iframe = getIframeContent();
             // Form sortable
-            $('.bb-form-area').sortable({
+            iframe.find('.bb-form-area').sortable({
                 connectWith: ".connectedSortable",
                 stop: function (event, ui) {
                     var fieldsJSON = $('[name=fields_json]'),

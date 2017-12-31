@@ -84,8 +84,13 @@ button.form-save {
   font-size: 17px;
   padding: 10px;
   text-transform: uppercase;
-  display: table;
-  margin: 10px 0; }
+  text-align: center; }
+
+/* Unit Iframe */
+#unit-iframe {
+  width: 100%;
+  border: none;
+  height: calc(100vh - 153px); }
 
 /* Form Styles */
 .form-group.inline {
