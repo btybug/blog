@@ -120,7 +120,8 @@
 
     <iframe src="" id="unit-iframe"></iframe>
 
-    <input type="hidden" name="fields_json" value="{}" id="existing-fields"/>
+    <input type="hidden" name="fields_json" value="{}" id="existing-fields" />
+    <input type="hidden" name="unit_json" value="{}" />
 </div>
 {!! Form::close() !!}
 @include('resources::assests.deleteModal')
@@ -308,8 +309,9 @@
             // Change form style
             .on("click", ".bb-field-style>a", function () {
                 var $this = $(this);
+                var iframe = getIframeContent();
 
-                $('.bb-form-area>.form-group').attr("class", "form-group " + $this.attr('data-id'));
+                iframe.find('.bb-form-area>.form-group').attr("class", "form-group " + $this.attr('data-id'));
 
                 // Hide modal
                 $('#formStyle').modal('hide');
@@ -328,7 +330,6 @@
             var iframe = $('#unit-iframe');
 
             iframe.attr("src", "{!! url("/admin/uploads/gears/settings-iframe/") !!}/" + layout);
-
         });
 
         // iFrame functions
@@ -393,16 +394,11 @@
 
         @if(isset($form) and $form->fields_json)
         // Default values
+        var iframe = $('#unit-iframe');
         var fieldsJSON = {!! $form->fields_json !!};
         var layout = '{!! $form->form_layout !!}';
 
-        loadLayout(layout, function (){
-            if (fieldsJSON.length > 0) {
-                $.each(fieldsJSON, function (index, group){
-                    addFieldsToFormArea(group, index);
-                });
-            }
-        });
+        iframe.attr("src", "{!! url("/admin/uploads/gears/settings-iframe/") !!}/" + layout);
         @endif
 
         function getIframeContent(){
@@ -536,7 +532,7 @@
                     var fieldsJSON = $('[name=fields_json]'),
                         fieldsJSONData = JSON.parse(fieldsJSON.val());
 
-                    $('.bb-form-area').each(function (){
+                    iframe.find('.bb-form-area').each(function (){
 
                         var ids = [],
                             container = $(this),
@@ -556,6 +552,30 @@
         }
 
         activateSortable();
+
+        // Listen to iframe
+        if (window.addEventListener) {
+            window.addEventListener("message", onMessage, false);
+        }
+        else if (window.attachEvent) {
+            window.attachEvent("onmessage", onMessage, false);
+        }
+
+        function onMessage(event) {
+
+            var data = event.data;
+            if(data.TODO){
+
+                var TODO = data.TODO;
+
+                // On Save settings form
+                if(TODO === "POST_SETTINGS_CALLBACK"){
+                    var json = data.json;
+                    $('[name="unit_json"]').val(JSON.stringify(json));
+                }
+
+            }
+        }
     });
 </script>
 
