@@ -57,9 +57,9 @@
     </div>
 
     <div class="pull-right">
-        <a class="btn btn-danger form-style" data-toggle="modal" data-target="#formStyle">
-            <span>Form Style</span>
-        </a>
+        {{--<a class="btn btn-danger form-style" data-toggle="modal" data-target="#formStyle">--}}
+            {{--<span>Form Style</span>--}}
+        {{--</a>--}}
         <a class="btn btn-warning layout-settings" style="margin-right: 10px;">
             <i class="fa fa-gear"></i>
         </a>
