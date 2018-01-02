@@ -224,6 +224,14 @@
         .bb-form-area-container:hover > .bb-form-actions {
             display: block;
         }
+
+        .bb-form-actions.active {
+            display: block;
+        }
+
+        .bb-form-area.active {
+            outline: 1px solid #c0c0c0;
+        }
     </style>
 </script>
 
@@ -345,6 +353,17 @@
                     $this.addClass('active');
                     iframe.find('[data-settinglive="settings"]').removeClass('hide');
                     iframe.find('.previewcontent').removeClass('activeprevew');
+                }
+            });
+
+            iframe.on("click", ".bb-form-area", function () {
+                var toggle = $(this).hasClass("active");
+                iframe.find('.bb-form-area').removeClass("active");
+                iframe.find('.bb-form-actions').removeClass("active");
+
+                if(!toggle) {
+                    $(this).addClass("active");
+                    $(this).closest('.bb-form-area-container').find('.bb-form-actions').addClass("active");
                 }
             });
 
