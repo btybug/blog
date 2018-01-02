@@ -57,54 +57,75 @@
     </div>
 
     <div class="pull-right">
+        <a class="btn btn-danger" style="margin-right: 10px;" data-toggle="modal" data-target="#formSettingsModal">
+            <i class="fa fa-gear"></i> Form Settings
+        </a>
         <a class="btn btn-warning layout-settings" style="margin-right: 10px;">
-            <i class="fa fa-gear"></i>
+            <i class="fa fa-pencil"></i> Layout settings
         </a>
     </div>
 </div>
 
-<div class="">
-
-    <div class="bb-form-style">
-        <!-- Modal -->
-        <div class="modal fade" id="formStyle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Select Form Style</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="bb-form-styles">
-                            <!-- Field style -->
-                            <div class="bb-field-style">
-                                <a href="javascript:" data-id="default">
-                                    Default Style
-                                </a>
+<!-- Modal -->
+<div class="modal fade" id="formSettingsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Form Settings</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group m-l-0 m-r-0">
+                            <label for="success_message" class="col-sm-4 ">Success Message</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" name="message" type="text">
                             </div>
+                        </div>
 
-                            <!-- Field style -->
-                            <div class="bb-field-style">
-                                <a href="javascript:" data-id="inline">
-                                    Inline Style
-                                </a>
+                        <div class="form-group m-l-0 m-r-0">
+                            <label for="success_message" class="col-sm-4 ">Event/Trigger</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="event"><option value="" selected="selected">Select Event</option><option value="App\Events\AfterLoginEvent">After Login</option><option value="App\Events\AfterLogOutEvent">After Log out</option><option value="Illuminate\Auth\Events\Registred">on registred</option><option value="App\Events\FormSubmit">on Form Submit</option><option value="App\Events\PageCreateEvent">on Page Create</option></select>
                             </div>
+                        </div>
 
-                            <!-- Field style -->
-                            <div class="bb-field-style">
-                                <a href="javascript:" data-id="rich">
-                                    Rich Style
-                                </a>
+                        <div class="form-group m-l-0 m-r-0">
+                            <label for="" class="col-sm-4">Redirect Page</label>
+                            <div class="col-sm-8">
+                                <select id="target" class="form-control" name="redirect_Page" title="Select Target">
+                                    <option value="alert">BB get page</option>
+                                </select>
                             </div>
+                        </div>
 
+                        <div class="form-group m-l-0 m-r-0">
+                            <label for="" class="col-sm-4">Is Ajax</label>
+
+                            <div class="col-sm-8">
+                                <div class="customelement radio-inline">
+                                    <input name="is_ajax" id="is_ajax_yes" value="yes" type="radio">
+                                    <label for="is_ajax_yes">Yes</label>
+                                </div>
+                                <div class="customelement radio-inline">
+                                    <input name="is_ajax" id="is_ajax_no" value="no" type="radio"> <label for="is_ajax_no">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-l-0 m-r-0">
+                            <button type="submit" class="bty-btn bty-btn-save bty-btn-cl-black bty-btn-size-sm pull-right m-r-10" data-action="save-form"><span>Save</span></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
+<div class="">
     <iframe src="" id="unit-iframe"></iframe>
 
     <input type="hidden" name="fields_json" value="{}" id="existing-fields" />
@@ -163,6 +184,9 @@
     </div>
 </script>
 
+<!-- Fields Backup -->
+<script type="template/html" id="fields-backup"></script>
+
 <!-- Injected templates to iframe -->
 <script type="template/html" id="iframe-inject-head">
     <style>
@@ -172,7 +196,7 @@
         }
 
         .bb-form-area:empty:after{
-            content: "Drop Form Fields Here";
+            content: "Add Form Fields Here";
             color: #bdbdbd;
             position: absolute;
             width: 100%;
@@ -336,14 +360,77 @@
             iframe.attr("src", "{!! url("/admin/uploads/gears/settings-iframe/") !!}/" + layout);
         });
 
+        @if(isset($form) and $form->fields_json)
+        // Default values
+        var iframe = $('#unit-iframe');
+        var fieldsJSON = {!! $form->fields_json !!};
+        var unitJSON = {!! $form->unit_json !!};
+        var layout = '{!! $form->form_layout !!}';
+
+        iframe.attr("src", "{!! url("/admin/uploads/gears/settings-iframe/") !!}/" + layout);
+        @endif
+
+        function onFrameLoaded(){
+            var iframe = getIframeContent();
+
+            // Mark sortable areas
+            iframe.find('.bb-form-area').each(function (i){
+                $(this).attr("data-sortable", i);
+            });
+
+            // Add form actions
+            iframe.find('.bb-form-area').each(function (){
+                var formActionsTemplate = $('#form-actions-template').html();
+
+                $(this)
+                    .wrap('<div class="bb-form-area-container"></div>')
+                    .before(formActionsTemplate);
+            });
+
+            // Activate sortable
+            activateSortable();
+
+            // Restore fields from backup
+            var fieldsJSONString = $('[name=fields_json]').val(),
+                fieldsJSON = JSON.parse(fieldsJSONString);
+
+            $.each(fieldsJSON, function (index, fields){
+                var formArea = iframe.find('[data-sortable=' + index + ']');
+
+                $.each(fields, function (index, field){
+                    var fieldHTML = $('#fields-backup').find('[data-field-id='+field+']').clone();
+                    formArea.append(fieldHTML);
+                });
+            });
+
+        }
+
         // iFrame functions
         $('#unit-iframe').load(function (){
             var headHTML = $('#iframe-inject-head').html();
             var iframe = getIframeContent();
             iframe.prepend(headHTML);
 
+            // Load saved fields
+            if(fieldsJSON){
+                $.each(fieldsJSON, function (index, areaJSON){
+                    addFieldsToFormArea(areaJSON, index);
+                });
+            }
+
+            if(unitJSON){
+                $.each(unitJSON, function (key, value){
+                    if(key !== "_token" && key !== "itemname"){
+                        var field = iframe.find('#add_custome_page').find('[name=' + key + ']');
+                        field.val(value);
+                    }
+                });
+
+                // $('#unit-iframe').contents().savesettingevent();
+                document.getElementById('unit-iframe').contentWindow.savesettingevent();
+            }
+
             $('.layout-settings').click(function(){
-                console.log("Clicked");
                 var  $this = $(this);
                 if($this.hasClass('active')){
                     $this.removeClass('active');
@@ -356,33 +443,30 @@
                 }
             });
 
-            iframe.on("click", ".bb-form-area", function () {
-                var toggle = $(this).hasClass("active");
-                iframe.find('.bb-form-area').removeClass("active");
-                iframe.find('.bb-form-actions').removeClass("active");
-
-                if(!toggle) {
-                    $(this).addClass("active");
-                    $(this).closest('.bb-form-area-container').find('.bb-form-actions').addClass("active");
-                }
-            });
-
-            // Add form actions
-            iframe.find('.bb-form-area').each(function (){
-                var formActionsTemplate = $('#form-actions-template').html();
-
-                $(this)
-                    .wrap('<div class="bb-form-area-container"></div>')
-                    .before(formActionsTemplate);
-            });
+            // On frame loaded
+            onFrameLoaded();
 
             // Actions
             iframe
+                .on("click", ".bb-form-area", function () {
+                    var toggle = $(this).hasClass("active");
+                    iframe.find('.bb-form-area').removeClass("active");
+                    iframe.find('.bb-form-actions').removeClass("active");
+
+                    if(!toggle) {
+                        $(this).addClass("active");
+                        $(this).closest('.bb-form-area-container').find('.bb-form-actions').addClass("active");
+                    }
+                })
                 .on('click', '.add-field-trigger', function (){
                     iframe.find('.bb-form-area').removeClass("active");
 
                     $(this)
                         .closest('.bb-form-area-container').find('.bb-form-area')
+                        .addClass('active');
+
+                    $(this)
+                        .closest('.bb-form-area-container').find('.bb-form-actions')
                         .addClass('active');
 
                     // Open modal
@@ -443,20 +527,11 @@
                     $(this).closest('.form-group').css("background", "red").fadeOut(function () {
                         $(this).remove();
                     });
+
+                    // Remove from backup
+                    $('#fields-backup').find('[data-field-id='+itemtoRemove+']').remove();
                 });
-
-            // Activate sortable
-            activateSortable();
         });
-
-        @if(isset($form) and $form->fields_json)
-        // Default values
-        var iframe = $('#unit-iframe');
-        var fieldsJSON = {!! $form->fields_json !!};
-        var layout = '{!! $form->form_layout !!}';
-
-        iframe.attr("src", "{!! url("/admin/uploads/gears/settings-iframe/") !!}/" + layout);
-        @endif
 
         function getIframeContent(){
             return $('#unit-iframe').contents().find('body');
@@ -465,21 +540,23 @@
         // Add fields to form area
         function addFieldsToFormArea(fieldsJSON, position) {
             var iframe = getIframeContent();
-            // Mark sortable areas
-            iframe.find('.bb-form-area').each(function (i){
-                $(this).attr("data-sortable", i);
-            });
 
             if(!position) position = 0;
 
             // Build form
             var activeFormArea = iframe.find('.bb-form-area.active');
+            var fieldHTML = "";
             if(activeFormArea.length === 1){
                 position = activeFormArea.data("sortable");
-                activeFormArea.html(formBuilder(fieldsJSON, position));
+                fieldHTML = formBuilder(fieldsJSON, position);
+                activeFormArea.html(fieldHTML);
             }else{
-                iframe.find('[data-sortable='+position+']').html(formBuilder(fieldsJSON, position));
+                fieldHTML = formBuilder(fieldsJSON, position);
+                iframe.find('[data-sortable='+position+']').html(fieldHTML);
             }
+
+            // Add field to backup
+            $('#fields-backup').append(fieldHTML);
 
             // Tooltip
             iframe.find('[data-toggle="tooltip"]').tooltip();
@@ -628,6 +705,9 @@
                 if(TODO === "POST_SETTINGS_CALLBACK"){
                     var json = data.json;
                     $('[name="unit_json"]').val(JSON.stringify(json));
+
+                    // Reload frame
+                    onFrameLoaded();
                 }
 
             }

@@ -63,29 +63,4 @@ button.form-save {
   height: calc(100vh - 153px);
   margin-top: 10px; }
 
-/* Form Styles */
-.form-group.inline {
-  display: table;
-  width: 100%; }
-  .form-group.inline input,
-  .form-group.inline textarea,
-  .form-group.inline select {
-    width: calc(100% - 120px); }
-  .form-group.inline i {
-    position: absolute; }
-  .form-group.inline label {
-    float: left;
-    width: 120px; }
-.form-group.rich {
-  box-shadow: 0 0 1px 1px #ccc;
-  padding: 10px;
-  background: #f3f3f3; }
-  .form-group.rich input,
-  .form-group.rich textarea,
-  .form-group.rich select {
-    border-radius: 0; }
-  .form-group.rich label {
-    float: left;
-    width: 120px; }
-
 /*# sourceMappingURL=form-builder.css.map */
