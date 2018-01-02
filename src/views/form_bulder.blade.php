@@ -50,16 +50,13 @@
 
 <div class="bb-form-options">
 
-    <a class="btn btn-default select-field"><i class="fa fa-plus"></i> ADD Field</a>
+    <span class="form-preview">FORM PREVIEW</span>
 
     <div class="form-layout pull-right">
         {!! BBbutton2('unit','form_layout','form_layout','Select Layout',['class'=>'form-control','model'=>$form]) !!}
     </div>
 
     <div class="pull-right">
-        {{--<a class="btn btn-danger form-style" data-toggle="modal" data-target="#formStyle">--}}
-            {{--<span>Form Style</span>--}}
-        {{--</a>--}}
         <a class="btn btn-warning layout-settings" style="margin-right: 10px;">
             <i class="fa fa-gear"></i>
         </a>
@@ -108,16 +105,6 @@
         </div>
     </div>
 
-    <div class="form-preview">
-        Form Preview
-    </div>
-
-    {{--<div class="row">--}}
-        {{--<div class="col-md-12 bb-form-container">--}}
-            {{--<div class="bb-form-area"></div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-
     <iframe src="" id="unit-iframe"></iframe>
 
     <input type="hidden" name="fields_json" value="{}" id="existing-fields" />
@@ -152,13 +139,11 @@
 </div>
 
 <!-- Field Container Template -->
-<script type="template/html" id="field-template">
-    <div class="form-group" data-field-id="{id}">
-        <label><i class="fa {icon}"></i> {label}</label>
-        <i class="fa {tooltip_icon}" data-toggle="tooltip" data-placement="top" title="{help}"></i>
-        {field}
-    </div>
-</script>
+<script type="template/html" id="field-template"><div class="form-group" data-field-id="{id}">
+    <label><i class="fa {icon}"></i> {label}</label>
+    <i class="fa {tooltip_icon}" data-toggle="tooltip" data-placement="top" title="{help}"></i>
+    {field}
+</div></script>
 
 <!-- Actions Buttons Template -->
 <script type="template/html" id="actions-template">
@@ -169,11 +154,21 @@
     </div>
 </script>
 
+<!-- From area controls -->
+<script type="template/html" id="form-actions-template">
+    <div class="bb-form-actions">
+        <button class="btn btn-xs btn-success add-field-trigger" data-id="{id}">
+            <i class="fa fa-plus"></i> ADD FIELD
+        </button>
+    </div>
+</script>
+
 <!-- Injected templates to iframe -->
 <script type="template/html" id="iframe-inject-head">
     <style>
-        .bb-form-area:empty {
-            border: 1px dashed #c0c0c0;
+        .bb-form-area {
+            outline: 1px dashed #c0c0c0;
+            outline-offset: 5px;
         }
 
         .bb-form-area:empty:after{
@@ -191,14 +186,9 @@
             position: relative;
         }
 
-        .bb-form-area.active {
-            outline: 4px solid #f10101;
-            outline-offset: 5px;
-        }
-
         .ui-sortable-handle:hover, .ui-sortable > div:hover {
-            outline: 2px dashed #e2e2e2;
-            outline-offset: 5px;
+            outline: 1px dashed #fbf7d9;
+            outline-offset: 2px;
             cursor: move;
         }
 
@@ -206,6 +196,33 @@
             background: #fbf7d9;
             visibility: visible !important;
             margin-bottom: 6px;
+        }
+
+        .bb-field-actions {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: none;
+        }
+
+        .bb-form-area > .form-group {
+            position: relative;
+        }
+
+        .bb-form-area > .form-group:hover .bb-field-actions {
+            display: block;
+        }
+
+        .bb-form-actions {
+            position: absolute;
+            top: -22px;
+            right: 15px;
+            z-index: 999;
+            display: none;
+        }
+
+        .bb-form-area-container:hover > .bb-form-actions {
+            display: block;
         }
     </style>
 </script>
@@ -234,24 +251,6 @@
     $(document).ready(function () {
 
         $("body")
-        // Remove field
-            .on("click", ".delete-field", function (e) {
-                e.preventDefault();
-
-                var itemtoRemove = $(this).data('id'),
-                    fields = $("#existing-fields");
-
-                var newData = JSON.parse(fields.val());
-                const index = newData.indexOf(itemtoRemove);
-                newData.splice(index, 1);
-                fields.val(JSON.stringify(newData));
-                resortJSON(newData);
-
-                // Remove from DOM
-                $(this).closest('.form-group').css("background", "red").fadeOut(function () {
-                    $(this).remove();
-                });
-            })
             // Select field
             .on("click", ".select-field", function () {
                 var table = "posts";
@@ -302,9 +301,6 @@
                     },
                     type: 'POST'
                 });
-
-                // reload_js('/public-x/custom/js/form_build_assets.js');
-                // reload_css('/public-x/custom/css/form_build_assets.css');
             })
             // Change form style
             .on("click", ".bb-field-style>a", function () {
@@ -324,7 +320,7 @@
                 if(!toggle) $(this).addClass("active");
             });
 
-        // Change layout "DEMO"
+        // Change layout
         $('[name=form_layout]').on('change', function (){
             var layout = $(this).val();
             var iframe = $('#unit-iframe');
@@ -337,13 +333,6 @@
             var headHTML = $('#iframe-inject-head').html();
             var iframe = getIframeContent();
             iframe.prepend(headHTML);
-
-            iframe.on("click", ".bb-form-area", function () {
-                var toggle = $(this).hasClass("active");
-                iframe.find('.bb-form-area').removeClass("active");
-
-                if(!toggle) $(this).addClass("active");
-            });
 
             $('.layout-settings').click(function(){
                 console.log("Clicked");
@@ -359,38 +348,87 @@
                 }
             });
 
-            activateSortable();
-        });
+            // Add form actions
+            iframe.find('.bb-form-area').each(function (){
+                var formActionsTemplate = $('#form-actions-template').html();
 
+                $(this)
+                    .wrap('<div class="bb-form-area-container"></div>')
+                    .before(formActionsTemplate);
+            });
 
-        function loadLayout(layout, onSuccess){
-            $.ajax({
-                url: "{!! url('admin/console/bburl/render-unit') !!}",
-                data: {
-                    id: layout
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $("input[name='_token']").val()
-                },
-                dataType: 'json',
-                success: function (data) {
-                    var layout = data.html;
-                    $('.bb-form-container').html(layout);
+            // Actions
+            iframe
+                .on('click', '.add-field-trigger', function (){
+                    iframe.find('.bb-form-area').removeClass("active");
 
-                    $("#existing-fields").val("{}");
+                    $(this)
+                        .closest('.bb-form-area-container').find('.bb-form-area')
+                        .addClass('active');
 
-                    activateSortable();
+                    // Open modal
+                    var table = "posts";
+                    var fields = $("#existing-fields").val();
+                    var fieldsJSON = JSON.parse(fields);
+                    var existingFields = [];
 
-                    if(onSuccess){
-                        onSuccess();
+                    if(Object.keys(fieldsJSON).length > 0){
+                        $.each(fieldsJSON, function (index, group){
+                            console.log(existingFields, group);
+                            existingFields = existingFields.concat(group);
+                            console.log(existingFields);
+                        });
                     }
 
-                    reload_js('/public-x/custom/js/form_build_assets.js');
-                    reload_css('/public-x/custom/css/form_build_assets.css');
-                },
-                type: 'POST'
-            });
-        }
+                    $.ajax({
+                        url: "{!! url('admin/blog/get-fields') !!}",
+                        data: {table: table, fields: JSON.stringify(existingFields)},
+                        headers: {
+                            'X-CSRF-TOKEN': $("input[name='_token']").val()
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            $("#select-fields .modal-body").html(data.html);
+                            $("#select-fields").modal();
+                        },
+                        type: 'POST'
+                    });
+                })
+                // Remove field
+                .on("click", ".delete-field", function (e) {
+                    e.preventDefault();
+
+                    var itemtoRemove = $(this).data('id'),
+                        fields = $("#existing-fields");
+
+                    var oldData = JSON.parse(fields.val());
+                    var newData = {};
+
+                    var isRemoved = false;
+
+                    $.each(oldData, function (index, item){
+                        if(!isRemoved){
+                            var itemToRemoveIndex = item.indexOf(itemtoRemove);
+                            if(itemToRemoveIndex !== -1){
+                                item.splice(itemToRemoveIndex, 1);
+                                isRemoved = true;
+                            }
+                        }
+
+                        newData[index] = item;
+                    });
+
+                    fields.val(JSON.stringify(newData));
+
+                    // Remove from DOM
+                    $(this).closest('.form-group').css("background", "red").fadeOut(function () {
+                        $(this).remove();
+                    });
+                });
+
+            // Activate sortable
+            activateSortable();
+        });
 
         @if(isset($form) and $form->fields_json)
         // Default values
@@ -418,16 +456,17 @@
             // Build form
             var activeFormArea = iframe.find('.bb-form-area.active');
             if(activeFormArea.length === 1){
-                activeFormArea.html(formBuilder(fieldsJSON, activeFormArea.data("sortable")));
+                position = activeFormArea.data("sortable");
+                activeFormArea.html(formBuilder(fieldsJSON, position));
             }else{
                 iframe.find('[data-sortable='+position+']').html(formBuilder(fieldsJSON, position));
             }
 
             // Tooltip
-            $('[data-toggle="tooltip"]').tooltip();
+            iframe.find('[data-toggle="tooltip"]').tooltip();
 
             // Add action button to fields
-            $('[data-sortable='+position+']>.form-group').each(function () {
+            iframe.find('[data-sortable='+position+']>.form-group').each(function () {
                 var $this = $(this),
                     actionsTemplate = $('#actions-template').html(),
                     id = $this.attr("data-field-id");
@@ -550,8 +589,6 @@
                 }
             });
         }
-
-        activateSortable();
 
         // Listen to iframe
         if (window.addEventListener) {
