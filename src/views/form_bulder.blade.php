@@ -401,6 +401,9 @@
                     var fieldHTML = $('#fields-backup').find('[data-field-id='+field+']').clone();
                     formArea.append(fieldHTML);
                 });
+
+                // Action buttons
+                addActionsButton(iframe, index);
             });
 
         }
@@ -412,13 +415,14 @@
             iframe.prepend(headHTML);
 
             // Load saved fields
-            if(fieldsJSON){
+            if(typeof fieldsJSON !== "undefined"){
                 $.each(fieldsJSON, function (index, areaJSON){
                     addFieldsToFormArea(areaJSON, index);
                 });
             }
 
-            if(unitJSON){
+            // Unit settings
+            if(typeof unitJSON !== "undefined"){
                 $.each(unitJSON, function (key, value){
                     if(key !== "_token" && key !== "itemname"){
                         var field = iframe.find('#add_custome_page').find('[name=' + key + ']');
@@ -426,7 +430,6 @@
                     }
                 });
 
-                // $('#unit-iframe').contents().savesettingevent();
                 document.getElementById('unit-iframe').contentWindow.savesettingevent();
             }
 
@@ -561,7 +564,12 @@
             // Tooltip
             iframe.find('[data-toggle="tooltip"]').tooltip();
 
-            // Add action button to fields
+            // Action buttons
+            addActionsButton(iframe, position);
+        }
+
+        // Add action button to fields
+        function addActionsButton(iframe, position){
             iframe.find('[data-sortable='+position+']>.form-group').each(function () {
                 var $this = $(this),
                     actionsTemplate = $('#actions-template').html(),
