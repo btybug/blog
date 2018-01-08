@@ -38,14 +38,18 @@
                         <li>
                             <input name="radionav" type="radio" class="bty-navradio nv-1 custom_grid_change" value="list"
                                    id="bty-navradio-1" {{ !isset($settings["custom_grid"]) ? "checked" : ""}}>
-                            <label for="bty-navradio-1"></label>
+                            <label for="bty-navradio-1">
+                                <i class="fa {{isset($settings['custom_list_icon']) ? $settings['custom_list_icon'] : 'fa-th-list'}}" aria-hidden="true"></i>
+                            </label>
                         </li>
                     @endif
                     @if(isset($settings["custom_grid"]))
                         <li>
                             <input name="radionav" type="radio" class="bty-navradio nv-2 custom_grid_change" value="grid"
                                    id="bty-navradio-2" checked>
-                            <label for="bty-navradio-2"></label>
+                            <label for="bty-navradio-2">
+                                <i class="fa {{isset($settings['custom_grid_icon']) ? $settings['custom_grid_icon'] : 'fa-th'}}" aria-hidden="true"></i>
+                            </label>
                         </li>
                     @endif
                 </ul>
@@ -54,7 +58,7 @@
                         <input type="search" name="term" class="form-control" placeholder="Search"/>
                         <input type="hidden" name="search_by" value="{{isset($settings['custom_search_by']) ? json_encode($settings['custom_search_by']) : ''}}"/>
                         <input type="hidden" name="settings_for_ajax_search" value="{{serialize($settings)}}">
-                        <input type="hidden" name="custom_get_col" value="{{(isset($settings["grid_system"]) && $settings["grid_system"] == 'list') ? 'col-md-12' : 'col-md-4'}}">
+                        <input type="hidden" name="custom_get_col" value="{{(isset($settings["custom_list"]) && !isset($settings["custom_grid"])) ? 'col-md-12' : 'col-md-4'}}">
                     </form>
                 @endif
             </div>

@@ -29,7 +29,7 @@ $post = $postRepo->first()->toArray();
                                     <label for="bty-sort-grid"><span>GRID</span></label>
                                 </div>
                                 <div class="sort-icon">
-                                    {!! Form::text('page_icon',null,['class' => 'grid-list-input icp icp-auto','data-placement' => 'bottomRight']) !!}
+                                    {!! Form::text('custom_grid_icon',null,['class' => 'grid-list-input form-control icp icp-auto','data-placement' => 'bottomRight']) !!}
                                     <span class="pull-right input-group-addon"></span>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@ $post = $postRepo->first()->toArray();
                                     <label for="bty-sort-list"><span>LIST</span></label>
                                 </div>
                                 <div class="sort-icon">
-                                    {!! Form::text('page_icon',null,['class' => 'grid-list-input icp icp-auto','data-placement' => 'bottomRight']) !!}
+                                    {!! Form::text('custom_list_icon',null,['class' => 'grid-list-input form-control icp icp-auto','data-placement' => 'bottomRight']) !!}
                                     <span class="pull-right input-group-addon"></span>
                                 </div>
                             </div>

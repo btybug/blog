@@ -5,7 +5,7 @@ if(isset($settings_for_ajax)){
 }
 
 $col_md_x = "col-md-4";
-if (isset($settings["grid_system"]) && $settings["grid_system"] == 'list'){
+if (isset($settings["custom_list"]) && !isset($settings["custom_grid"])){
     $col_md_x = "col-md-12";
 }
 ?>
@@ -31,9 +31,9 @@ if (isset($settings["grid_system"]) && $settings["grid_system"] == 'list'){
                                 </div>
                                 <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                                 <figcaption>
-                                    <h3>{!! $post->title !!}</h3>
+                                    <h3>{!! isset($settings["custom_section1_for_post"]) ? $post[$settings["custom_section1_for_post"]] : $post->title !!}</h3>
                                     <p>
-                                        {!! $post->description !!}
+                                        {!! isset($settings["custom_section2_for_post"]) ? $post[$settings["custom_section2_for_post"]] : $post->description !!}
                                     </p>
                                     <button>Read More</button>
                                 </figcaption>
