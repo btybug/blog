@@ -27,34 +27,29 @@ nav.bty-navbar-blog .bty-navradio+label{
     position: relative;
     margin: 11px 5px;
     /*border: 1px solid #fff;*/
+    padding: 4px 6px;
 }
-nav.bty-navbar-blog .bty-navradio + label:before {
-    content: '';
+nav.bty-navbar-blog .bty-navradio + label i {
     display: block;
-    font-family: 'fontawesome';
     color: #fff;
     font-size: 22px;
     text-align: center;
 }
 
-nav.bty-navbar-blog .bty-navradio.nv-1 + label:before{
-    content: '\f00b';
+nav.bty-navbar-blog .bty-navradio.nv-1 + label{
     opacity: 0.5;
 }
-nav.bty-navbar-blog .bty-navradio.nv-2 + label:before{
-    content: '\f00a';
+nav.bty-navbar-blog .bty-navradio.nv-2 + label{
     opacity: 0.5;
 }
-nav.bty-navbar-blog .bty-navradio.nv-1:checked + label:before{
-    content: '\f00b';
-    opacity: 1;
+nav.bty-navbar-blog .bty-navradio.nv-1:checked + label{
+   opacity: 1;
 }
-nav.bty-navbar-blog .bty-navradio.nv-2:checked + label:before{
-    content: '\f00a';
+nav.bty-navbar-blog .bty-navradio.nv-2:checked + label{
     opacity: 1;
 }
 
-/*vahag end*/
+
 #blog-section {
 
     margin-bottom: 80px;
