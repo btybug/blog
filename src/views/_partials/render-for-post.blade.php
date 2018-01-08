@@ -43,25 +43,28 @@ if (isset($settings["grid_system"]) && $settings["grid_system"] == 'list'){
                     @endforeach
                 </ul>
             @endif
+            <div class="clearfix"></div>
+                @if(!isset($dont_render_pagination))
+                    @if(isset($settings["custom_pagination"]))
+                        @if($settings["custom_pagination"] === "php")
+                            {!! $posts->links() !!}
+                        @elseif($settings["custom_pagination"] === "scroll")
+                            <div class="ajax-load text-center" style="display:none">
+                                <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
+                            </div>
+                            <input type="hidden" id="custom_limit_per_page_for_ajax" value="{{isset($settings["custom_limit_per_page"]) ? $settings["custom_limit_per_page"] : "" }}">
+                        @else
+                            <div class="text-center blog-load-more">
+                            <button class="custom_load_more">Load More</button>
+                            </div>
+                            <div class="ajax-load-button text-center" style="display:none">
+                                <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
+                            </div>
+                            <input type="hidden" id="custom_limit_per_page_for_ajax" value="{{isset($settings["custom_limit_per_page"]) ? $settings["custom_limit_per_page"] : "" }}">
+                        @endif
+                    @endif
+                @endif
         </div>
     </div>
 </div>
 
-@if(!isset($dont_render_pagination))
-    @if(isset($settings["custom_pagination"]))
-        @if($settings["custom_pagination"] === "php")
-            {!! $posts->links() !!}
-        @elseif($settings["custom_pagination"] === "scroll")
-            <div class="ajax-load text-center" style="display:none">
-                <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
-            </div>
-            <input type="hidden" id="custom_limit_per_page_for_ajax" value="{{isset($settings["custom_limit_per_page"]) ? $settings["custom_limit_per_page"] : "" }}">
-        @else
-            <button class="custom_load_more">Load More</button>
-            <div class="ajax-load-button text-center" style="display:none">
-                <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
-            </div>
-            <input type="hidden" id="custom_limit_per_page_for_ajax" value="{{isset($settings["custom_limit_per_page"]) ? $settings["custom_limit_per_page"] : "" }}">
-        @endif
-    @endif
-@endif
