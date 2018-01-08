@@ -23,11 +23,11 @@ $post = $postRepo->first()->toArray();
                         </div>
                         <div class="grid-list">
                             <div>
-                                <input name="grid_system" value="grid" type="radio" class="bty-input-radio-1" id="bty-sort-grid" {{(isset($settings["grid_system"]) && $settings["grid_system"] === "grid")?"checked":""}} {{ !isset($settings["grid_system"])?"checked":"" }}>
+                                <input name="custom_grid" value="grid" type="checkbox" class="bty-input-radio-1" id="bty-sort-grid" {{isset($settings["custom_grid"]) ? "checked":""}}>
                                 <label for="bty-sort-grid">GRID</label>
                             </div>
                             <div>
-                                <input name="grid_system" value="list" type="radio" class="bty-input-radio-1" id="bty-sort-list" {{(isset($settings["grid_system"]) && $settings["grid_system"] === "list")?"checked":""}}>
+                                <input name="custom_list" value="list" type="checkbox" class="bty-input-radio-1" id="bty-sort-list" {{(isset($settings["custom_list"]) && $settings["custom_list"] === "list")?"checked":""}}>
                                 <label for="bty-sort-list">LIST</label>
                             </div>
                         </div>
@@ -176,7 +176,7 @@ $post = $postRepo->first()->toArray();
                         <div>
                             <h6>Section 1:</h6>
                             <div class="bty-input-select-1">
-                                <select name="custom_sort_by[]" id="">
+                                <select name="custom_section1_for_post">
                                     <option value="id">ID</option>
                                     @foreach($post as $key => $val)
                                         @if($key === 'id')
@@ -190,35 +190,7 @@ $post = $postRepo->first()->toArray();
                         <div>
                             <h6>Section 2:</h6>
                             <div class="bty-input-select-1">
-                                <select name="custom_sort_by[]" id="">
-                                    <option value="id">ID</option>
-                                    @foreach($post as $key => $val)
-                                        @if($key === 'id')
-                                            @continue
-                                        @endif
-                                        <option value="{{$key}}">{{$key}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <h6>Section 3:</h6>
-                            <div class="bty-input-select-1">
-                                <select name="custom_sort_by[]" id="">
-                                    <option value="id">ID</option>
-                                    @foreach($post as $key => $val)
-                                        @if($key === 'id')
-                                            @continue
-                                        @endif
-                                        <option value="{{$key}}">{{$key}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <h6>Section 4:</h6>
-                            <div class="bty-input-select-1">
-                                <select name="custom_sort_by[]" id="">
+                                <select name="custom_section2_for_post">
                                     <option value="id">ID</option>
                                     @foreach($post as $key => $val)
                                         @if($key === 'id')
@@ -235,7 +207,10 @@ $post = $postRepo->first()->toArray();
             </div>
         </div>
 
-
+        <div class="input-group">
+            {!! Form::text('page_icon',null,['class' => 'form-control icp icp-auto','data-placement' => 'bottomRight']) !!}
+            <span style="height: 34px;width: 60px;" class="pull-left input-group-addon"></span>
+        </div>
     </div>
 </div>
 {!!  BBstyle($_this->path.'/css/settings.css') !!}
@@ -243,5 +218,6 @@ $post = $postRepo->first()->toArray();
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+{!! BBscript($_this->path.'/js/fontawesome-iconpicker.min.js') !!}
 
 {!!  BBscript($_this->path.'/js/custom.js') !!}

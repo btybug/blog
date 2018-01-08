@@ -34,17 +34,20 @@
 
                         @endif
                     </li>
-                    <li>
-                        <input name="radionav" type="radio" class="bty-navradio nv-1 custom_grid_change" value="list"
-                               id="bty-navradio-1" {{ (isset($settings["grid_system"]) && $settings["grid_system"] == 'list') ? "checked" : ""}}>
-                        <label for="bty-navradio-1"></label>
-                    </li>
-                    <li>
-                        <input name="radionav" type="radio" class="bty-navradio nv-2 custom_grid_change" value="grid"
-                               id="bty-navradio-2" {{ (isset($settings["grid_system"]) && $settings["grid_system"] == 'grid') ? "checked" : ""}} {{ !isset($settings["grid_system"])? "checked" : "" }}>
-                        <label for="bty-navradio-2"></label>
-                    </li>
-
+                    @if(isset($settings["custom_list"]))
+                        <li>
+                            <input name="radionav" type="radio" class="bty-navradio nv-1 custom_grid_change" value="list"
+                                   id="bty-navradio-1" {{ !isset($settings["custom_grid"]) ? "checked" : ""}}>
+                            <label for="bty-navradio-1"></label>
+                        </li>
+                    @endif
+                    @if(isset($settings["custom_grid"]))
+                        <li>
+                            <input name="radionav" type="radio" class="bty-navradio nv-2 custom_grid_change" value="grid"
+                                   id="bty-navradio-2" checked>
+                            <label for="bty-navradio-2"></label>
+                        </li>
+                    @endif
                 </ul>
                 @if(isset($settings["custom_search"]))
                     <form class="navbar-form text-center search-form" id="custom_form_search" role="search">

@@ -30,3 +30,10 @@ window.onload = function(){
         width: '100%'
     });
 };
+$(function (){
+    $('.icp-auto').iconpicker();
+
+    $('.icp').on('iconpickerSelected', function(e) {
+        $(this).attr("value", e.iconpickerValue);
+    });
+});
