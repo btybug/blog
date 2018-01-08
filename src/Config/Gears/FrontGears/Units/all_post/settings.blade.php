@@ -23,12 +23,27 @@ $post = $postRepo->first()->toArray();
                         </div>
                         <div class="grid-list">
                             <div>
-                                <input name="custom_grid" value="grid" type="checkbox" class="bty-input-radio-1" id="bty-sort-grid" {{isset($settings["custom_grid"]) ? "checked":""}}>
-                                <label for="bty-sort-grid">GRID</label>
+                                <div>
+                                    <input name="custom_grid" value="grid" type="checkbox" class="bty-input-checkbox-6"
+                                           id="bty-sort-grid" {{isset($settings["custom_grid"]) ? "checked":""}}>
+                                    <label for="bty-sort-grid"><span>GRID</span></label>
+                                </div>
+                                <div class="sort-icon">
+                                    {!! Form::text('page_icon',null,['class' => 'grid-list-input icp icp-auto','data-placement' => 'bottomRight']) !!}
+                                    <span class="pull-right input-group-addon"></span>
+                                </div>
                             </div>
                             <div>
-                                <input name="custom_list" value="list" type="checkbox" class="bty-input-radio-1" id="bty-sort-list" {{(isset($settings["custom_list"]) && $settings["custom_list"] === "list")?"checked":""}}>
-                                <label for="bty-sort-list">LIST</label>
+                                <div>
+                                    <input name="custom_list" value="list" type="checkbox" class="bty-input-checkbox-6"
+                                           id="bty-sort-list" {{(isset($settings["custom_list"]) && $settings["custom_list"] === "list")?"checked":""}}>
+
+                                    <label for="bty-sort-list"><span>LIST</span></label>
+                                </div>
+                                <div class="sort-icon">
+                                    {!! Form::text('page_icon',null,['class' => 'grid-list-input icp icp-auto','data-placement' => 'bottomRight']) !!}
+                                    <span class="pull-right input-group-addon"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -149,15 +164,23 @@ $post = $postRepo->first()->toArray();
                             <h5>Pagination:</h5>
                             <div class="bty-input-select-1">
                                 <select name="custom_pagination">
-                                    <option value="php" {{ (isset($settings['custom_pagination']) && $settings["custom_pagination"] == "php") ? "selected" : "" }}>PHP pagiantion</option>
-                                    <option value="load" {{ (isset($settings['custom_pagination']) && $settings["custom_pagination"] == "load") ? "selected" : "" }}>Load more button</option>
-                                    <option value="scroll" {{ (isset($settings['custom_pagination']) && $settings["custom_pagination"] == "scroll") ? "selected" : "" }}>Scrolling</option>
+                                    <option value="php" {{ (isset($settings['custom_pagination']) && $settings["custom_pagination"] == "php") ? "selected" : "" }}>
+                                        PHP pagiantion
+                                    </option>
+                                    <option value="load" {{ (isset($settings['custom_pagination']) && $settings["custom_pagination"] == "load") ? "selected" : "" }}>
+                                        Load more button
+                                    </option>
+                                    <option value="scroll" {{ (isset($settings['custom_pagination']) && $settings["custom_pagination"] == "scroll") ? "selected" : "" }}>
+                                        Scrolling
+                                    </option>
                                 </select>
                             </div>
                         </div>
                         <div>
                             <h5>Limit page:</h5>
-                                <input class="bty-setting-numner" name="custom_limit_per_page" min="5" type="number" placeholder="count" value="{{ isset($settings["custom_limit_per_page"]) ? $settings["custom_limit_per_page"] : 10 }}">
+                            <input class="bty-setting-numner" name="custom_limit_per_page" min="5" type="number"
+                                   placeholder="count"
+                                   value="{{ isset($settings["custom_limit_per_page"]) ? $settings["custom_limit_per_page"] : 10 }}">
                         </div>
                     </div>
                 </div>
@@ -165,7 +188,8 @@ $post = $postRepo->first()->toArray();
         </div>
         <div class="bty-panel-collapse">
             <div>
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#data-mapping" aria-expanded="true">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#data-mapping"
+                   aria-expanded="true">
                     <span class="icon"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
                     <span class="title">Data mapping</span>
                 </a>
@@ -205,11 +229,6 @@ $post = $postRepo->first()->toArray();
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="input-group">
-            {!! Form::text('page_icon',null,['class' => 'form-control icp icp-auto','data-placement' => 'bottomRight']) !!}
-            <span style="height: 34px;width: 60px;" class="pull-left input-group-addon"></span>
         </div>
     </div>
 </div>

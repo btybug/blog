@@ -99,16 +99,36 @@
     background: #34495e;
     pointer-events: none;
 }
-.bty-settings-panel .grid-list{
-    display: flex;
-    /*justify-content: center;*/
-}
+
 .bty-settings-panel .general-head{
     display: flex;
     flex-direction: column-reverse;
 }
 .bty-settings-panel .grid-list>div{
-    align-self: center;
+    margin-bottom: 10px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+.bty-settings-panel .grid-list .bty-input-checkbox-6 + label{
+    left: 0;
+    top: 0;
+}
+.bty-settings-panel .grid-list>div .sort-icon span.input-group-addon{
+    width: 40px;
+    height: 26px;
+    border-radius: 0 4px 4px 0;
+    border: none;
+    color: #219250;
+    background-color: #fff;
+    border-left: 1px solid #ccc;
+}
+.bty-settings-panel .grid-list>div .sort-icon .grid-list-input{
+    padding: 3px;
+    color: white;
+    background-color: #fff;
+    border: 0;
+    border-radius: 4px 0 0 4px;
 }
 .bty-settings-panel .pagin-number{
     display: flex;
