@@ -22,8 +22,10 @@ $(document).ready(function () {
         var cols = $("li.custom_class_for_change_col");
         if(which_type === "list"){
             cols.removeClass("col-md-4").addClass("col-md-12");
+            $(".custom_get_bootstrap_col").val("col-md-12");
         }else{
             cols.removeClass("col-md-12").addClass("col-md-4");
+            $(".custom_get_bootstrap_col").val("col-md-4");
         }
     });
 
@@ -41,11 +43,12 @@ $(document).ready(function () {
 
     function loadMoreData(page){
         var limit = $("#custom_limit_per_page_for_ajax").val();
+        var bootstrap_col = $(".custom_get_bootstrap_col").val();
         $.ajax(
             {
                 url: '/admin/blog/append-post-scroll-paginator?page=' + page,
                 type: "post",
-                data:{_token:token,custom_limit_per_page:limit},
+                data:{_token:token,custom_limit_per_page:limit,bootstrap_col:bootstrap_col},
                 beforeSend: function()
                 {
                     $('.ajax-load').show();
@@ -68,11 +71,12 @@ $(document).ready(function () {
 
     $("body").delegate(".custom_load_more","click",function(){
         var limit = $("#custom_limit_per_page_for_ajax").val();
+        var bootstrap_col = $(".custom_get_bootstrap_col").val();
         $.ajax(
             {
                 url: '/admin/blog/append-post-scroll-paginator?page=' + page,
                 type: "post",
-                data:{_token:token,custom_limit_per_page:limit},
+                data:{_token:token,custom_limit_per_page:limit,bootstrap_col:bootstrap_col},
                 beforeSend: function()
                 {
                     $('.ajax-load-button').show();

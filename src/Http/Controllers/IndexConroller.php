@@ -269,10 +269,11 @@ class IndexConroller extends Controller
 
         $posts = $repository->getPublished();
         $limit_per_page = isset($request->custom_limit_per_page) ? $request->custom_limit_per_page : 10;
+        $bootstrap_col = isset($request->bootstrap_col) ? $request->bootstrap_col : "col-md-4";
 
         $posts = new Paginator($limit_per_page,6,'bty-pagination-2',$posts);
 
-        $html = \View::make('blog::_partials.render-for-post',compact('posts'))->render();
+        $html = \View::make('blog::_partials.render-for-post',compact('posts','bootstrap_col'))->render();
 
         return \Response::json(["html" => $html]);
     }

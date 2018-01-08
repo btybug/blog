@@ -10,6 +10,7 @@
 @endphp
 
 <section id="blog-section">
+    <input type="hidden" class="custom_get_bootstrap_col" value="{{$col_md_x}}">
     <nav class="navbar bty-navbar-blog">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -63,7 +64,7 @@
                 @if(count($posts))
                     <ul class="custom_append_post">
                         @foreach($posts as $post)
-                            <li class="{{$col_md_x}}">
+                            <li class="{{$col_md_x}} custom_class_for_change_col">
                                 <figure class="bty-recent-post-3">
                                     @if(!isset($post->image))
                                         <img src="{!! url($post->image) !!}" class="img-responsive">

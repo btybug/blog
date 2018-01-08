@@ -1,12 +1,6 @@
-<?php
-$col_md_x = "col-md-4";
-if (isset($settings["grid_system"]) && $settings["grid_system"] == 'list'){
-    $col_md_x = "col-md-12";
-}
-?>
 @if(count($posts))
     @foreach($posts as $post)
-        <li class="{{$col_md_x}}">
+        <li class="{{$bootstrap_col}} custom_class_for_change_col">
             <figure class="bty-recent-post-3">
                 @if(!isset($post->image))
                     <img src="{!! url($post->image) !!}" class="img-responsive">
