@@ -3,14 +3,10 @@
     $posts = $postRepo->paginationSettings($settings);
     $page = \Btybug\btybug\Services\RenderService::getFrontPageByURL();
 
-    $col_md_x = "col-md-4";
-    if (isset($settings["grid_system"]) && $settings["grid_system"] == 'list'){
-        $col_md_x = "col-md-12";
-    }
 @endphp
 
 <section id="blog-section">
-    <input type="hidden" class="custom_get_bootstrap_col" value="{{$col_md_x}}">
+    <input type="hidden" name="settings_for_ajax" value="{{serialize($settings)}}">
     <nav class="navbar bty-navbar-blog">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -51,65 +47,19 @@
 
                 </ul>
                 @if(isset($settings["custom_search"]))
-                    <form class="navbar-form text-center search-form" role="search">
-                        <input type="search" class="form-control" placeholder="Search"/>
+                    <form class="navbar-form text-center search-form" id="custom_form_search" role="search">
+                        <input type="search" name="term" class="form-control" placeholder="Search"/>
+                        <input type="hidden" name="search_by" value="{{isset($settings['custom_search_by']) ? json_encode($settings['custom_search_by']) : ''}}"/>
+                        <input type="hidden" name="settings_for_ajax_search" value="{{serialize($settings)}}">
+                        <input type="hidden" name="custom_get_col" value="{{(isset($settings["grid_system"]) && $settings["grid_system"] == 'list') ? 'col-md-12' : 'col-md-4'}}">
                     </form>
                 @endif
             </div>
         </div>
     </nav>
-    <div class="bty-all-blog">
-        <div class="container">
-            <div class="row">
-                @if(count($posts))
-                    <ul class="custom_append_post">
-                        @foreach($posts as $post)
-                            <li class="{{$col_md_x}} custom_class_for_change_col">
-                                <figure class="bty-recent-post-3">
-                                    @if(!isset($post->image))
-                                        <img src="{!! url($post->image) !!}" class="img-responsive">
-                                    @else
-                                        <img src="http://avante.biz/wp-content/uploads/Nice-Wallpapers/Nice-Wallpapers-006.jpg"
-                                             alt="">
-                                    @endif
-                                    <div>
-                                        <span>{{\Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$post->created_at)->format('d')}}</span>
-                                        <span>{{\Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$post->created_at)->format('M')}}</span>
-                                    </div>
-                                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                    <figcaption>
-                                        <h3>{!! $post->title !!}</h3>
-                                        <p>
-                                            {!! $post->description !!}
-                                        </p>
-                                        <button>Read More</button>
-                                    </figcaption>
-                                    <a href="{{ get_post_url($post->id) }}"></a>
-                                </figure>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
-        </div>
+    <div class="custom_append_post">
+        @include("blog::_partials.render-for-post")
     </div>
-
-    @if(isset($settings["custom_pagination"]))
-        @if($settings["custom_pagination"] === "php")
-            {!! $posts->links() !!}
-        @elseif($settings["custom_pagination"] === "scroll")
-            <div class="ajax-load text-center" style="display:none">
-                <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
-            </div>
-            <input type="hidden" id="custom_limit_per_page_for_ajax" value="{{isset($settings["custom_limit_per_page"]) ? $settings["custom_limit_per_page"] : "" }}">
-        @else
-            <button class="custom_load_more">Load More</button>
-            <div class="ajax-load-button text-center" style="display:none">
-                <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
-            </div>
-            <input type="hidden" id="custom_limit_per_page_for_ajax" value="{{isset($settings["custom_limit_per_page"]) ? $settings["custom_limit_per_page"] : "" }}">
-        @endif
-    @endif
     {{--<div class="container">
         <div class="row">
             <div class="col-lg-8">

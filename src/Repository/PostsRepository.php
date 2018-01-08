@@ -37,6 +37,23 @@ class PostsRepository extends GeneralRepository
         return $this->model->where('status', 'published')->where('slug',$slug)->first();
     }
 
+    public function renderSearch($term,$search_by = null){
+        $result = $this->model;
+        if(count($search_by)){
+            foreach ($search_by as $key => $column){
+                if($key === 0){
+                    $result = $result->where($column,'like','%'.$term.'%');
+                }else{
+                    $result = $result->orWhere($column,'like','%'.$term.'%');
+                }
+
+            }
+        }else{
+            $result = $result->where('title','like','%'.$term.'%');
+        }
+        return $result->get();
+    }
+
     public function model()
     {
         return new Post();

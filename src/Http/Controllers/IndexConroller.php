@@ -269,11 +269,29 @@ class IndexConroller extends Controller
 
         $posts = $repository->getPublished();
         $limit_per_page = isset($request->custom_limit_per_page) ? $request->custom_limit_per_page : 10;
-        $bootstrap_col = isset($request->bootstrap_col) ? $request->bootstrap_col : "col-md-4";
+        $col_md_x = isset($request->bootstrap_col) ? $request->bootstrap_col : "col-md-4";
+        $settings_for_ajax = unserialize($request->settings_for_ajax);
+        $dont_render_pagination = 1;
+        $posts = new Paginator($limit_per_page,6,'bty-pagination-2',$posts);
+
+        $html = \View::make('blog::_partials.render-for-post',compact('posts','col_md_x','settings_for_ajax','dont_render_pagination'))->render();
+
+        return \Response::json(["html" => $html]);
+    }
+    public function search(PostsRepository $repository,Request $request){
+        $term = $request->term;
+        $search_by = json_decode($request->search_by);
+        $settings_for_ajax = unserialize($request->settings_for_ajax_search);
+
+        $posts = $repository->renderSearch($term,$search_by);
+
+
+        $limit_per_page = 10;
+        $col_md_x = isset($request->custom_get_col) ? $request->custom_get_col : "col-md-4";
 
         $posts = new Paginator($limit_per_page,6,'bty-pagination-2',$posts);
 
-        $html = \View::make('blog::_partials.render-for-post',compact('posts','bootstrap_col'))->render();
+        $html = \View::make('blog::_partials.render-for-post',compact('posts','col_md_x','settings_for_ajax'))->render();
 
         return \Response::json(["html" => $html]);
     }

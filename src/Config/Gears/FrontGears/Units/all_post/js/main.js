@@ -1,5 +1,35 @@
+(function($){
+    $.fn.extend({
+        doSearch: function(callback,timeout){
+            timeout = timeout || 1e3;
+            var timeoutReference,
+                doneTyping = function(el){
+                    if (!timeoutReference) return;
+                    timeoutReference = null;
+                    callback.call(this,el);
+                };
+            return this.each(function(i,el){
+                var $el = $(el);
+                $el.is(':input') && $el.on('keyup keypress paste cut',function(e){
+
+                    if (e.type=='keyup' && e.keyCode!=8) return;
+
+                    if (timeoutReference) clearTimeout(timeoutReference);
+                    timeoutReference = setTimeout(function(){
+                        doneTyping(el);
+                    }, timeout);
+                }).on('blur',function(){
+                    doneTyping(el);
+                });
+            });
+        }
+    });
+})(jQuery);
+
+
 $(document).ready(function () {
     var token = $("input[name='_token']").val();
+    var base_path = window.location.origin;
      $('.get-user-profile').on('click',function () {
          var url='/'+$('#mytplpath').val()+'/logic.php';
          $.ajax({
@@ -44,11 +74,12 @@ $(document).ready(function () {
     function loadMoreData(page){
         var limit = $("#custom_limit_per_page_for_ajax").val();
         var bootstrap_col = $(".custom_get_bootstrap_col").val();
+        var settings_for_ajax = $('input[name="settings_for_ajax"]').val();
         $.ajax(
             {
                 url: '/admin/blog/append-post-scroll-paginator?page=' + page,
                 type: "post",
-                data:{_token:token,custom_limit_per_page:limit,bootstrap_col:bootstrap_col},
+                data:{_token:token,custom_limit_per_page:limit,bootstrap_col:bootstrap_col,settings_for_ajax:settings_for_ajax},
                 beforeSend: function()
                 {
                     $('.ajax-load').show();
@@ -61,22 +92,25 @@ $(document).ready(function () {
                     return;
                 }
                 $('.ajax-load').hide();
-                $(".custom_append_post").append(data.html);
+                var $data = $(data.html);
+                $(".custom_append_post_to_ul").append($data.find('li'));
             })
             .fail(function(jqXHR, ajaxOptions, thrownError)
             {
                 alert('server not responding...');
             });
     }
-
+    // this is for load more buttom
+    var load_page = 2;
     $("body").delegate(".custom_load_more","click",function(){
         var limit = $("#custom_limit_per_page_for_ajax").val();
         var bootstrap_col = $(".custom_get_bootstrap_col").val();
+        var settings_for_ajax = $('input[name="settings_for_ajax"]').val();
         $.ajax(
             {
-                url: '/admin/blog/append-post-scroll-paginator?page=' + page,
+                url: '/admin/blog/append-post-scroll-paginator?page=' + load_page,
                 type: "post",
-                data:{_token:token,custom_limit_per_page:limit,bootstrap_col:bootstrap_col},
+                data:{_token:token,custom_limit_per_page:limit,bootstrap_col:bootstrap_col,settings_for_ajax:settings_for_ajax},
                 beforeSend: function()
                 {
                     $('.ajax-load-button').show();
@@ -89,12 +123,31 @@ $(document).ready(function () {
                     return;
                 }
                 $('.ajax-load-button').hide();
-                $(".custom_append_post").append(data.html);
+                var $data = $(data.html);
+                $(".custom_append_post_to_ul").append($data.find('li'));
+                load_page++;
             })
             .fail(function(jqXHR, ajaxOptions, thrownError)
             {
                 alert('server not responding...');
             });
     });
+
+    $("#custom_form_search :input").doSearch(function(){
+        var that = $("#custom_form_search").serialize();
+        $('.custom_append_post').addClass('custom_style_for_loading').html('<img src="'+base_path+'/public/images/load.gif") alt="" class="custom_hidden_loading">');
+        $.ajax({
+            type : 'POST',
+            url: '/admin/blog/search',
+            headers: {
+                'X-CSRF-TOKEN': token
+            },
+            data : that,
+            success: function(data){
+                $('.custom_append_post').removeClass('custom_style_for_loading').html(data.html);
+            }
+        });
+    },500);
+
 
  });
