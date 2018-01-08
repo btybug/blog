@@ -63,7 +63,7 @@ $post = $postRepo->first()->toArray();
                 </a>
             </div>
             <div id="sorting" class="collapse in" aria-expanded="true" style="">
-                <div class="content bty-settings-panel">
+                <div class="content bty-settings-panel bty-sort-by">
                     <div>
                         <h5>Show sort system:</h5>
                         <input name="custom_sort" type="checkbox" class="show_sort_system bty-input-checkbox-5"
@@ -99,6 +99,9 @@ $post = $postRepo->first()->toArray();
                                                id="bty-sort-desc"
                                                value="DESC" {{(isset($settings["custom_sort_how"]) && $settings["custom_sort_how"] == 'DESC')?"selected":""}}>
                                         <label for="bty-sort-desc">DESC:</label>
+                                    </div>
+                                    <div class="sort-by-text">
+                                        <input type="text" placeholder="Your text">
                                     </div>
                                 </div>
                                 @if(count($settings["custom_sort_by"]) > 1)
@@ -156,6 +159,51 @@ $post = $postRepo->first()->toArray();
                             <h5>Limit page:</h5>
                                 <input class="bty-setting-numner" name="custom_limit_per_page" min="5" type="number" placeholder="count" value="{{ isset($settings["custom_limit_per_page"]) ? $settings["custom_limit_per_page"] : 10 }}">
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bty-panel-collapse">
+            <div>
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#data-mapping" aria-expanded="true">
+                    <span class="icon"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+                    <span class="title">Data mapping</span>
+                </a>
+            </div>
+            <div id="data-mapping" class="collapse in" aria-expanded="true" style="">
+                <div class="content bty-settings-panel">
+                    <div class="data-mapping">
+                        <div>
+                            <h6>Section 1:</h6>
+                            <div class="bty-input-select-1">
+                                <select>
+                                    <option>opt1</option>
+                                    <option>opt2</option>
+                                    <option>opt3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <h6>Section 2:</h6>
+                            <div class="bty-input-select-1">
+                                <select>
+                                    <option>opt1</option>
+                                    <option>opt2</option>
+                                    <option>opt3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <h6>Section 3:</h6>
+                            <div class="bty-input-select-1">
+                                <select>
+                                    <option>opt1</option>
+                                    <option>opt2</option>
+                                    <option>opt3</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
