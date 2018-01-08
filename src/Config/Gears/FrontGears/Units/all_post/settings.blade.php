@@ -176,30 +176,56 @@ $post = $postRepo->first()->toArray();
                         <div>
                             <h6>Section 1:</h6>
                             <div class="bty-input-select-1">
-                                <select>
-                                    <option>opt1</option>
-                                    <option>opt2</option>
-                                    <option>opt3</option>
+                                <select name="custom_sort_by[]" id="">
+                                    <option value="id">ID</option>
+                                    @foreach($post as $key => $val)
+                                        @if($key === 'id')
+                                            @continue
+                                        @endif
+                                        <option value="{{$key}}">{{$key}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div>
                             <h6>Section 2:</h6>
                             <div class="bty-input-select-1">
-                                <select>
-                                    <option>opt1</option>
-                                    <option>opt2</option>
-                                    <option>opt3</option>
+                                <select name="custom_sort_by[]" id="">
+                                    <option value="id">ID</option>
+                                    @foreach($post as $key => $val)
+                                        @if($key === 'id')
+                                            @continue
+                                        @endif
+                                        <option value="{{$key}}">{{$key}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div>
                             <h6>Section 3:</h6>
                             <div class="bty-input-select-1">
-                                <select>
-                                    <option>opt1</option>
-                                    <option>opt2</option>
-                                    <option>opt3</option>
+                                <select name="custom_sort_by[]" id="">
+                                    <option value="id">ID</option>
+                                    @foreach($post as $key => $val)
+                                        @if($key === 'id')
+                                            @continue
+                                        @endif
+                                        <option value="{{$key}}">{{$key}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <h6>Section 4:</h6>
+                            <div class="bty-input-select-1">
+                                <select name="custom_sort_by[]" id="">
+                                    <option value="id">ID</option>
+                                    @foreach($post as $key => $val)
+                                        @if($key === 'id')
+                                            @continue
+                                        @endif
+                                        <option value="{{$key}}">{{$key}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
