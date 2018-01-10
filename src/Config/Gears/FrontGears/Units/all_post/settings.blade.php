@@ -86,64 +86,73 @@ $post = $postRepo->first()->toArray();
                         <label for="bty-checkbox-search-sort"></label>
                     </div>
 
-                    <div class="custom_sort_div_for_append {{ !isset($settings["custom_sort"]) ? "custom_hidden_for_sort_div" : "" }}">
-                        @if(isset($settings["custom_sort_by"]))
-                            <h6>Sort by
-                                <i class="fa fa-plus custom_add_sort_rule"></i>
-                            </h6>
-                            <div class="custom_sort_append_for_rules">
-                                <div class="sort-select-ad custom_margin_10">
-                                    <div class="bty-input-select-1 custom_class_for_copy">
-                                        <select name="custom_sort_by[]" id="">
-                                            <option value="id">ID</option>
-                                            @foreach($post as $key => $val)
-                                                @if($key === 'id')
-                                                    @continue
-                                                @endif
-                                                <option value="{{$key}}">{{$key}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <input name="custom_sort_how" type="radio" class="bty-input-radio-1"
-                                               id="bty-sort-asc"
-                                               value="ASC" {{(isset($settings["custom_sort_how"]) && $settings["custom_sort_how"] == 'ASC')?"selected":""}}>
-                                        <label for="bty-sort-asc">ASC:</label>
 
-                                        <input name="custom_sort_how" type="radio" class="bty-input-radio-1"
-                                               id="bty-sort-desc"
-                                               value="DESC" {{(isset($settings["custom_sort_how"]) && $settings["custom_sort_how"] == 'DESC')?"selected":""}}>
-                                        <label for="bty-sort-desc">DESC:</label>
-                                    </div>
-                                    <div class="sort-by-text">
-                                        <input type="text" placeholder="Your text">
-                                    </div>
-                                </div>
-                                @if(count($settings["custom_sort_by"]) > 1)
-                                    @foreach($settings["custom_sort_by"] as $keyy => $sort_by)
-                                        @if($sort_by === 'id')
-                                            @continue
-                                        @endif
-                                        <div class="sort-select-ad custom_margin_10">
-                                            <div class="bty-input-select-1">
-                                                <select name="custom_sort_by[{{$sort_by}}]" id="">
-                                                    @foreach($post as $key => $val)
-                                                        @if($key === 'id' || $keyy === 'id')
-                                                            @continue
-                                                        @endif
-                                                        @if($sort_by === $key)
-                                                            <option value="{{$key}}" selected>{{$key}}</option>
-                                                        @else
-                                                            <option value="{{$key}}">{{$key}}</option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+                    <div class="custom_class_for_copy hidden">
+                        <div class="sort-select-ad custom_margin_10">
+                            <div class="bty-input-select-1">
+                                <select chng_nm="custom_sort_by[repl][by]" class="custom_get_data_key" data-key="repl">
+                                    @foreach($post as $key => $val)
+                                        <option value="{{$key}}">{{$key}}</option>
                                     @endforeach
-                                @endif
+                                </select>
                             </div>
-                        @endif
+                            <div>
+                                <input chng_nm="custom_sort_by[repl][how]" type="radio" class="bty-input-radio-1"
+                                       id="bty-sort-asc-repl"
+                                       value="ASC" checked>
+                                <label for="bty-sort-asc-repl">ASC:</label>
+
+                                <input chng_nm="custom_sort_by[repl][how]" type="radio" class="bty-input-radio-1"
+                                       id="bty-sort-desc-repl"
+                                       value="DESC">
+                                <label for="bty-sort-desc-repl">DESC:</label>
+                            </div>
+                            <div class="sort-by-text">
+                                <input type="text" chng_nm="custom_sort_by[repl][fail_name]" placeholder="Your text">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="custom_sort_div_for_append {{ !isset($settings["custom_sort"]) ? "custom_hidden_for_sort_div" : "" }}">
+                        <h6>Sort by
+                            <i class="fa fa-plus custom_add_sort_rule"></i>
+                        </h6>
+                        <div class="custom_sort_append_for_rules">
+                            @if(isset($settings["custom_sort_by"]))
+                                    @if(count($settings["custom_sort_by"]) > 0)
+                                        @foreach($settings["custom_sort_by"] as $keyy => $sort_by)
+                                            <div class="sort-select-ad custom_margin_10">
+                                                <div class="bty-input-select-1">
+                                                    <select name="custom_sort_by[{{$keyy}}][by]" class="custom_get_data_key" data-key={{$keyy}}>
+                                                        @foreach($post as $key => $val)
+                                                            @if($sort_by['by'] === $key)
+                                                                <option value="{{$key}}" selected>{{$key}}</option>
+                                                            @else
+                                                                <option value="{{$key}}">{{$key}}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <input name="custom_sort_by[{{$keyy}}][how]" type="radio" class="bty-input-radio-1"
+                                                           id="bty-sort-asc-{{$keyy}}"
+                                                           value="ASC" {{(isset($settings["custom_sort_by"][$keyy]["how"]) && $settings["custom_sort_by"][$keyy]["how"] == 'ASC') ? "checked" : ""}} {{ !isset($settings["custom_sort_by"][$keyy]["how"]) ? "checked" :  "" }}>
+                                                    <label for="bty-sort-asc-{{$keyy}}">ASC:</label>
+
+                                                    <input name="custom_sort_by[{{$keyy}}][how]" type="radio" class="bty-input-radio-1"
+                                                           id="bty-sort-desc-{{$keyy}}"
+                                                           value="DESC" {{(isset($settings["custom_sort_by"][$keyy]["how"]) && $settings["custom_sort_by"][$keyy]["how"] == 'DESC') ? "checked" : ""}}>
+                                                    <label for="bty-sort-desc-{{$keyy}}">DESC:</label>
+                                                </div>
+                                                <div class="sort-by-text">
+                                                    <input type="text" name="custom_sort_by[{{$keyy}}][fail_name]" value="{{isset($settings["custom_sort_by"][$keyy]['fail_name']) ? $settings["custom_sort_by"][$keyy]['fail_name'] : '' }}" placeholder="Insert name for this field">
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -231,6 +240,7 @@ $post = $postRepo->first()->toArray();
             </div>
         </div>
     </div>
+
 </div>
 {!!  BBstyle($_this->path.'/css/settings.css') !!}
 {!!  BBstyle($_this->path.'/css/custom.css') !!}

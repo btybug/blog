@@ -267,32 +267,64 @@ class IndexConroller extends Controller
 
     public function appendPostScrollPaginator(PostsRepository $repository,Request $request){
 
-        $posts = $repository->getPublished();
+        $posts = json_decode($request->all_posts);
+
         $limit_per_page = isset($request->custom_limit_per_page) ? $request->custom_limit_per_page : 10;
         $col_md_x = isset($request->bootstrap_col) ? $request->bootstrap_col : "col-md-4";
         $settings_for_ajax = unserialize($request->settings_for_ajax);
-        $dont_render_pagination = 1;
+        $all_posts = json_encode($posts);
+        if(!count($posts) < $limit_per_page){
+            return \Response::json(["html" => '','all_posts' => $all_posts]);
+        }
         $posts = new Paginator($limit_per_page,6,'bty-pagination-2',$posts);
 
-        $html = \View::make('blog::_partials.render-for-post',compact('posts','col_md_x','settings_for_ajax','dont_render_pagination'))->render();
+        $html = \View::make('blog::_partials.render-for-post',compact('posts','col_md_x','settings_for_ajax'))->render();
 
-        return \Response::json(["html" => $html]);
+        return \Response::json(["html" => $html,'all_posts' => $all_posts]);
     }
     public function search(PostsRepository $repository,Request $request){
         $term = $request->term;
         $search_by = json_decode($request->search_by);
         $settings_for_ajax = unserialize($request->settings_for_ajax_search);
+        $sort_by = $request->sort_by;
+        $sort_how = $request->sort_how;
 
         $posts = $repository->renderSearch($term,$search_by);
 
+        if($sort_how && $sort_by){
+            $posts = $repository->renderSort($posts,$sort_by,$sort_how);
+        }else{
+            $posts = $repository->renderSort($posts);
+        }
 
-        $limit_per_page = 10;
+
+        $limit_per_page = isset($request->limit_per_page_for_ajax) ? $request->limit_per_page_for_ajax : 10;
         $col_md_x = isset($request->custom_get_col) ? $request->custom_get_col : "col-md-4";
 
+        $posts = $posts->get();
+        $all_posts = json_encode($posts);
         $posts = new Paginator($limit_per_page,6,'bty-pagination-2',$posts);
 
         $html = \View::make('blog::_partials.render-for-post',compact('posts','col_md_x','settings_for_ajax'))->render();
 
-        return \Response::json(["html" => $html]);
+        return \Response::json(["html" => $html,'all_posts' => $all_posts]);
+    }
+    public function findPage(PostsRepository $repository, Request $request){
+        $all_posts = json_decode($request->all_posts);
+        $col_md_x = isset($request->bootstrap_col) ? $request->bootstrap_col : "col-md-4";
+        $settings_for_ajax = unserialize($request->settings_for_ajax);
+        $limit_per_page = isset($request->limit_per_page) ? $request->limit_per_page : 10;
+
+        if(!count($all_posts)){
+            $posts = $repository->getPublished();
+        }else{
+            $posts = $all_posts;
+        }
+        $all_posts = json_encode($posts);
+
+        $posts = new Paginator($limit_per_page,6,'bty-pagination-2',$posts);
+        $html = \View::make('blog::_partials.render-for-post',compact('posts','col_md_x','settings_for_ajax'))->render();
+
+        return \Response::json(["html" => $html,"all_posts" => $all_posts]);
     }
 }

@@ -1,3 +1,11 @@
+$(function (){
+    $('.icp-auto').iconpicker();
+
+    $('.icp').on('iconpickerSelected', function(e) {
+        $(this).attr("value", e.iconpickerValue);
+    });
+});
+
 window.onload = function(){
     $('body').delegate(".show_search_input","click",function(){
         var is_active = $(this).attr("checked");
@@ -21,8 +29,18 @@ window.onload = function(){
     });
     $("body").delegate(".custom_add_sort_rule","click",function(){
         var content = $(".custom_class_for_copy").html();
+        var key = $(".custom_get_data_key").last().data("key");
+        if(key === 'repl'){
+            key = 0;
+        }else{
+            key = key + 1;
+        }
+        key = key.toString();
 
-        $(".custom_sort_append_for_rules").append("<div class='sort-select-ad custom_margin_10'><div class='bty-input-select-1'>" + content + "</div></div>");
+        content = content.replace(/repl/g, key);
+        content = content.replace(/chng_nm/g, 'name');
+
+        $(".custom_sort_append_for_rules").append(content);
     });
 
     $("#custom_search_by").select2({
@@ -30,10 +48,3 @@ window.onload = function(){
         width: '100%'
     });
 };
-$(function (){
-    $('.icp-auto').iconpicker();
-
-    $('.icp').on('iconpickerSelected', function(e) {
-        $(this).attr("value", e.iconpickerValue);
-    });
-});

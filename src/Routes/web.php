@@ -72,3 +72,4 @@ Route::post('/render-unit', 'IndexConroller@unitRenderWithFields');
 
 Route::post('append-post-scroll-paginator', 'IndexConroller@appendPostScrollPaginator')->name('append_post_scroll_paginator');
 Route::post('search', 'IndexConroller@search')->name('search');
+Route::post('findpage', 'IndexConroller@findPage')->name('find_page');

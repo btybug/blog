@@ -1,11 +1,12 @@
 @php
     $postRepo = new \BtyBugHook\Blog\Repository\PostsRepository();
     $posts = $postRepo->paginationSettings($settings);
+    $all_posts = json_encode($postRepo->getPublished());
     $page = \Btybug\btybug\Services\RenderService::getFrontPageByURL();
-
 @endphp
 
 <section id="blog-section">
+    <form class="navbar-form text-center search-form" id="custom_form_search" role="search">
     <input type="hidden" name="settings_for_ajax" value="{{serialize($settings)}}">
     <nav class="navbar bty-navbar-blog">
         <div class="container-fluid">
@@ -26,8 +27,12 @@
 
                             @if(isset($settings["custom_sort_by"]))
                                 <ul class="dropdown-menu" role="menu">
-                                    @foreach($settings["custom_sort_by"] as $sort_by)
-                                        <li><a href="#">{{$sort_by}}</a></li>
+                                    @foreach($settings["custom_sort_by"] as $key => $sort_by)
+                                        <li>
+                                            <a href="#" class="custom_a_for_click_sort" data-by="{{$sort_by['by']}}" data-how="{{$sort_by['how']}}">
+                                                {{ $sort_by["fail_name"] ? $sort_by["fail_name"] : $sort_by["by"] }}
+                                            </a>
+                                        </li>
                                     @endforeach
                                 </ul>
                             @endif
@@ -54,16 +59,17 @@
                     @endif
                 </ul>
                 @if(isset($settings["custom_search"]))
-                    <form class="navbar-form text-center search-form" id="custom_form_search" role="search">
-                        <input type="search" name="term" class="form-control" placeholder="Search"/>
-                        <input type="hidden" name="search_by" value="{{isset($settings['custom_search_by']) ? json_encode($settings['custom_search_by']) : ''}}"/>
-                        <input type="hidden" name="settings_for_ajax_search" value="{{serialize($settings)}}">
-                        <input type="hidden" name="custom_get_col" value="{{(isset($settings["custom_list"]) && !isset($settings["custom_grid"])) ? 'col-md-12' : 'col-md-4'}}">
-                    </form>
+                    <input type="search" name="term" class="form-control" placeholder="Search"/>
+                    <input type="hidden" name="search_by" value="{{isset($settings['custom_search_by']) ? json_encode($settings['custom_search_by']) : ''}}"/>
                 @endif
+                <input type="hidden" name="settings_for_ajax_search" value="{{serialize($settings)}}">
+                <input type="hidden" name="all_posts" value="{{$all_posts}}">
+                <input type="hidden" name="limit_per_page_for_ajax" value="{{isset($settings["custom_limit_per_page"]) ? $settings["custom_limit_per_page"] : "" }}">
+                <input type="hidden" name="custom_get_col" value="{{(isset($settings["custom_list"]) && !isset($settings["custom_grid"])) ? 'col-md-12' : 'col-md-4'}}">
             </div>
         </div>
     </nav>
+    </form>
     <div class="custom_append_post">
         @include("blog::_partials.render-for-post")
     </div>

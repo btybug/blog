@@ -75,11 +75,18 @@ $(document).ready(function () {
         var limit = $("#custom_limit_per_page_for_ajax").val();
         var bootstrap_col = $(".custom_get_bootstrap_col").val();
         var settings_for_ajax = $('input[name="settings_for_ajax"]').val();
+        var all_posts = $("input[name=all_posts]").val();
         $.ajax(
             {
                 url: '/admin/blog/append-post-scroll-paginator?page=' + page,
                 type: "post",
-                data:{_token:token,custom_limit_per_page:limit,bootstrap_col:bootstrap_col,settings_for_ajax:settings_for_ajax},
+                data:{
+                    _token:token,
+                    custom_limit_per_page:limit,
+                    bootstrap_col:bootstrap_col,
+                    settings_for_ajax:settings_for_ajax,
+                    all_posts:all_posts
+                },
                 beforeSend: function()
                 {
                     $('.ajax-load').show();
@@ -87,13 +94,14 @@ $(document).ready(function () {
             })
             .done(function(data)
             {
-                if(data.html == " "){
+                if(data.html == ""){
                     $('.ajax-load').html("No more records found");
                     return;
                 }
                 $('.ajax-load').hide();
                 var $data = $(data.html);
                 $(".custom_append_post_to_ul").append($data.find('li'));
+                $("input[name=all_posts]").val(data.all_posts);
             })
             .fail(function(jqXHR, ajaxOptions, thrownError)
             {
@@ -106,11 +114,18 @@ $(document).ready(function () {
         var limit = $("#custom_limit_per_page_for_ajax").val();
         var bootstrap_col = $(".custom_get_bootstrap_col").val();
         var settings_for_ajax = $('input[name="settings_for_ajax"]').val();
+        var all_posts = $("input[name=all_posts]").val();
         $.ajax(
             {
                 url: '/admin/blog/append-post-scroll-paginator?page=' + load_page,
                 type: "post",
-                data:{_token:token,custom_limit_per_page:limit,bootstrap_col:bootstrap_col,settings_for_ajax:settings_for_ajax},
+                data:{
+                    _token:token,
+                    custom_limit_per_page:limit,
+                    bootstrap_col:bootstrap_col,
+                    settings_for_ajax:settings_for_ajax,
+                    all_posts:all_posts
+                },
                 beforeSend: function()
                 {
                     $('.ajax-load-button').show();
@@ -118,13 +133,14 @@ $(document).ready(function () {
             })
             .done(function(data)
             {
-                if(data.html == " "){
-                    $('.ajax-load').html("No more records found");
+                if(data.html == ""){
+                    $('.ajax-load-button').html("No more records found");
                     return;
                 }
                 $('.ajax-load-button').hide();
                 var $data = $(data.html);
                 $(".custom_append_post_to_ul").append($data.find('li'));
+                $("input[name=all_posts]").val(data.all_posts);
                 load_page++;
             })
             .fail(function(jqXHR, ajaxOptions, thrownError)
@@ -145,9 +161,62 @@ $(document).ready(function () {
             data : that,
             success: function(data){
                 $('.custom_append_post').removeClass('custom_style_for_loading').html(data.html);
+                $("input[name=all_posts]").val(data.all_posts);
             }
         });
     },500);
 
+    $("body").delegate(".custom_a_for_click_sort","click",function(event){
+        event.preventDefault();
 
+        $("input[name='sort_by']").remove();
+        $("input[name='sort_how']").remove();
+
+        var sort_by = $(this).data("by");
+        var sort_how = $(this).data("how");
+        $(this).parent().append("<input type='hidden' name='sort_by' value='"+sort_by+"'> <input type='hidden' name='sort_how' value='"+sort_how+"'>");
+
+        $("#custom_form_search :input").first().trigger('keypress');
+    });
+
+
+    $(window).on('hashchange', function() {
+        if (window.location.hash) {
+            var page = window.location.hash.replace('#', '');
+            if (page == Number.NaN || page <= 0) {
+                return false;
+            } else {
+                getPosts(page);
+            }
+        }
+    });
+    $(document).on('click', '.custom_pagination div ul li a', function (e) {
+        e.preventDefault();
+        getPosts($(this).attr('href').split('page=')[1]);
+    });
+    function getPosts(page) {
+        var token = $('input[name=_token]').val();
+        var all_posts = $("input[name=all_posts]").val();
+        var limit = $("#custom_limit_per_page_for_ajax").val();
+        var bootstrap_col = $(".custom_get_bootstrap_col").val();
+        var settings_for_ajax = $('input[name="settings_for_ajax"]').val();
+        $.ajax({
+            url : '/admin/blog/findpage?page=' + page,
+            data:{
+                all_posts:all_posts,
+                _token:token,
+                limit_per_page:limit,
+                bootstrap_col:bootstrap_col,
+                settings_for_ajax:settings_for_ajax
+            },
+            method:'post',
+            dataType: 'json',
+        }).done(function (data) {
+            $('.custom_append_post').removeClass('custom_style_for_loading').html(data.html);
+            $("input[name=all_posts]").val(data.all_posts);
+            location.hash = page;
+        }).fail(function () {
+            alert('Something went wrong.');
+        });
+    }
  });

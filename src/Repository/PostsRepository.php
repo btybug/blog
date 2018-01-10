@@ -46,12 +46,18 @@ class PostsRepository extends GeneralRepository
                 }else{
                     $result = $result->orWhere($column,'like','%'.$term.'%');
                 }
-
             }
         }else{
             $result = $result->where('title','like','%'.$term.'%');
         }
-        return $result->get();
+        return $result;
+    }
+
+    public function renderSort($all_posts,$sort_by='id',$sort_how='ASC'){
+
+        $result = $all_posts->orderBy($sort_by,$sort_how);
+
+        return $result;
     }
 
     public function model()
