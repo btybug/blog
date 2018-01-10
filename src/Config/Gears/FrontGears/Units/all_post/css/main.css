@@ -51,15 +51,20 @@ nav.bty-navbar-blog .bty-navradio.nv-2:checked + label{
 
 
 #blog-section {
-
     margin-bottom: 80px;
 }
-
+#blog-section .navbar-form{
+    margin: 0;
+    padding: 0;
+}
 #blog-section .content-title {
     padding: 5px;
     background-color: #fff;
 }
-
+#blog-section .search-head input{
+    width: 100%;
+    margin-top: 8px;
+}
 #blog-section .content-title h3 a {
     color: #34495E;
     text-decoration: none;

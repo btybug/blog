@@ -59,7 +59,9 @@
                     @endif
                 </ul>
                 @if(isset($settings["custom_search"]))
+                    <div class="col-md-offset-3 col-md-6 search-head">
                     <input type="search" name="term" class="form-control" placeholder="Search"/>
+                    </div>
                     <input type="hidden" name="search_by" value="{{isset($settings['custom_search_by']) ? json_encode($settings['custom_search_by']) : ''}}"/>
                 @endif
                 <input type="hidden" name="settings_for_ajax_search" value="{{serialize($settings)}}">
