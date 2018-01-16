@@ -38,6 +38,18 @@
                     {
                         extend: 'colvis',
                         columns: ':not(.noVis)'
+                    },
+                    {
+                        text: 'Create New',
+                        action: function (e, dt, node, config) {
+                            window.location = '/admin/blog/new-post'
+                        }
+                    },
+                    {
+                        text: 'Settings',
+                        action: function (e, dt, node, config) {
+                            window.location = '/admin/blog/settings'
+                        }
                     }
                 ]
                 ,colReorder: {

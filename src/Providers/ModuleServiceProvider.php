@@ -39,16 +39,6 @@ class ModuleServiceProvider extends ServiceProvider
                     "custom-link" => "/admin/blog/posts",
                     "icon" => "fa fa-angle-right",
                     "is_core" => "yes"
-                ],[
-                    "title" => "New post",
-                    "custom-link" => "/admin/blog/new-post",
-                    "icon" => "fa fa-angle-right",
-                    "is_core" => "yes"
-                ],[
-                    "title" => "Settings",
-                    "custom-link" => "/admin/blog/settings",
-                    "icon" => "fa fa-angle-right",
-                    "is_core" => "yes"
                 ]
             ]]);
         $tubs = [
