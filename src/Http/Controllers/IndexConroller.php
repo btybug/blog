@@ -33,7 +33,7 @@ class IndexConroller extends Controller
         PostsRepository $postsRepository
     )
     {
-        $posts = $postsRepository->getAll();
+        $posts = $postsRepository->getAllByOrder();
 
         return view('blog::list', compact(['posts']));
     }

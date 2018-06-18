@@ -6,6 +6,7 @@
             <thead>
             <tr>
                 <th>id</th>
+                <th>Title</th>
                 <th>Description</th>
                 <th>Image</th>
                 <th>Author</th>
@@ -57,6 +58,7 @@
                 },
                 columns: [
                     {data: 'id', name: 'id'},
+                    {data: 'title', name: 'title'},
                     {data: 'description', name: 'description'},
                     {data: 'image', name: 'image'},
                     {data: 'author', name: 'author'},

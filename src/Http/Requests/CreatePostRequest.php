@@ -34,9 +34,9 @@ class CreatePostRequest extends Request
     {
         if ($this->isMethod('POST')) {
             return [
-                'title' => 'required',
-                'image' => 'required',
-                'description' => 'required',
+                'title' => 'required|max:100',
+                'image' => 'required|mimes:jpeg,bmp,png',
+                'description' => 'required|max:1000',
             ];
         }
         return [];

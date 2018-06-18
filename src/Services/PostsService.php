@@ -29,7 +29,8 @@ class PostsService extends GeneralService
         $data['slug'] = self::replaceSpaceWithLine($data['title']);
         $created = $this->postRepo->create($data);
         if ($created) {
-            $this->upload($file, $created->id);
+            $path = \Storage::putFile('posts', $file);
+//            $this->upload($file, $created->id);
         }
     }
 
