@@ -29,8 +29,7 @@ class PostsService extends GeneralService
         $data['slug'] = self::replaceSpaceWithLine($data['title']);
         $created = $this->postRepo->create($data);
         if ($created) {
-            $path = \Storage::putFile('posts', $file);
-//            $this->upload($file, $created->id);
+            $this->upload($file, $created->id);
         }
     }
 
@@ -39,20 +38,16 @@ class PostsService extends GeneralService
         $updated = $this->postRepo->update($data['id'],$data);
         if ($updated) {
             if($file){
-                if($updated->image && file_exists(public_path($updated->image)) && ! is_dir(public_path($updated->image))) unlink(public_path($updated->image));
+                if($updated->image && file_exists(public_path($updated->image)) && ! is_dir(public_path($updated->image))) \Storage::delete($updated->image);
                 $this->upload($file, $updated->id);
             }
         }
     }
 
-    public function upload($file, $post_id)
+    public function upload($file, $postId)
     {
-        $extension = $file->getClientOriginalExtension();
-        $filename = uniqid() . "." . $extension;
-        $path = 'images/posts/' . $filename;;
-        $file->move('images/posts', $filename);
-
-        $this->postRepo->update($post_id,['image' => $path]);
+        $path = \Storage::disk('public')->put('posts', $file,'public');
+        $this->postRepo->update($postId,['image' => $path]);
     }
 
     public function delete($id)

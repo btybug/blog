@@ -34,8 +34,7 @@ class IndexConroller extends Controller
     )
     {
         $posts = $postsRepository->getAllByOrder();
-
-        return view('blog::list', compact(['posts']));
+        return view('blog::list', compact(['posts','p']));
     }
 
     public function getNewPost()
