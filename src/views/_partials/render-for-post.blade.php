@@ -49,7 +49,8 @@ if (isset($settings["custom_list"]) && !isset($settings["custom_grid"])){
                                     </p>
                                     <button>Read More</button>
                                 </figcaption>
-                                <a href="{{ get_post_url($post->id) }}"></a>
+                                {{--<a href="{{ get_post_url($post->id) }}"></a>--}}
+                                <a href="#"></a>
                             </figure>
                         </li>
                     @endforeach
