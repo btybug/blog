@@ -19,7 +19,7 @@ if (isset($settings["custom_list"]) && !isset($settings["custom_grid"])){
                     @foreach($posts as $post)
                         <li class="{{$col_md_x}} custom_class_for_change_col">
                             <figure class="bty-recent-post-3">
-                                @if(!isset($post->image))
+                                @if(isset($post->image))
                                     <img src="{!! url($post->image) !!}" class="img-responsive">
                                 @else
                                     <img src="http://avante.biz/wp-content/uploads/Nice-Wallpapers/Nice-Wallpapers-006.jpg"
