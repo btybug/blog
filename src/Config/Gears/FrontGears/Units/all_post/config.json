@@ -14,7 +14,38 @@
   "place": "frontend",
   "tags": [
     "all_posts",
-    "frontend"
+    "frontend",
+    "frontend_page_content"
   ],
+  "placeholders": {
+    "general": {
+      "type": "unit",
+      "tag": "general",
+      "title": "General",
+      "s" : true,
+      "f" : true
+    },
+    "sort": {
+      "type": "unit",
+      "tag": "sort",
+      "title": "Sort system",
+      "f" : true,
+      "s" : true
+    },
+    "pagination": {
+      "type": "unit",
+      "tag": "pagination",
+      "title": "Pagination system",
+      "f" : true,
+      "s" : true
+    },
+    "mapping": {
+      "type": "unit",
+      "tag": "mapping",
+      "title": "Data Mapping",
+      "f" : true,
+      "s" : true
+    }
+  },
   "path": "app\/Plugins\/vendor\/btybug.hook\/blog\/src\/Config\/Gears\/FrontGears\/Units\/all_post"
 }

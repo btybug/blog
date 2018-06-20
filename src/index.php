@@ -58,18 +58,34 @@ addProvider('BtyBugHook\Blog\Providers\ModuleServiceProvider');
 //    }
 //}
 //
-//if (! function_exists('find_post_by_url')) {
-//    function find_post_by_url(){
-//        $slug = posts_url_manager();
-//        if($slug){
-//            $param = \Request::route()->parameters();
-//            if(isset($param['param'])) {
-//                $param = $param['param'];
-//                $postRepository = new \BtyBugHook\Blog\Repository\PostsRepository();
-//                return $postRepository->findBy($slug,$param);
-//            }
-//        }
-//
-//        return null;
-//    }
-//}
+if (! function_exists('find_post_by_url')) {
+    function find_post_by_url(){
+        $slug = posts_url_manager();
+        if($slug){
+            $param = \Request::route()->parameters();
+            if(isset($param['param'])) {
+                $param = $param['param'];
+                $postRepository = new \BtyBugHook\Blog\Repository\PostsRepository();
+                return $postRepository->findBy($slug,$param);
+            }
+        }
+
+        return null;
+    }
+}
+
+if (! function_exists('get_active_posts')) {
+    function get_active_posts(){
+        $slug = posts_url_manager();
+        if($slug){
+            $param = \Request::route()->parameters();
+            if(isset($param['param'])) {
+                $param = $param['param'];
+                $postRepository = new \BtyBugHook\Blog\Repository\PostsRepository();
+                return $postRepository->findBy($slug,$param);
+            }
+        }
+
+        return null;
+    }
+}
