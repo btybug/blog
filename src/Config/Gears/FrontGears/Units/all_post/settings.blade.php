@@ -60,6 +60,16 @@ $post = $postRepo->first()->toArray();
                     </div>
                 </div>
             </div>
+        <script>
+$(function () {
+    console.log( $('body').find("#custom_search_by").select2({
+        tags: true,
+        width: '100%'
+    }));
+
+})
+
+        </script>
         @endoption
 
 
