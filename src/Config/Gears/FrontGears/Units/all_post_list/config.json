@@ -1,0 +1,20 @@
+{
+  "title": "All Post List",
+  "author": "Edo",
+  "site": "http:\/\/bootydev.co.uk",
+  "version": "1.0",
+  "type": "unit",
+  "description": "all post list unit",
+  "have_setting": 1,
+  "image": "screenshot.png",
+  "slug": "all_post_list",
+  "folder": "all_post_list",
+  "created_at": 1490088665,
+  "is_core": 1,
+  "example" : "demo",
+  "place": "frontend",
+  "tags": [
+    "frontend"
+  ],
+  "path": "app\/Plugins\/vendor\/btybug.hook\/blog\/src\/Config\/Gears\/FrontGears\/Units\/all_post_list"
+}

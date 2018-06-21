@@ -1,0 +1,20 @@
+.all-post-list img{
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+}
+.all-post-list .edit-delete{
+    display: flex;
+}
+.all-post-list .images{
+    width: 10%;
+}
+.all-post-list .td-edit-delete{
+vertical-align: middle;
+}
+.all-post-list .edit-delete .btn-warning{
+    margin-right:8px;
+}
+.all-post-list .edit-delete .btn{
+    padding: 6px 12px;
+}

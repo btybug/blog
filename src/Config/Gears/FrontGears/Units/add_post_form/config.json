@@ -1,0 +1,20 @@
+{
+  "title": "Add Post",
+  "author": "Edo",
+  "site": "http:\/\/bootydev.co.uk",
+  "version": "1.0",
+  "type": "unit",
+  "description": "add post unit",
+  "have_setting": 1,
+  "image": "screenshot.png",
+  "slug": "add_post_form",
+  "folder": "add_post_form",
+  "created_at": 1490088665,
+  "is_core": 1,
+  "example" : "demo",
+  "place": "frontend",
+  "tags": [
+    "frontend"
+  ],
+  "path": "app\/Plugins\/vendor\/btybug.hook\/blog\/src\/Config\/Gears\/FrontGears\/Units\/add_post_form"
+}
