@@ -60,6 +60,21 @@ class PostsRepository extends GeneralRepository
         return $result;
     }
 
+    public function getRelatedPosts($autorID)
+    {
+        return $this->model->where('status', 'published')->where('author_id',$autorID)->take(3)->get();
+    }
+
+    public function getPreviousPost($postID)
+    {
+        return $this->model->where('status', 'published')->where('id', '<', $postID)->max('id');
+    }
+
+    public function getNextPost($postID)
+    {
+        return $this->model->where('status', 'published')->where('id', '>', $postID)->min('id');
+    }
+
     public function model()
     {
         return new Post();

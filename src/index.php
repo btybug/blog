@@ -25,25 +25,25 @@ addProvider('BtyBugHook\Blog\Providers\ModuleServiceProvider');
 //    }
 //}
 //
-//if (! function_exists('get_post_url')) {
-//    function get_post_url(int $post_id){
-//        $postRepository = new \BtyBugHook\Blog\Repository\PostsRepository();
-//        $post = $postRepository->find($post_id);
-//
-//        if($post){
-//            $pagesRepository = new \Btybug\Console\Repository\FrontPagesRepository();
-//            $all = $pagesRepository->findBy('slug', 'all-posts');
-//            $url_manager = posts_url_manager();
-//            if($url_manager && isset($post->$url_manager)){
-//                return new \Illuminate\Support\HtmlString($all->url ."/".$post->$url_manager);
-//            }else{
-//                return new \Illuminate\Support\HtmlString($all->url ."/".$post_id);
-//            }
-//        }
-//
-//        return new \Illuminate\Support\HtmlString('javascript::void(0)');
-//    }
-//}
+if (! function_exists('get_post_url')) {
+    function get_post_url(int $post_id){
+        $postRepository = new \BtyBugHook\Blog\Repository\PostsRepository();
+        $post = $postRepository->find($post_id);
+
+        if($post){
+            $pagesRepository = new \Btybug\Console\Repository\FrontPagesRepository();
+            $all = $pagesRepository->findBy('slug', 'all-posts');
+            $url_manager = posts_url_manager();
+            if($url_manager && isset($post->$url_manager)){
+                return new \Illuminate\Support\HtmlString($all->url ."/".$post->$url_manager);
+            }else{
+                return new \Illuminate\Support\HtmlString($all->url ."/".$post_id);
+            }
+        }
+
+        return new \Illuminate\Support\HtmlString('javascript::void(0)');
+    }
+}
 //
 //if (! function_exists('posts_url_manager')) {
 //    function posts_url_manager(){

@@ -15,7 +15,8 @@
   "place": "frontend",
   "tags": [
     "single_post",
-    "frontend"
+    "frontend",
+    "front_page_content"
   ],
   "path": "app\/Plugins\/vendor\/btybug.hook\/blog\/src\/Config\/Gears\/FrontGears\/Units\/single_post"
 }

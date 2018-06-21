@@ -1,60 +1,209 @@
 @php
     $post = find_post_by_url();
+    $postRepository = new \BtyBugHook\Blog\Repository\PostsRepository();
+    $related = [];
+    $next = null;$prev = null;
+
+    if($post){
+        $related = $postRepository->getRelatedPosts($post->autor_id);
+        $next = $postRepository->getNextPost($post->id);
+        $prev = $postRepository->getPreviousPost($post->id);
+    }
+
 @endphp
-<section id="single-post">
-    <div class="col-md-10 blogShort">
-        @if($post)
-            <h1>{{ $post->title }} <span class="pull-right">{!! BBGetUser($post->author_id) .", ". BBgetDateFormat($post->created_at) !!}</span></h1>
-            <img src="{!! url($post->image) !!}" alt="post img"
-                 class="pull-left img-responsive postImg img-thumbnail margin10">
-            <article>
-                {{ $post->description }}
-            </article>
-        @else
-            No Posts
-        @endif
+
+<div class="single-post">
+    <article class="single-blog">
+        <div class="post-thumb">
+            <img src="https://cdn.britannica.com/900x675/80/140480-131-28E57753.jpg" alt="">
+        </div>
+        <div class="post-content">
+            <div class="entry-header text-center text-uppercase">
+                {{--<a href="" class="post-cat">Travel</a>--}}
+                <h2>{{ @$post->title }}</h2>
+            </div>
+            <div class="entry-content">
+                <p>
+                    {{ @$post->description }}
+                </p>
+            </div>
+
+            <div class="post-meta">
+                <ul class="pull-left list-inline author-meta">
+                    <li class="author">By <a href="#">{{ BBGetUser(@$post->author_id) }} </a></li>
+                    <li class="date"> On {{ BBgetDateFormat(@$post->created_at) }}</li>
+                </ul>
+                <ul class="pull-right list-inline social-share">
+                    <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                    <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                    <li><a href=""><i class="fa fa-pinterest"></i></a></li>
+                    <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href=""><i class="fa fa-instagram"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </article>
+    <div class="top-comment"><!--top comment-->
+        <img src="https://files.brightside.me/files/news/part_39/398660/17068260-26730710-01finished-0-1510496576-1510496592-2000-1-1510496592-650-04f9ebaa03-1510932288.jpg" class="pull-left img-circle" alt="">
+        <h4><a href="">Ricard Goff</a></h4>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy hello ro mod tempor
+            invidunt ut labore et dolore magna aliquyam erat.</p>
+        <ul class="list-inline social-share">
+            <li><a href=""><i class="fa fa-facebook"></i></a></li>
+            <li><a href=""><i class="fa fa-twitter"></i></a></li>
+            <li><a href=""><i class="fa fa-pinterest"></i></a></li>
+            <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+            <li><a href=""><i class="fa fa-instagram"></i></a></li>
+        </ul>
     </div>
-</section>
 
-<style>
-    .single-post .blogShort {
-        border-bottom: 1px solid #ddd;
-    }
+    <div class="row"><!--blog next previous-->
+        <div class="col-md-6">
+            @if($prev)
+                <div class="single-blog-box">
+                    <a href="{{ get_post_url($prev->id) }}">
+                        <img src="https://d1o50x50snmhul.cloudfront.net/wp-content/uploads/2017/07/17153147/gettyimages-590483570.jpg" alt="">
+                        <div class="overlay">
+                            <div class="promo-text">
+                                <p><i class=" pull-left fa fa-angle-left"></i></p>
+                                <h5>{{ $prev->title }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endif
+        </div>
+        <div class="col-md-6">
+            @if($next)
+                <div class="single-blog-box">
+                    <a href="{{ get_post_url($next->id) }}">
+                        <img src="https://www.worldatlas.com/r/w728-h425-c728x425/upload/00/fa/69/shutterstock-450936571.jpg" alt="">
+                        <div class="overlay">
+                            <div class="promo-text">
+                                <p><i class="pull-right fa fa-angle-right"></i></p>
+                                <h5>{{ $next->title }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endif
+        </div>
+    </div>
 
-    .single-post .add {
-        background: #333;
-        padding: 10%;
-        height: 300px;
-    }
 
-    .single-post .btn-blog {
-        color: #ffffff;
-        background-color: #37d980;
-        border-color: #37d980;
-        border-radius: 0;
-        margin-bottom: 10px
-    }
+    <div class="related-post">
+        <div class="related-heading">
+            <h4>You might also like</h4>
+        </div>
+        <div class="related-post-items">
+            <div class="row">
+                @if(count($related))
+                    @foreach($related as $relationed)
+                        <div class="col-md-4 col-xs-12">
+                            <div class="single-item">
+                                <a href="{{ get_post_url($relationed->id) }}">
+                                    <img src="https://media2.fdncms.com/stranger/imager/u/large/26041878/1523647161-gettyimages-847218080.jpg" alt="">
+                                    <h4>{{ $relationed->title }}</h4>
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+    </div>
 
-    .single-post .btn-blog:hover,
-    .single-post .btn-blog:focus,
-    .single-post .btn-blog:active,
-    .single-post .btn-blog.active,
-    .single-post .open .dropdown-toggle.btn-blog {
-        color: white;
-        background-color: #34ca78;
-        border-color: #34ca78;
-    }
+    <div class="comment-area">
+        <div class="comment-heading">
+            <h3>3 Thoughts</h3>
+        </div>
+        <div class="single-comment">
+            <div class="media">
+                <div class="media-left text-center">
+                    <a href=""><img class="media-object" src="http://www.sheebamagazine.com/wp-content/uploads/2016/03/2016-15-VOL-I-A-Bieber-WEB-620x805.jpg" alt=""></a>
+                </div>
+                <div class="media-body">
+                    <div class="media-heading">
+                        <h3 class="text-uppercase">
+                            <a href="">John Smith</a>
+                            <a href="" class="pull-right reply-btn">reply</a>
+                        </h3>
+                    </div>
+                    <p class="comment-date">
+                        December, 02, 2017 at 5:57 PM
+                    </p>
+                    <p class="comment-p">
+                        Nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sdiam
+                        voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                        gubergren, no sea takimata sanctus est.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="single-comment single-comment-reply">
+            <div class="media">
+                <div class="media-left text-center">
+                    <a href=""> <img class="media-object" src="http://www.sheebamagazine.com/wp-content/uploads/2016/03/2016-15-VOL-I-A-Bieber-WEB-620x805.jpg" alt=""></a>
+                </div>
+                <div class="media-body">
+                    <div class="media-heading">
+                        <h3 class="text-uppercase"><a href="">Joan Coal</a></h3>
+                    </div>
+                    <p class="comment-date">
+                        2 days ago
+                    </p>
+                    <p class="comment-p">
+                        Labore et dolore magna aliquyam erat, sdiam voluptua. At vero eos eaccusam et justo
+                        duo dolores et ea rebum. Stet clita kasd.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="single-comment">
+            <div class="media">
+                <div class="media-left text-center">
+                    <a href=""> <img class="media-object" src="http://www.sheebamagazine.com/wp-content/uploads/2016/03/2016-15-VOL-I-A-Bieber-WEB-620x805.jpg" alt=""></a>
+                </div>
+                <div class="media-body">
+                    <div class="media-heading">
+                        <h3 class="text-uppercase"><a href="">Ricard Goff</a> <a href="" class="pull-right reply-btn">reply</a>
+                        </h3>
+                    </div>
+                    <span class="comment-date"> 5 hours ago</span>
+                    <p class="comment-p">
+                        Amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidu labore et
+                        dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et usto duo
+                        dolores et ea rebum.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="leave-comment">
+        <h4>Leave a reply</h4>
+        <form class="form-horizontal contact-form" method="" action="#">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" required="">
+                </div>
+                <div class="col-md-6">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required="">
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Website url">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <textarea class="form-control" rows="6" name="message" placeholder="Write Massage" required=""></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn send-btn">Post Comment</button>
+        </form>
+    </div>
+</div>
 
-    .single-post article h2 {
-        color: #333333;
-    }
-
-    .single-post h2 {
-        color: #34ca78;
-    }
-
-    .single-post .margin10 {
-        margin-bottom: 10px;
-        margin-right: 10px;
-    }
-</style>
+{!! BBstyle($_this->path.DS.'css'.DS.'css.css') !!}
