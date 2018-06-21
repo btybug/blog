@@ -67,12 +67,12 @@ class PostsRepository extends GeneralRepository
 
     public function getPreviousPost($postID)
     {
-        return $this->model->where('status', 'published')->where('id', '<', $postID)->max('id');
+        return $this->model->where('status', 'published')->where('id', '<', $postID)->first();
     }
 
     public function getNextPost($postID)
     {
-        return $this->model->where('status', 'published')->where('id', '>', $postID)->min('id');
+        return $this->model->where('status', 'published')->where('id', '>', $postID)->first();
     }
 
     public function model()

@@ -75,7 +75,6 @@
         </div>
         <div class="col-md-6">
             @if($next)
-                {!! dd($next) !!}
                 <div class="single-blog-box">
                     <a href="{{ get_post_url($next->id) }}">
                         <img src="https://www.worldatlas.com/r/w728-h425-c728x425/upload/00/fa/69/shutterstock-450936571.jpg" alt="">
