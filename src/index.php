@@ -44,20 +44,20 @@ if (! function_exists('get_post_url')) {
         return new \Illuminate\Support\HtmlString('javascript::void(0)');
     }
 }
-//
-//if (! function_exists('posts_url_manager')) {
-//    function posts_url_manager(){
-//        $settingsRepository = new \Btybug\btybug\Repositories\AdminsettingRepository();
-//        $settings = $settingsRepository->findOneByMultipleSettingsArray(['section' => 'btybug_blog','settingkey' => 'blog_settings']);
-//
-//        if(isset($settings['url_manager'])){
-//            return $settings['url_manager'];
-//        }
-//
-//        return false;
-//    }
-//}
-//
+
+if (! function_exists('posts_url_manager')) {
+    function posts_url_manager(){
+        $settingsRepository = new \Btybug\btybug\Repositories\AdminsettingRepository();
+        $settings = $settingsRepository->findOneByMultipleSettingsArray(['section' => 'btybug_blog','settingkey' => 'blog_settings']);
+
+        if(isset($settings['url_manager'])){
+            return $settings['url_manager'];
+        }
+
+        return false;
+    }
+}
+
 if (! function_exists('find_post_by_url')) {
     function find_post_by_url(){
         $slug = posts_url_manager();
