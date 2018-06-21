@@ -14,7 +14,8 @@
   "example" : "demo",
   "place": "frontend",
   "tags": [
-    "frontend"
+    "frontend",
+    "front_page_content"
   ],
   "path": "app\/Plugins\/vendor\/btybug.hook\/blog\/src\/Config\/Gears\/FrontGears\/Units\/all_post_list"
 }
