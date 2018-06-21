@@ -4,6 +4,7 @@ $post = $postRepo->first()->toArray();
 ?>
 <div class="row">
     <div class="col-xs-12 ">
+{{--        {!! dd($settings) !!}--}}
 
         @option('general','f',$data)
             <div class="col-md-12">
@@ -11,7 +12,7 @@ $post = $postRepo->first()->toArray();
                     <div>
                         <h5>Show search input:</h5>
                         <input name="custom_search" type="checkbox" class="show_search_input bty-input-checkbox-5"
-                               id="bty-checkbox-search-set">
+                               id="bty-checkbox-search-set" {{isset($settings["custom_search"]) ? "checked":""}}>
                         <label for="bty-checkbox-search-set"></label>
                     </div>
                     <div class="grid-list">
@@ -77,8 +78,8 @@ $(function () {
             <div class="content bty-settings-panel bty-sort-by">
             <div>
                 <h5>Show sort system:</h5>
-                <input name="custom_sort" type="checkbox" class="show_sort_system bty-input-checkbox-5"
-                       id="bty-checkbox-search-sort">
+                <input name="custom_sort" type="checkbox" class="show_sort_system bty-input-checkbox-4"
+                       id="bty-checkbox-search-sort" {{isset($settings["custom_sort"]) ? "checked":""}}>
                 <label for="bty-checkbox-search-sort"></label>
             </div>
 
@@ -188,12 +189,8 @@ $(function () {
                         <h6>Section 1:</h6>
                         <div class="bty-input-select-1">
                             <select name="custom_section1_for_post">
-                                <option value="id">ID</option>
                                 @foreach($post as $key => $val)
-                                    @if($key === 'id')
-                                        @continue
-                                    @endif
-                                    <option value="{{$key}}">{{$key}}</option>
+                                    <option {{ (isset($settings['custom_section1_for_post']) && $settings['custom_section1_for_post'] == $key) ? 'selected' : null }} value="{{$key}}">{{$key}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -202,12 +199,8 @@ $(function () {
                         <h6>Section 2:</h6>
                         <div class="bty-input-select-1">
                             <select name="custom_section2_for_post">
-                                <option value="id">ID</option>
                                 @foreach($post as $key => $val)
-                                    @if($key === 'id')
-                                        @continue
-                                    @endif
-                                    <option value="{{$key}}">{{$key}}</option>
+                                    <option {{ (isset($settings['custom_section2_for_post']) && $settings['custom_section2_for_post'] == $key) ? 'selected' : null }} value="{{$key}}">{{$key}}</option>
                                 @endforeach
                             </select>
                         </div>
