@@ -5,7 +5,7 @@
     $next = null;$prev = null;
 
     if($post){
-        $related = $postRepository->getRelatedPosts($post->autor_id);
+        $related = $postRepository->getRelatedPosts($post->author_id);
         $next = $postRepository->getNextPost($post->id);
         $prev = $postRepository->getPreviousPost($post->id);
     }
@@ -15,7 +15,11 @@
 <div class="single-post">
     <article class="single-blog">
         <div class="post-thumb">
-            <img src="https://cdn.britannica.com/900x675/80/140480-131-28E57753.jpg" alt="">
+            @if($post)
+                <img src="{!! url('public/storage/'.$post->image) !!}" alt="">
+            @else
+                <img src="https://cdn.britannica.com/900x675/80/140480-131-28E57753.jpg" alt="">
+            @endif
         </div>
         <div class="post-content">
             <div class="entry-header text-center text-uppercase">
@@ -62,7 +66,7 @@
             @if($prev)
                 <div class="single-blog-box">
                     <a href="{{ get_post_url($prev->id) }}">
-                        <img src="https://d1o50x50snmhul.cloudfront.net/wp-content/uploads/2017/07/17153147/gettyimages-590483570.jpg" alt="">
+                        <img src="{!! url('public/storage/'.$prev->image) !!}" alt="">
                         <div class="overlay">
                             <div class="promo-text">
                                 <p><i class=" pull-left fa fa-angle-left"></i></p>
@@ -77,7 +81,7 @@
             @if($next)
                 <div class="single-blog-box">
                     <a href="{{ get_post_url($next->id) }}">
-                        <img src="https://www.worldatlas.com/r/w728-h425-c728x425/upload/00/fa/69/shutterstock-450936571.jpg" alt="">
+                        <img src="{!! url('public/storage/'.$next->image) !!}" alt="">
                         <div class="overlay">
                             <div class="promo-text">
                                 <p><i class="pull-right fa fa-angle-right"></i></p>
@@ -98,12 +102,12 @@
         <div class="related-post-items">
             <div class="row">
                 @if(count($related))
-                    @foreach($related as $relationed)
+                    @foreach($related as $value)
                         <div class="col-md-4 col-xs-12">
                             <div class="single-item">
-                                <a href="{{ get_post_url($relationed->id) }}">
-                                    <img src="https://media2.fdncms.com/stranger/imager/u/large/26041878/1523647161-gettyimages-847218080.jpg" alt="">
-                                    <h4>{{ $relationed->title }}</h4>
+                                <a href="{{ get_post_url($value->id) }}">
+                                    <img src="{!! url('public/storage/'.$value->image) !!}" alt="">
+                                    <h4>{{ $value->title }}</h4>
                                 </a>
                             </div>
                         </div>

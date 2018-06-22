@@ -46,7 +46,8 @@ class PostsService extends GeneralService
 
     public function upload($file, $postId)
     {
-        $path = \Storage::disk('public')->put('posts', $file,'public');
+        $path = \Storage::disk('public')->put('posts', $file);
+
         $this->postRepo->update($postId,['image' => $path]);
     }
 

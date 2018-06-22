@@ -21,7 +21,7 @@ if (isset($settings["custom_list"]) && !isset($settings["custom_grid"])){
                             <div class="single-blog">
                             <div class="post-thumb">
                                 <a href="{{ get_post_url($post->id) }}">
-                                    <img src="http://listtop10s.com/wp-content/uploads/2013/12/Top-10-Most-Dangerous-Animals-Hippopotamus.jpg" alt="">
+                                    <img src="{!! url('public/storage/'.$post->image) !!}" alt="">
                                 </a>
                             </div>
                             <div class="post-content">

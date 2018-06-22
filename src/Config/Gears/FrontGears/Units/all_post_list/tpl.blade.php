@@ -22,7 +22,9 @@
                 @foreach($posts as $post)
                     <tr>
                         <td>{{ $post->id }}</td>
-                        <td class="images"><img src="https://www.studyabroad.com/sites/default/files/images/Nice-France-Study-Abroad-Programs.jpg" alt=""></td>
+                        <td class="images">
+                            <img src="{!! url('public/storage/'.$post->image) !!}" alt="">
+                        </td>
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->description }}</td>
                         <td>{{ $post->status }}</td>
