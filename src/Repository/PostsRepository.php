@@ -75,6 +75,11 @@ class PostsRepository extends GeneralRepository
         return $this->model->where('status', 'published')->where('id', '>', $postID)->first();
     }
 
+    public function getAllByCount($count = 4)
+    {
+        return $this->model->where('status', 'published')->orderBy('created_at','desc')->take(4)->get();
+    }
+
     public function model()
     {
         return new Post();
