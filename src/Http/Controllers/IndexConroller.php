@@ -284,7 +284,7 @@ class IndexConroller extends Controller
     public function search(PostsRepository $repository,Request $request){
         $term = $request->term;
         $search_by = json_decode($request->search_by);
-        $settings_for_ajax = unserialize($request->settings_for_ajax_search);
+        $settings_for_ajax = @unserialize($request->settings_for_ajax_search);
         $sort_by = $request->sort_by;
         $sort_how = $request->sort_how;
 
