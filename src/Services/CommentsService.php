@@ -34,7 +34,7 @@ class CommentsService extends GeneralService
     public function addDefaultData($data)
     {
         $settings = $this->adminsettingsRepository->getSettings('comments', 'settings',true);
-        $data['status'] = $settings['status'];
+        $data['status'] = issetReturn($settings,'status','unpublished');
         return $data;
     }
 
