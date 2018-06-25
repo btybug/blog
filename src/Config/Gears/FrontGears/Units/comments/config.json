@@ -1,0 +1,23 @@
+{
+  "title": "Comments",
+  "author": "Edo",
+  "site": "http:\/\/bootydev.co.uk",
+  "version": "1.0",
+  "type": "unit",
+  "description": "single post Comments",
+  "have_setting": 1,
+  "image": "screenshot.png",
+  "slug": "comments",
+  "folder": "comments",
+  "created_at": 1490088665,
+  "is_core": 1,
+  "example" : "demo",
+  "place": "frontend",
+  "tags": [
+    "comment",
+    "frontend"
+  ],
+  "placeholders": {
+  },
+  "path": "app\/Plugins\/vendor\/btybug.hook\/blog\/src\/Config\/Gears\/FrontGears\/Units\/comments"
+}

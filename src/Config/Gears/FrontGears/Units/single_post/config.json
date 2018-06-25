@@ -18,5 +18,14 @@
     "frontend",
     "front_page_content"
   ],
+  "placeholders": {
+    "comment": {
+      "type": "unit",
+      "tag": "comment",
+      "title": "Comment",
+      "s": true,
+      "f": true
+    }
+  },
   "path": "app\/Plugins\/vendor\/btybug.hook\/blog\/src\/Config\/Gears\/FrontGears\/Units\/single_post"
 }

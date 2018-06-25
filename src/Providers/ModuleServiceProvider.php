@@ -40,6 +40,11 @@ class ModuleServiceProvider extends ServiceProvider
                     "custom-link" => "/admin/blog/posts",
                     "icon" => "fa fa-angle-right",
                     "is_core" => "yes"
+                ],[
+                    "title" => "Comments",
+                    "custom-link" => "/admin/blog/comments",
+                    "icon" => "fa fa-angle-right",
+                    "is_core" => "yes"
                 ]
             ]]);
         $tubs = [

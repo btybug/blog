@@ -45,10 +45,8 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapWebRoutes();
-
+        $this->mapGuestRoutes();
         $this->mapApiRoutes();
-
-        //
     }
 
     /**
@@ -71,6 +69,22 @@ class RouteServiceProvider extends ServiceProvider
             ], function ($router) {
                 //TODO fix path when done
                 require __DIR__.'/../Routes/web.php';
+            });
+        });
+    }
+
+    protected function mapGuestRoutes()
+    {
+        Route::group([
+            'domain' => (string)env('DOMAIN'),
+            'middleware' => 'web',
+        ], function ($router) {
+            Route::group([
+                'prefix' => 'admin/blog',
+                'namespace' => $this->namespace,
+            ], function ($router) {
+                //TODO fix path when done
+                require __DIR__.'/../Routes/guest.php';
             });
         });
     }

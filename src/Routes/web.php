@@ -20,7 +20,18 @@
 |
 */
 
+//Comment Routes
 
+Route::group(['prefix'=>'comments'],function (){
+    Route::get('/', 'CommentsConroller@getindex',true);
+    Route::get('/settings', 'CommentsConroller@getSettings',true);
+    Route::post('/settings', 'CommentsConroller@postSettings');
+    Route::get('/unapprove/{id}', 'CommentsConroller@unapprove');
+    Route::get('/delete/{id}', 'CommentsConroller@delete');
+    Route::get('/approve/{id}', 'CommentsConroller@approve');
+    Route::get('/datatable-data', 'CommentsConroller@postsData')->name('comments_data');
+
+});
 
 //Routes
 Route::get('/', 'IndexConroller@getIndex',true);
@@ -73,3 +84,4 @@ Route::post('/render-unit', 'IndexConroller@unitRenderWithFields');
 Route::post('append-post-scroll-paginator', 'IndexConroller@appendPostScrollPaginator')->name('append_post_scroll_paginator');
 Route::post('search', 'IndexConroller@search')->name('search');
 Route::post('findpage', 'IndexConroller@findPage')->name('find_page');
+
