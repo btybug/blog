@@ -21,7 +21,7 @@ if (isset($settings["custom_list"]) && !isset($settings["custom_grid"])){
                             <div class="single-blog">
                             <div class="post-thumb">
                                 <a href="{{ get_post_url($post->id) }}">
-                                    <img src="{!! url('public/storage/'.$post->image) !!}" alt="">
+                                    <img src="{!! url($post->image) !!}" alt="">
                                 </a>
                             </div>
                             <div class="post-content">

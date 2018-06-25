@@ -34,7 +34,7 @@
             <div class="form-group col-md-12">
                 <label class="col-md-2 control-label" for="post-desc">Post Image</label>
                 <div class="col-md-6">
-                    {!! Form::file('image',['class' => 'form-control input-md']) !!}
+                    {!! BBmediaButton('image') !!}
                 </div>
             </div>
 

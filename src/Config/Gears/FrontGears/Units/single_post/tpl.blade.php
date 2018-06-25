@@ -16,7 +16,7 @@
     <article class="single-blog">
         <div class="post-thumb">
             @if($post)
-                <img src="{!! url('public/storage/'.$post->image) !!}" alt="">
+                <img src="{!! url($post->image) !!}" alt="">
             @else
                 <img src="https://cdn.britannica.com/900x675/80/140480-131-28E57753.jpg" alt="">
             @endif
@@ -53,7 +53,7 @@
             @if($prev)
                 <div class="single-blog-box">
                     <a href="{{ get_post_url($prev->id) }}">
-                        <img src="{!! url('public/storage/'.$prev->image) !!}" alt="">
+                        <img src="{!! url($prev->image) !!}" alt="">
                         <div class="overlay">
                             <div class="promo-text">
                                 <p><i class=" pull-left fa fa-angle-left"></i></p>
@@ -68,7 +68,7 @@
             @if($next)
                 <div class="single-blog-box">
                     <a href="{{ get_post_url($next->id) }}">
-                        <img src="{!! url('public/storage/'.$next->image) !!}" alt="">
+                        <img src="{!! url($next->image) !!}" alt="">
                         <div class="overlay">
                             <div class="promo-text">
                                 <p><i class="pull-right fa fa-angle-right"></i></p>
@@ -93,7 +93,7 @@
                         <div class="col-md-4 col-xs-12">
                             <div class="single-item">
                                 <a href="{{ get_post_url($value->id) }}">
-                                    <img src="{!! url('public/storage/'.$value->image) !!}" alt="">
+                                    <img src="{!! url($value->image) !!}" alt="">
                                     <h4>{{ $value->title }}</h4>
                                 </a>
                             </div>

@@ -23,25 +23,16 @@ class PostsService extends GeneralService
     }
 
 
-    public function create(array $data, $file)
+    public function create(array $data)
     {
         $data['author_id'] = \Auth::id();
         $data['slug'] = self::replaceSpaceWithLine($data['title']);
         $created = $this->postRepo->create($data);
-        if ($created) {
-            $this->upload($file, $created->id);
-        }
     }
 
-    public function update(array $data, $file)
+    public function update(array $data)
     {
         $updated = $this->postRepo->update($data['id'],$data);
-        if ($updated) {
-            if($file){
-                if($updated->image && file_exists(public_path($updated->image)) && ! is_dir(public_path($updated->image))) \Storage::delete($updated->image);
-                $this->upload($file, $updated->id);
-            }
-        }
     }
 
     public function upload($file, $postId)

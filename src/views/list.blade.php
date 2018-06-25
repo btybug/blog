@@ -1,6 +1,5 @@
 @extends('btybug::layouts.admin')
 @section('content')
-    {{--<img src="{{ asset('public/storage/'.$posts['0']->image) }}" />--}}
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 main_container_11">
         <table id="users-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>

@@ -23,7 +23,7 @@
                     <tr>
                         <td>{{ $post->id }}</td>
                         <td class="images">
-                            <img src="{!! url('public/storage/'.$post->image) !!}" alt="">
+                            <img src="{!! url($post->image) !!}" alt="">
                         </td>
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->description }}</td>

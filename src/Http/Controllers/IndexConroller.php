@@ -47,7 +47,7 @@ class IndexConroller extends Controller
         PostsService $postsService
     )
     {
-        $result = $postsService->create($request->except("_token", 'image'), $request->file("image"));
+        $result = $postsService->create($request->except("_token"));
 
         return redirect()->to('admin/blog/posts')->with("message", "Post Successfully Created");
     }
@@ -183,7 +183,7 @@ class IndexConroller extends Controller
         PostsService $postsService
     )
     {
-        $result = $postsService->update($request->except("_token", 'image'), $request->file("image"));
+        $result = $postsService->update($request->except("_token"));
 
         return redirect()->to('admin/blog/posts')->with("message", "Post Successfully Edited");
     }
