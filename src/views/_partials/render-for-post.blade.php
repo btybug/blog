@@ -12,7 +12,7 @@ if (isset($settings["custom_list"]) && !isset($settings["custom_grid"])){
 
 <div class="bty-all-blog">
     <input type="hidden" class="custom_get_bootstrap_col" value="{{$col_md_x}}">
-    <div class="container">
+    <div>
         <div class="row">
             @if(count($posts))
                 <ul class="custom_append_post_to_ul more-blog">
