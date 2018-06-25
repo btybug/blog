@@ -16,7 +16,9 @@
             <div class="single-comment">
                 <div class="media">
                     <div class="media-left text-center">
-                        <a href="#"><img class="media-object" src="http://www.sheebamagazine.com/wp-content/uploads/2016/03/2016-15-VOL-I-A-Bieber-WEB-620x805.jpg" alt=""></a>
+                        <a href="#">
+                            <img class="media-object" src="{{ BBGetUserAvatar($comment->author_id) }}" alt="">
+                        </a>
                     </div>
                     <div class="media-body">
                         <div class="media-heading">
