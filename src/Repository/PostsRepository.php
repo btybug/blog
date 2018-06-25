@@ -38,7 +38,7 @@ class PostsRepository extends GeneralRepository
     }
 
     public function renderSearch($term,$search_by = null){
-        $result = $this->model;
+        $result = $this->model->where('status','published');
         if(count($search_by)){
             foreach ($search_by as $key => $column){
                 if($key === 0){
