@@ -18,6 +18,13 @@
     "frontend"
   ],
   "placeholders": {
+    "general": {
+      "type": "unit",
+      "tag": "general",
+      "title": "General",
+      "s": true,
+      "f": true
+    }
   },
   "path": "app\/Plugins\/vendor\/btybug.hook\/blog\/src\/Config\/Gears\/FrontGears\/Units\/comments"
 }

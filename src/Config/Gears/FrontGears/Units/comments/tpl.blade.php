@@ -7,7 +7,7 @@
         $count = $post->comments()->where('status','approved')->count();
     }
 @endphp
-<div class="comment-area">
+<div class="comment-area {{ issetReturn($settings,'c_container','') }}">
     <div class="comment-heading">
         <h3>{{ $count }} Thoughts</h3>
     </div>
@@ -17,24 +17,26 @@
                 <div class="media">
                     <div class="media-left text-center">
                         <a href="#">
-                            <img class="media-object" src="{{ BBGetUserAvatar($comment->author_id) }}" alt="">
+                            @if(isset($settings['show_img']))
+                                <img class="media-object {{ issetReturn($settings,'c_img','') }}" src="{{ BBGetUserAvatar($comment->author_id) }}" alt="">
+                            @endif
                         </a>
                     </div>
                     <div class="media-body">
                         <div class="media-heading">
                             <h3 class="text-uppercase">
                                 @if($comment->author)
-                                    <a href="#">{{ $comment->author->username }}</a>
+                                    <span {{ issetReturn($settings,'c_name','') }}>{{ $comment->author->username }}</span>
                                 @else
-                                    <a href="#">{{ $comment->guest_name }}</a>
+                                    <span {{ issetReturn($settings,'c_name','') }}>{{ $comment->guest_name }}</span>
                                 @endif
-                                <a href="#" class="pull-right reply-btn">reply</a>
+                                <a href="#" class="pull-right {{ issetReturn($settings,'c_reply','reply-btn') }}">reply</a>
                             </h3>
                         </div>
-                        <p class="comment-date">
+                        <p class="comment-date {{ issetReturn($settings,'c_date','') }}">
                             {{ BBgetDateFormat($comment->created_at) }}
                         </p>
-                        <p class="comment-p">
+                        <p class="comment-p {{ issetReturn($settings,'c_comment','') }}">
                             {{ $comment->comment }}
                         </p>
                     </div>
@@ -104,3 +106,8 @@
         <button type="submit" class="btn send-btn">Post Comment</button>
     {!! Form::close() !!}
 </div>
+
+{!! useDinamicStyle('texts') !!}
+{!! useDinamicStyle('images') !!}
+{!! useDinamicStyle('containers') !!}
+{!! useDinamicStyle('buttons') !!}
